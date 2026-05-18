@@ -6,7 +6,7 @@ Instructions for coding agents working in this repository.
 
 ## Project Summary
 
-- VixPHPCS is a PHP_CodeSniffer standard package for PHP 8.3+.
+- VixPHPCS is a PHP_CodeSniffer standard package for PHP 8.4+.
 - Production code lives in `src/VixPHPCS`.
 - Custom sniffs are grouped by domain in `src/VixPHPCS/Sniffs/<Category>`.
 - Tests live in `tests/Sniffs/<Category>` and usually exercise sniffs through inline PHP snippets via `tests/BaseTest.php`.

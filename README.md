@@ -2,7 +2,7 @@
 
 [![PHPStan](https://github.com/vix-4800/phpcs-sniffs/actions/workflows/phpstan.yml/badge.svg)](https://github.com/vix-4800/phpcs-sniffs/actions/workflows/phpstan.yml)
 [![Tests](https://github.com/vix-4800/phpcs-sniffs/actions/workflows/tests.yml/badge.svg)](https://github.com/vix-4800/phpcs-sniffs/actions/workflows/tests.yml)
-[![PHP Version](https://img.shields.io/badge/php-%5E8.3-blue)](https://www.php.net/)
+[![PHP Version](https://img.shields.io/badge/php-%5E8.4-blue)](https://www.php.net/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A comprehensive set of strict PHP_CodeSniffer rules for general PHP, Laravel, and Yii2 projects to maintain high code
@@ -12,7 +12,7 @@ quality standards in your projects.
 
 ### Requirements
 
-- PHP 8.3 or higher
+- PHP 8.4 or higher
 - Composer
 
 ### Install via Composer
