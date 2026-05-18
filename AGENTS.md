@@ -35,7 +35,7 @@ Instructions for coding agents working in this repository.
 - For PHP code changes, use these repository commands:
   - `composer test`
   - `composer phpcs`
-  - `composer phpstan`
+  - `composer static-analysis`
   - `composer check`
 - Prefer `composer check` before finishing when the change affects runtime behavior, rule matching, or multiple files.
 

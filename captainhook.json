@@ -1,82 +1,82 @@
 {
-    "config": {
-        "includes": [],
-        "run-mode": "local",
-        "run-path": "",
-        "ansi-colors": true,
-        "git-directory": ".git",
-        "bootstrap": "",
-        "php-bin": "",
-        "verbosity": "normal",
-        "run": {
-            "pre-commit": {
-                "enabled": true,
-                "actions": [
-                    {
-                        "action": "\\CaptainHook\\App\\Hook\\PHP\\Action\\Linting",
-                        "options": [],
-                        "conditions": []
-                    },
-                    {
-                        "action": "composer cs-fix-dry",
-                        "options": [],
-                        "conditions": []
-                    },
-                    {
-                        "action": "composer phpcs",
-                        "options": [],
-                        "conditions": []
-                    }
-                ]
+  "config": {
+    "includes": [],
+    "run-mode": "local",
+    "run-path": "",
+    "ansi-colors": true,
+    "git-directory": ".git",
+    "bootstrap": "",
+    "php-bin": "",
+    "verbosity": "normal",
+    "run": {
+      "pre-commit": {
+        "enabled": true,
+        "actions": [
+          {
+            "action": "\\CaptainHook\\App\\Hook\\PHP\\Action\\Linting",
+            "options": [],
+            "conditions": []
+          },
+          {
+            "action": "composer cs-fix-dry",
+            "options": [],
+            "conditions": []
+          },
+          {
+            "action": "composer phpcs",
+            "options": [],
+            "conditions": []
+          }
+        ]
+      },
+      "commit-msg": {
+        "enabled": true,
+        "actions": [
+          {
+            "action": "\\CaptainHook\\App\\Hook\\Message\\Action\\Beams",
+            "options": {
+              "subjectLength": 72,
+              "bodyLineLength": 80
             },
-            "commit-msg": {
-                "enabled": true,
-                "actions": [
-                    {
-                        "action": "\\CaptainHook\\App\\Hook\\Message\\Action\\Beams",
-                        "options": {
-                            "subjectLength": 72,
-                            "bodyLineLength": 80
-                        },
-                        "conditions": []
-                    }
-                ]
-            },
-            "pre-push": {
-                "enabled": true,
-                "actions": [
-                    {
-                        "action": "composer phpstan",
-                        "options": [],
-                        "conditions": []
-                    },
-                    {
-                        "action": "composer test",
-                        "options": [],
-                        "conditions": []
-                    }
-                ]
-            },
-            "post-commit": {
-                "enabled": false,
-                "actions": []
-            },
-            "post-merge": {
-                "enabled": false,
-                "actions": []
-            },
-            "post-checkout": {
-                "enabled": false,
-                "actions": []
-            },
-            "post-rewrite": {
-                "enabled": false,
-                "actions": []
-            },
-            "post-change": {
-                "enabled": false,
-                "actions": []
-            }
-        }
+            "conditions": []
+          }
+        ]
+      },
+      "pre-push": {
+        "enabled": true,
+        "actions": [
+          {
+            "action": "composer static-analysis",
+            "options": [],
+            "conditions": []
+          },
+          {
+            "action": "composer test",
+            "options": [],
+            "conditions": []
+          }
+        ]
+      },
+      "post-commit": {
+        "enabled": false,
+        "actions": []
+      },
+      "post-merge": {
+        "enabled": false,
+        "actions": []
+      },
+      "post-checkout": {
+        "enabled": false,
+        "actions": []
+      },
+      "post-rewrite": {
+        "enabled": false,
+        "actions": []
+      },
+      "post-change": {
+        "enabled": false,
+        "actions": []
+      }
     }
+  }
 }

@@ -49,11 +49,11 @@
   },
   "scripts": {
     "post-autoload-dump": "vendor/bin/captainhook install --only-enabled -f -s",
-    "test": "phpunit",
-    "phpcs": "phpcs",
-    "phpcbf": "phpcbf",
-    "phpstan": "phpstan analyse --memory-limit=1G",
-    "cs-fix": "php-cs-fixer fix --config=.php-cs-fixer.php",
+    "test": "php -d memory_limit=1G vendor/bin/phpunit --colors=always",
+    "phpcs": "vendor/bin/phpcs",
+    "phpcbf": "vendor/bin/phpcbf",
+    "static-analysis": "vendor/bin/phpstan analyse --memory-limit=1G --debug",
+    "cs-fix": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php",
     "cs-fix-dry": "@cs-fix --dry-run --diff",
     "check": [
       "@phpcs",
