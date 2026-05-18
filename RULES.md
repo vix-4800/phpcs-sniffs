@@ -1,46 +1,46 @@
-# DevStrict Coding Standard Rules
+# VixPHPCS Coding Standard Rules
 
-This document describes the custom coding standard rules implemented in the DevStrict PHPCS ruleset.
+This document describes the custom coding standard rules implemented in the VixPHPCS PHPCS ruleset.
 
 ## Table of Contents
 
-- [DevStrict Coding Standard Rules](#devstrict-coding-standard-rules)
+- [VixPHPCS Coding Standard Rules](#devstrict-coding-standard-rules)
   - [Table of Contents](#table-of-contents)
   - [Functions](#functions)
-    - [DevStrict.Functions.DisallowCastFunctions](#devstrictfunctionsdisallowcastfunctions)
-    - [DevStrict.Functions.DisallowHttpFileGetContents](#devstrictfunctionsdisallowhttpfilegetcontents)
-    - [DevStrict.Functions.PreferModernStringFunctions](#devstrictfunctionsprefermodernstringfunctions)
-    - [DevStrict.Functions.PreferJsonValidate](#devstrictfunctionspreferjsonvalidate)
+    - [VixPHPCS.Functions.DisallowCastFunctions](#devstrictfunctionsdisallowcastfunctions)
+    - [VixPHPCS.Functions.DisallowHttpFileGetContents](#devstrictfunctionsdisallowhttpfilegetcontents)
+    - [VixPHPCS.Functions.PreferModernStringFunctions](#devstrictfunctionsprefermodernstringfunctions)
+    - [VixPHPCS.Functions.PreferJsonValidate](#devstrictfunctionspreferjsonvalidate)
   - [Control Structures](#control-structures)
-    - [DevStrict.ControlStructures.DisallowCountInLoop](#devstrictcontrolstructuresdisallowcountinloop)
-    - [DevStrict.ControlStructures.DisallowGotoStatement](#devstrictcontrolstructuresdisallowgotostatement)
-    - [DevStrict.ControlStructures.DisallowThrowInTernary](#devstrictcontrolstructuresdisallowthrowinternary)
-    - [DevStrict.ControlStructures.UseInArray](#devstrictcontrolstructuresuseinarray)
+    - [VixPHPCS.ControlStructures.DisallowCountInLoop](#devstrictcontrolstructuresdisallowcountinloop)
+    - [VixPHPCS.ControlStructures.DisallowGotoStatement](#devstrictcontrolstructuresdisallowgotostatement)
+    - [VixPHPCS.ControlStructures.DisallowThrowInTernary](#devstrictcontrolstructuresdisallowthrowinternary)
+    - [VixPHPCS.ControlStructures.UseInArray](#devstrictcontrolstructuresuseinarray)
   - [Formatting](#formatting)
-    - [DevStrict.Formatting.MethodChainingIndentation](#devstrictformattingmethodchainingindentation)
-    - [DevStrict.Formatting.MethodChainingPerLine](#devstrictformattingmethodchainingperline)
-    - [DevStrict.Formatting.ConsistentStatementIndentation](#devstrictformattingconsistentstatementindentation)
-    - [DevStrict.Formatting.DisallowMultipleThrowsPerLine](#devstrictformattingdisallowmultiplethrowsperline)
+    - [VixPHPCS.Formatting.MethodChainingIndentation](#devstrictformattingmethodchainingindentation)
+    - [VixPHPCS.Formatting.MethodChainingPerLine](#devstrictformattingmethodchainingperline)
+    - [VixPHPCS.Formatting.ConsistentStatementIndentation](#devstrictformattingconsistentstatementindentation)
+    - [VixPHPCS.Formatting.DisallowMultipleThrowsPerLine](#devstrictformattingdisallowmultiplethrowsperline)
   - [PhpDoc](#phpdoc)
-    - [DevStrict.PhpDoc.DeprecatedTag](#devstrictphpdocdeprecatedtag)
-    - [DevStrict.PhpDoc.DisallowUnusedTemplate](#devstrictphpdocdisallowunusedtemplate)
-    - [DevStrict.PhpDoc.DisallowVoidMixedWithOtherTypes](#devstrictphpdocdisallowvoidmixedwithothertypes)
+    - [VixPHPCS.PhpDoc.DeprecatedTag](#devstrictphpdocdeprecatedtag)
+    - [VixPHPCS.PhpDoc.DisallowUnusedTemplate](#devstrictphpdocdisallowunusedtemplate)
+    - [VixPHPCS.PhpDoc.DisallowVoidMixedWithOtherTypes](#devstrictphpdocdisallowvoidmixedwithothertypes)
   - [Objects](#objects)
-    - [DevStrict.Objects.DisallowVariableStaticProperty](#devstrictobjectsdisallowvariablestaticproperty)
+    - [VixPHPCS.Objects.DisallowVariableStaticProperty](#devstrictobjectsdisallowvariablestaticproperty)
   - [Yii2](#yii2)
-    - [DevStrict.Yii2.DisallowResponseFormatAssignment](#devstrictyii2disallowresponseformatassignment)
-    - [DevStrict.Yii2.PreferActiveRecordShortcuts](#devstrictyii2preferactiverecordshortcuts)
-    - [DevStrict.Yii2.PreferExistsOverCount](#devstrictyii2preferexistsovercount)
-    - [DevStrict.Yii2.PreferIdentityOverFindOne](#devstrictyii2preferidentityoverfindone)
-    - [DevStrict.Yii2.PreferIsGuestOverUserIdCheck](#devstrictyii2preferisguestoveruseridcheck)
+    - [VixPHPCS.Yii2.DisallowResponseFormatAssignment](#devstrictyii2disallowresponseformatassignment)
+    - [VixPHPCS.Yii2.PreferActiveRecordShortcuts](#devstrictyii2preferactiverecordshortcuts)
+    - [VixPHPCS.Yii2.PreferExistsOverCount](#devstrictyii2preferexistsovercount)
+    - [VixPHPCS.Yii2.PreferIdentityOverFindOne](#devstrictyii2preferidentityoverfindone)
+    - [VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck](#devstrictyii2preferisguestoveruseridcheck)
   - [Attributes](#attributes)
-    - [DevStrict.Attributes.ForbiddenAttributes](#devstrictattributesforbiddenattributes)
+    - [VixPHPCS.Attributes.ForbiddenAttributes](#devstrictattributesforbiddenattributes)
 
 ---
 
 ## Functions
 
-### DevStrict.Functions.DisallowCastFunctions
+### VixPHPCS.Functions.DisallowCastFunctions
 
 **Type:** Warning
 
@@ -69,7 +69,7 @@ $hex = (int) hexdec($value);
 
 ---
 
-### DevStrict.Functions.DisallowHttpFileGetContents
+### VixPHPCS.Functions.DisallowHttpFileGetContents
 
 **Type:** Warning
 
@@ -91,7 +91,7 @@ $response = $httpClient->request('GET', 'https://example.com/api');
 
 ---
 
-### DevStrict.Functions.PreferModernStringFunctions
+### VixPHPCS.Functions.PreferModernStringFunctions
 
 **Type:** Warning
 
@@ -137,7 +137,7 @@ if (str_ends_with($haystack, $needle)) {
 
 ---
 
-### DevStrict.Functions.PreferJsonValidate
+### VixPHPCS.Functions.PreferJsonValidate
 
 **Type:** Warning
 
@@ -178,7 +178,7 @@ if (json_validate($json)) {
 
 ## Control Structures
 
-### DevStrict.ControlStructures.DisallowCountInLoop
+### VixPHPCS.ControlStructures.DisallowCountInLoop
 
 **Type:** Warning
 
@@ -214,7 +214,7 @@ foreach ($array as $item) {
 
 ---
 
-### DevStrict.ControlStructures.DisallowGotoStatement
+### VixPHPCS.ControlStructures.DisallowGotoStatement
 
 **Type:** Error
 
@@ -265,7 +265,7 @@ try {
 
 ---
 
-### DevStrict.ControlStructures.DisallowThrowInTernary
+### VixPHPCS.ControlStructures.DisallowThrowInTernary
 
 **Type:** Error
 
@@ -305,7 +305,7 @@ if ($model === null) {
 
 ---
 
-### DevStrict.ControlStructures.UseInArray
+### VixPHPCS.ControlStructures.UseInArray
 
 **Type:** Warning
 
@@ -341,7 +341,7 @@ if (!in_array($status, ['pending', 'processing', 'cancelled'], true)) {
 
 ## Formatting
 
-### DevStrict.Formatting.MethodChainingIndentation
+### VixPHPCS.Formatting.MethodChainingIndentation
 
 **Type:** Error
 
@@ -377,7 +377,7 @@ User::find()->where(['id' => $id])->all();
 
 ---
 
-### DevStrict.Formatting.MethodChainingPerLine
+### VixPHPCS.Formatting.MethodChainingPerLine
 
 **Type:** Error
 
@@ -412,7 +412,7 @@ User::find()->where(['id' => $id])->all();
 
 ---
 
-### DevStrict.Formatting.ConsistentStatementIndentation
+### VixPHPCS.Formatting.ConsistentStatementIndentation
 
 **Type:** Warning
 
@@ -441,7 +441,7 @@ Modal::end();
 
 ---
 
-### DevStrict.Formatting.DisallowMultipleThrowsPerLine
+### VixPHPCS.Formatting.DisallowMultipleThrowsPerLine
 
 **Type:** Warning
 
@@ -482,7 +482,7 @@ function processData($data): void
 
 ## PhpDoc
 
-### DevStrict.PhpDoc.DeprecatedTag
+### VixPHPCS.PhpDoc.DeprecatedTag
 
 **Type:** Warning
 
@@ -512,7 +512,7 @@ function oldFunction(): void
 
 ---
 
-### DevStrict.PhpDoc.DisallowUnusedTemplate
+### VixPHPCS.PhpDoc.DisallowUnusedTemplate
 
 **Type:** Warning
 
@@ -550,7 +550,7 @@ class Repository extends BaseRepository
 
 ---
 
-### DevStrict.PhpDoc.DisallowVoidMixedWithOtherTypes
+### VixPHPCS.PhpDoc.DisallowVoidMixedWithOtherTypes
 
 **Type:** Error
 
@@ -589,7 +589,7 @@ function bar(): ?string {}
 
 ## Objects
 
-### DevStrict.Objects.DisallowVariableStaticProperty
+### VixPHPCS.Objects.DisallowVariableStaticProperty
 
 **Type:** Error
 
@@ -614,7 +614,7 @@ $value = self::$cache['key'];
 
 ## Yii2
 
-### DevStrict.Yii2.DisallowResponseFormatAssignment
+### VixPHPCS.Yii2.DisallowResponseFormatAssignment
 
 **Type:** Warning
 
@@ -689,7 +689,7 @@ class SiteController extends Controller
 
 ---
 
-### DevStrict.Yii2.PreferActiveRecordShortcuts
+### VixPHPCS.Yii2.PreferActiveRecordShortcuts
 
 **Type:** Warning
 
@@ -753,7 +753,7 @@ class UserController extends Controller
 
 ---
 
-### DevStrict.Yii2.PreferExistsOverCount
+### VixPHPCS.Yii2.PreferExistsOverCount
 
 **Type:** Warning
 
@@ -820,7 +820,7 @@ class UserController extends Controller
 
 ---
 
-### DevStrict.Yii2.PreferIdentityOverFindOne
+### VixPHPCS.Yii2.PreferIdentityOverFindOne
 
 **Type:** Warning
 
@@ -885,7 +885,7 @@ class ProfileController extends Controller
 
 ---
 
-### DevStrict.Yii2.PreferIsGuestOverUserIdCheck
+### VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck
 
 **Type:** Warning
 
@@ -948,7 +948,7 @@ class SiteController extends Controller
 
 ## Attributes
 
-### DevStrict.Attributes.ForbiddenAttributes
+### VixPHPCS.Attributes.ForbiddenAttributes
 
 **Type:** Warning
 

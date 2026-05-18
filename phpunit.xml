@@ -9,7 +9,7 @@
          executionOrder="random"
          cacheDirectory=".phpunit.cache">
     <testsuites>
-        <testsuite name="DevStrict Test Suite">
+        <testsuite name="VixPHPCS Test Suite">
             <directory>tests</directory>
             <exclude>tests/BaseTest.php</exclude>
         </testsuite>

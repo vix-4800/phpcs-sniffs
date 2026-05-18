@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="DevStrict">
-    <description>PHP_CodeSniffer configuration for DevStrict project itself</description>
+<ruleset name="VixPHPCS">
+    <description>PHP_CodeSniffer configuration for VixPHPCS project itself</description>
 
     <!-- Show progress -->
     <arg value="p" />

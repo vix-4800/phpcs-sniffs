@@ -1,4 +1,4 @@
-# DevStrict - PHP_CodeSniffer Custom Ruleset
+# VixPHPCS - PHP_CodeSniffer Custom Ruleset
 
 [![CI](https://github.com/vix-4800/phpcs-devstrict/workflows/CI/badge.svg)](https://github.com/vix-4800/phpcs-devstrict/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -38,63 +38,63 @@ Create a `phpcs.xml` file in your project root:
     <file>src</file>
     <file>tests</file>
 
-    <!-- Use DevStrict rules -->
-    <rule ref="DevStrict"/>
+    <!-- Use VixPHPCS rules -->
+    <rule ref="VixPHPCS"/>
 </ruleset>
 ```
 
 ## Rulesets
 
-### DevStrict
+### VixPHPCS
 
 The main ruleset includes all available rules. See [RULES.md](RULES.md) for detailed documentation of each rule.
 
 **Core Rules:**
 
-- [`DevStrict.Attributes.ForbiddenAttributes`](RULES.md#devstrictattributesforbiddenattributes) - Disallow specific
+- [`VixPHPCS.Attributes.ForbiddenAttributes`](RULES.md#devstrictattributesforbiddenattributes) - Disallow specific
     attributes (e.g. `#[ArrayShape]`)
-- [`DevStrict.ControlStructures.DisallowCountInLoop`](RULES.md#devstrictcontrolstructuresdisallowcountinloop) -
+- [`VixPHPCS.ControlStructures.DisallowCountInLoop`](RULES.md#devstrictcontrolstructuresdisallowcountinloop) -
     Prevent `count()` in loop conditions for performance
-- [`DevStrict.ControlStructures.DisallowGotoStatement`](RULES.md#devstrictcontrolstructuresdisallowgotostatement) -
+- [`VixPHPCS.ControlStructures.DisallowGotoStatement`](RULES.md#devstrictcontrolstructuresdisallowgotostatement) -
     Disallow `goto` statements as anti-pattern
-- [`DevStrict.ControlStructures.DisallowThrowInTernary`](RULES.md#devstrictcontrolstructuresdisallowthrowinternary) -
+- [`VixPHPCS.ControlStructures.DisallowThrowInTernary`](RULES.md#devstrictcontrolstructuresdisallowthrowinternary) -
     No exceptions in ternary or null coalescing operators
-- [`DevStrict.ControlStructures.UseInArray`](RULES.md#devstrictcontrolstructuresuseinarray) - Suggest `in_array()` for
+- [`VixPHPCS.ControlStructures.UseInArray`](RULES.md#devstrictcontrolstructuresuseinarray) - Suggest `in_array()` for
     multiple OR comparisons
-- [`DevStrict.Formatting.MethodChainingIndentation`](RULES.md#devstrictformattingmethodchainingindentation) - Enforce
+- [`VixPHPCS.Formatting.MethodChainingIndentation`](RULES.md#devstrictformattingmethodchainingindentation) - Enforce
     four-space indentation for multi-line method chains
-- [`DevStrict.Formatting.MethodChainingPerLine`](RULES.md#devstrictformattingmethodchainingperline) - Require one
+- [`VixPHPCS.Formatting.MethodChainingPerLine`](RULES.md#devstrictformattingmethodchainingperline) - Require one
     chained call per line once the chain is broken
-- [`DevStrict.Formatting.ConsistentStatementIndentation`](RULES.md#devstrictformattingconsistentstatementindentation) -
+- [`VixPHPCS.Formatting.ConsistentStatementIndentation`](RULES.md#devstrictformattingconsistentstatementindentation) -
     Keep statements at the same nesting level aligned with identical indentation
-- [`DevStrict.Formatting.DisallowMultipleThrowsPerLine`](RULES.md#devstrictformattingdisallowmultiplethrowsperline) -
+- [`VixPHPCS.Formatting.DisallowMultipleThrowsPerLine`](RULES.md#devstrictformattingdisallowmultiplethrowsperline) -
     Require separate `@throws` annotations for each exception type
-- [`DevStrict.Functions.DisallowCastFunctions`](RULES.md#devstrictfunctionsdisallowcastfunctions) - Use type casts
+- [`VixPHPCS.Functions.DisallowCastFunctions`](RULES.md#devstrictfunctionsdisallowcastfunctions) - Use type casts
     instead of `strval()`, `intval()`, `floatval()`, `boolval()`
-- [`DevStrict.Functions.DisallowHttpFileGetContents`](RULES.md#devstrictfunctionsdisallowhttpfilegetcontents) -
+- [`VixPHPCS.Functions.DisallowHttpFileGetContents`](RULES.md#devstrictfunctionsdisallowhttpfilegetcontents) -
     Disallow `file_get_contents()` for HTTP requests
-- [`DevStrict.Functions.PreferModernStringFunctions`](RULES.md#devstrictfunctionsprefermodernstringfunctions) -
+- [`VixPHPCS.Functions.PreferModernStringFunctions`](RULES.md#devstrictfunctionsprefermodernstringfunctions) -
     Suggest modern string functions (`str_contains()`, `str_starts_with()`, `str_ends_with()`) instead of `strpos()`
-- [`DevStrict.Functions.PreferJsonValidate`](RULES.md#devstrictfunctionspreferjsonvalidate) -
+- [`VixPHPCS.Functions.PreferJsonValidate`](RULES.md#devstrictfunctionspreferjsonvalidate) -
     Suggest `json_validate()` instead of `json_decode()` for validation-only use cases
-- [`DevStrict.PhpDoc.DeprecatedTag`](RULES.md#devstrictphpdocdeprecatedtag) - Suggest replacing `@deprecated`
+- [`VixPHPCS.PhpDoc.DeprecatedTag`](RULES.md#devstrictphpdocdeprecatedtag) - Suggest replacing `@deprecated`
     docblock tag with the `#[\Deprecated]` attribute (PHP 8.4+) for functions, methods, class constants, and enum cases
-- [`DevStrict.PhpDoc.DisallowUnusedTemplate`](RULES.md#devstrictphpdocdisallowunusedtemplate) - Disallow unused
+- [`VixPHPCS.PhpDoc.DisallowUnusedTemplate`](RULES.md#devstrictphpdocdisallowunusedtemplate) - Disallow unused
     PHPDoc `@template` declarations
-- [`DevStrict.PhpDoc.DisallowVoidMixedWithOtherTypes`](RULES.md#devstrictphpdocdisallowvoidmixedwithothertypes) -
+- [`VixPHPCS.PhpDoc.DisallowVoidMixedWithOtherTypes`](RULES.md#devstrictphpdocdisallowvoidmixedwithothertypes) -
     Disallow `void` combined with other types in `@return` tags
-- [`DevStrict.Objects.DisallowVariableStaticProperty`](RULES.md#devstrictobjectsdisallowvariablestaticproperty) -
+- [`VixPHPCS.Objects.DisallowVariableStaticProperty`](RULES.md#devstrictobjectsdisallowvariablestaticproperty) -
     Forbid `$object::$property` static property access
 
 **Yii2 Framework Rules:**
 
-- [`DevStrict.Yii2.DisallowResponseFormatAssignment`](RULES.md#devstrictyii2disallowresponseformatassignment) - Use
+- [`VixPHPCS.Yii2.DisallowResponseFormatAssignment`](RULES.md#devstrictyii2disallowresponseformatassignment) - Use
     controller methods like `asJson()` instead of direct assignment
-- [`DevStrict.Yii2.PreferActiveRecordShortcuts`](RULES.md#devstrictyii2preferactiverecordshortcuts) - Suggest
+- [`VixPHPCS.Yii2.PreferActiveRecordShortcuts`](RULES.md#devstrictyii2preferactiverecordshortcuts) - Suggest
     `findOne()`/`findAll()` over `find()->where()->one()/all()`
-- [`DevStrict.Yii2.PreferExistsOverCount`](RULES.md#devstrictyii2preferexistsovercount) - Use `exists()` instead of
+- [`VixPHPCS.Yii2.PreferExistsOverCount`](RULES.md#devstrictyii2preferexistsovercount) - Use `exists()` instead of
     `count() > 0` for better performance
-- [`DevStrict.Yii2.PreferIsGuestOverUserIdCheck`](RULES.md#devstrictyii2preferisguestoveruseridcheck) - Use
+- [`VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck`](RULES.md#devstrictyii2preferisguestoveruseridcheck) - Use
     `Yii::$app->user->isGuest` instead of checking `id` directly
 
 ## Development
