@@ -31,9 +31,9 @@ final class PreferJsonValidateSniff implements Sniff
     public function process(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
-        $functionName = mb_strtolower($tokens[$stackPtr]['content']);
+        $functionName = mb_strtolower((string) $tokens[$stackPtr]['content']);
 
-        if ($functionName !== 'json_decode' && $functionName !== 'json_last_error') {
+        if (!in_array($functionName, ['json_decode', 'json_last_error'], true)) {
             return;
         }
 
@@ -82,7 +82,7 @@ final class PreferJsonValidateSniff implements Sniff
 
         $closeParen = $tokens[$openParen]['parenthesis_closer'];
 
-        for ($i = $openParen + 1; $i < $closeParen; $i++) {
+        for ($i = $openParen + 1; $i < $closeParen; ++$i) {
             if ($tokens[$i]['code'] === T_STRING && $tokens[$i]['content'] === 'JSON_THROW_ON_ERROR') {
                 return true;
             }
@@ -120,8 +120,8 @@ final class PreferJsonValidateSniff implements Sniff
             $foundJsonLastError = false;
             $tokensCount = count($tokens);
 
-            for ($i = $nextToken + 1; $i < $searchEnd && $i < $tokensCount; $i++) {
-                if ($tokens[$i]['code'] === T_STRING && mb_strtolower($tokens[$i]['content']) === 'json_last_error') {
+            for ($i = $nextToken + 1; $i < $searchEnd && $i < $tokensCount; ++$i) {
+                if ($tokens[$i]['code'] === T_STRING && mb_strtolower((string) $tokens[$i]['content']) === 'json_last_error') {
                     $foundJsonLastError = true;
 
                     break;

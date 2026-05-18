@@ -47,7 +47,7 @@ final class PreferModernStringFunctionsSniff implements Sniff
 
         $functionName = mb_strtolower((string) $token['content']);
 
-        if ($functionName !== 'strpos' && $functionName !== 'stripos' && $functionName !== 'mb_strpos') {
+        if (!in_array($functionName, ['strpos', 'stripos', 'mb_strpos'], true)) {
             return;
         }
 

@@ -24,7 +24,7 @@ final class DisallowVariableStaticPropertySniff implements Sniff
     /**
      * {@inheritDoc}
      */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
         if (!$this->isStaticPropertyAccess($phpcsFile, $stackPtr)) {
             return;

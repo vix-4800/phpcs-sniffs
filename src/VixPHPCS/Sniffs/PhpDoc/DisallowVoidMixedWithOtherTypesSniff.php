@@ -21,7 +21,7 @@ final class DisallowVoidMixedWithOtherTypesSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (mb_strtolower($tokens[$stackPtr]['content']) !== '@return') {
+        if (mb_strtolower((string) $tokens[$stackPtr]['content']) !== '@return') {
             return;
         }
 
@@ -32,8 +32,8 @@ final class DisallowVoidMixedWithOtherTypesSniff implements Sniff
             return;
         }
 
-        $typeString = preg_split('/\s+/', $tokens[$nextToken]['content'], 2)[0] ?? '';
-        $types = array_map('trim', explode('|', $typeString));
+        $typeString = preg_split('/\s+/', (string) $tokens[$nextToken]['content'], 2)[0] ?? '';
+        $types = array_map(trim(...), explode('|', $typeString));
 
         if (!in_array('void', $types, true)) {
             return;

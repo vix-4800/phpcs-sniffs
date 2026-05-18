@@ -34,7 +34,7 @@ final class DisallowUnusedTemplateSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (!in_array(mb_strtolower($tokens[$stackPtr]['content']), self::TEMPLATE_TAGS, true)) {
+        if (!in_array(mb_strtolower((string) $tokens[$stackPtr]['content']), self::TEMPLATE_TAGS, true)) {
             return;
         }
 
@@ -68,7 +68,7 @@ final class DisallowUnusedTemplateSniff implements Sniff
 
         $matches = [];
 
-        if (preg_match('/^([A-Za-z_][A-Za-z0-9_]*)\b/', $tokens[$nextToken]['content'], $matches) !== 1) {
+        if (preg_match('/^([A-Za-z_]\w*)\b/', (string) $tokens[$nextToken]['content'], $matches) !== 1) {
             return null;
         }
 
@@ -137,7 +137,7 @@ final class DisallowUnusedTemplateSniff implements Sniff
             }
 
             if (isset($allowedTokens[$tokens[$current]['code']])) {
-                $current++;
+                ++$current;
 
                 continue;
             }
@@ -159,7 +159,7 @@ final class DisallowUnusedTemplateSniff implements Sniff
         $declarationLine = $declarationTag === null ? null : $tokens[$declarationTag]['line'];
         $pattern = '/(?<![A-Za-z0-9_\\\])' . preg_quote($templateName, '/') . '(?![A-Za-z0-9_])/';
 
-        for ($i = $start; $i <= $end; $i++) {
+        for ($i = $start; $i <= $end; ++$i) {
             if ($tokens[$i]['code'] !== T_DOC_COMMENT_STRING) {
                 continue;
             }
@@ -168,7 +168,7 @@ final class DisallowUnusedTemplateSniff implements Sniff
                 continue;
             }
 
-            if (preg_match($pattern, $tokens[$i]['content']) === 1) {
+            if (preg_match($pattern, (string) $tokens[$i]['content']) === 1) {
                 return true;
             }
         }

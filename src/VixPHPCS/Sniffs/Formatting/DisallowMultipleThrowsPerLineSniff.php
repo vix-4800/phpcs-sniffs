@@ -59,7 +59,7 @@ final class DisallowMultipleThrowsPerLineSniff implements Sniff
         $exceptionTypes = $tokens[$nextToken]['content'];
 
         if (str_contains($exceptionTypes, '|')) {
-            $types = array_map('trim', explode('|', $exceptionTypes));
+            $types = array_map(trim(...), explode('|', $exceptionTypes));
             $types = array_filter($types, static fn($type): bool => $type !== '');
 
             if (count($types) > 1) {

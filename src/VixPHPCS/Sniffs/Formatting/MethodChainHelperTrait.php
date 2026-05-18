@@ -17,7 +17,7 @@ trait MethodChainHelperTrait
      *
      * @var array<int|string, bool>
      */
-    private const ADDITIONAL_BREAK_TOKENS = [
+    private const array ADDITIONAL_BREAK_TOKENS = [
         T_SEMICOLON => true,
         T_COMMA => true,
         T_DOUBLE_ARROW => true,

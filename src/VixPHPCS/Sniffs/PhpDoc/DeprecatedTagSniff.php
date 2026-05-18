@@ -22,7 +22,7 @@ final class DeprecatedTagSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (mb_strtolower($tokens[$stackPtr]['content']) !== '@deprecated') {
+        if (mb_strtolower((string) $tokens[$stackPtr]['content']) !== '@deprecated') {
             return;
         }
 
@@ -81,7 +81,7 @@ final class DeprecatedTagSniff implements Sniff
             }
 
             if (isset($allowedTokens[$tokens[$current]['code']])) {
-                $current++;
+                ++$current;
 
                 continue;
             }

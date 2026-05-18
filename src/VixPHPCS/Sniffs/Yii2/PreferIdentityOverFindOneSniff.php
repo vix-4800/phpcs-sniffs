@@ -33,7 +33,6 @@ final class PreferIdentityOverFindOneSniff implements Sniff
     public function process(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
-        $token = $tokens[$stackPtr];
 
         $next = $phpcsFile->findNext(T_WHITESPACE, $stackPtr + 1, null, true);
 
@@ -235,10 +234,8 @@ final class PreferIdentityOverFindOneSniff implements Sniff
                 if ($value === 'id') {
                     $arrow = $phpcsFile->findNext(T_WHITESPACE, $i + 1, $end, true);
 
-                    if ($arrow !== false && $tokens[$arrow]['code'] === T_DOUBLE_ARROW) {
-                        if ($this->containsYiiUserId($phpcsFile, $arrow + 1, $end)) {
-                            return true;
-                        }
+                    if ($arrow !== false && $tokens[$arrow]['code'] === T_DOUBLE_ARROW && $this->containsYiiUserId($phpcsFile, $arrow + 1, $end)) {
+                        return true;
                     }
                 }
             }
