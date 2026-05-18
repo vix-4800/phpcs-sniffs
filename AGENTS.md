@@ -6,11 +6,11 @@ Instructions for coding agents working in this repository.
 
 ## Project Summary
 
-- DevStrict is a PHP_CodeSniffer standard package for PHP 8.3+.
-- Production code lives in `src/DevStrict`.
-- Custom sniffs are grouped by domain in `src/DevStrict/Sniffs/<Category>`.
+- VixPHPCS is a PHP_CodeSniffer standard package for PHP 8.3+.
+- Production code lives in `src/VixPHPCS`.
+- Custom sniffs are grouped by domain in `src/VixPHPCS/Sniffs/<Category>`.
 - Tests live in `tests/Sniffs/<Category>` and usually exercise sniffs through inline PHP snippets via `tests/BaseTest.php`.
-- The published ruleset is defined in `src/DevStrict/ruleset.xml`.
+- The published ruleset is defined in `src/VixPHPCS/ruleset.xml`.
 - User-facing rule documentation lives in `RULES.md`, with package overview in `README.md`.
 
 ## Working Rules
@@ -23,8 +23,8 @@ Instructions for coding agents working in this repository.
 
 ## When Adding Or Changing A Sniff
 
-1. Update or add the sniff class under the matching category in `src/DevStrict/Sniffs`.
-2. Register the rule in `src/DevStrict/ruleset.xml` if it is new, or update its configuration if behavior changed.
+1. Update or add the sniff class under the matching category in `src/VixPHPCS/Sniffs`.
+2. Register the rule in `src/VixPHPCS/ruleset.xml` if it is new, or update its configuration if behavior changed.
 3. Add or update PHPUnit coverage in the matching `tests/Sniffs/<Category>` file.
 4. Update `RULES.md` when rule behavior, examples, severity, or supported patterns change.
 5. Update `README.md` when the public rule list or package capabilities change.
