@@ -45,55 +45,7 @@ Create a `phpcs.xml` file in your project root:
 
 ### VixPHPCS
 
-The main ruleset includes all available rules. See [RULES.md](RULES.md) for detailed documentation of each rule.
-
-**Core Rules:**
-
-- [`VixPHPCS.Attributes.ForbiddenAttributes`](RULES.md#vixphpcsattributesforbiddenattributes) - Disallow specific
-    attributes (e.g. `#[ArrayShape]`)
-- [`VixPHPCS.ControlStructures.DisallowCountInLoop`](RULES.md#vixphpcscontrolstructuresdisallowcountinloop) -
-    Prevent `count()` in loop conditions for performance
-- [`VixPHPCS.ControlStructures.DisallowGotoStatement`](RULES.md#vixphpcscontrolstructuresdisallowgotostatement) -
-    Disallow `goto` statements as anti-pattern
-- [`VixPHPCS.ControlStructures.DisallowThrowInTernary`](RULES.md#vixphpcscontrolstructuresdisallowthrowinternary) -
-    No exceptions in ternary or null coalescing operators
-- [`VixPHPCS.ControlStructures.UseInArray`](RULES.md#vixphpcscontrolstructuresuseinarray) - Suggest `in_array()` for
-    multiple OR comparisons
-- [`VixPHPCS.Formatting.MethodChainingIndentation`](RULES.md#vixphpcsformattingmethodchainingindentation) - Enforce
-    four-space indentation for multi-line method chains
-- [`VixPHPCS.Formatting.MethodChainingPerLine`](RULES.md#vixphpcsformattingmethodchainingperline) - Require one
-    chained call per line once the chain is broken
-- [`VixPHPCS.Formatting.ConsistentStatementIndentation`](RULES.md#vixphpcsformattingconsistentstatementindentation) -
-    Keep statements at the same nesting level aligned with identical indentation
-- [`VixPHPCS.Formatting.DisallowMultipleThrowsPerLine`](RULES.md#vixphpcsformattingdisallowmultiplethrowsperline) -
-    Require separate `@throws` annotations for each exception type
-- [`VixPHPCS.Functions.DisallowCastFunctions`](RULES.md#vixphpcsfunctionsdisallowcastfunctions) - Use type casts
-    instead of `strval()`, `intval()`, `floatval()`, `boolval()`
-- [`VixPHPCS.Functions.DisallowHttpFileGetContents`](RULES.md#vixphpcsfunctionsdisallowhttpfilegetcontents) -
-    Disallow `file_get_contents()` for HTTP requests
-- [`VixPHPCS.Functions.PreferModernStringFunctions`](RULES.md#vixphpcsfunctionsprefermodernstringfunctions) -
-    Suggest modern string functions (`str_contains()`, `str_starts_with()`, `str_ends_with()`) instead of `strpos()`
-- [`VixPHPCS.Functions.PreferJsonValidate`](RULES.md#vixphpcsfunctionspreferjsonvalidate) -
-    Suggest `json_validate()` instead of `json_decode()` for validation-only use cases
-- [`VixPHPCS.PhpDoc.DeprecatedTag`](RULES.md#vixphpcsphpdocdeprecatedtag) - Suggest replacing `@deprecated`
-    docblock tag with the `#[\Deprecated]` attribute (PHP 8.4+) for functions, methods, class constants, and enum cases
-- [`VixPHPCS.PhpDoc.DisallowUnusedTemplate`](RULES.md#vixphpcsphpdocdisallowunusedtemplate) - Disallow unused
-    PHPDoc `@template` declarations
-- [`VixPHPCS.PhpDoc.DisallowVoidMixedWithOtherTypes`](RULES.md#vixphpcsphpdocdisallowvoidmixedwithothertypes) -
-    Disallow `void` combined with other types in `@return` tags
-- [`VixPHPCS.Objects.DisallowVariableStaticProperty`](RULES.md#vixphpcsobjectsdisallowvariablestaticproperty) -
-    Forbid `$object::$property` static property access
-
-**Yii2 Framework Rules:**
-
-- [`VixPHPCS.Yii2.DisallowResponseFormatAssignment`](RULES.md#vixphpcsyii2disallowresponseformatassignment) - Use
-    controller methods like `asJson()` instead of direct assignment
-- [`VixPHPCS.Yii2.PreferActiveRecordShortcuts`](RULES.md#vixphpcsyii2preferactiverecordshortcuts) - Suggest
-    `findOne()`/`findAll()` over `find()->where()->one()/all()`
-- [`VixPHPCS.Yii2.PreferExistsOverCount`](RULES.md#vixphpcsyii2preferexistsovercount) - Use `exists()` instead of
-    `count() > 0` for better performance
-- [`VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck`](RULES.md#vixphpcsyii2preferisguestoveruseridcheck) - Use
-    `Yii::$app->user->isGuest` instead of checking `id` directly
+The package ships with the `VixPHPCS` ruleset plus additional standalone sniffs you can enable manually. See [docs/SNIFFS.md](docs/SNIFFS.md) for the full catalog, examples, and configurable parameters.
 
 ## Development
 
