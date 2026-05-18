@@ -1,6 +1,13 @@
 # VixPHPCS Sniff Catalog
 
+This document describes every custom sniff shipped with VixPHPCS.
+
+The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can also be enabled individually in a custom PHPCS standard when you want a narrower or more opinionated setup.
+
+## Table of Contents
+
 - [VixPHPCS Sniff Catalog](#vixphpcs-sniff-catalog)
+  - [Table of Contents](#table-of-contents)
   - [Attributes](#attributes)
     - [VixPHPCS.Attributes.ForbiddenAttributes](#vixphpcsattributesforbiddenattributes)
   - [Control Structures](#control-structures)
@@ -30,10 +37,6 @@
     - [VixPHPCS.Yii2.PreferExistsOverCount](#vixphpcsyii2preferexistsovercount)
     - [VixPHPCS.Yii2.PreferIdentityOverFindOne](#vixphpcsyii2preferidentityoverfindone)
     - [VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck](#vixphpcsyii2preferisguestoveruseridcheck)
-
-This document describes every custom sniff shipped with VixPHPCS.
-
-The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can also be enabled individually in a custom PHPCS standard when you want a narrower or more opinionated setup.
 
 ## Attributes
 
