@@ -34,10 +34,7 @@ Instructions for coding agents working in this repository.
 - For targeted validation, run the relevant PHPUnit test or a focused subset first.
 - For PHP code changes, use these repository commands:
   - `composer test`
-  - `composer phpcs`
   - `composer static-analysis`
-  - `composer check`
-- Prefer `composer check` before finishing when the change affects runtime behavior, rule matching, or multiple files.
 
 ## Notes For Test Changes
 

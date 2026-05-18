@@ -16,16 +16,6 @@
             "action": "\\CaptainHook\\App\\Hook\\PHP\\Action\\Linting",
             "options": [],
             "conditions": []
-          },
-          {
-            "action": "composer cs-fix-dry",
-            "options": [],
-            "conditions": []
-          },
-          {
-            "action": "composer phpcs",
-            "options": [],
-            "conditions": []
           }
         ]
       },

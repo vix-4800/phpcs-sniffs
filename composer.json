@@ -50,15 +50,6 @@
   "scripts": {
     "post-autoload-dump": "vendor/bin/captainhook install --only-enabled -f -s",
     "test": "php -d memory_limit=1G vendor/bin/phpunit --colors=always",
-    "phpcs": "vendor/bin/phpcs",
-    "phpcbf": "vendor/bin/phpcbf",
-    "static-analysis": "vendor/bin/phpstan analyze --memory-limit=1G",
-    "cs-fix": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php",
-    "cs-fix-dry": "@cs-fix --dry-run --diff",
-    "check": [
-      "@phpcs",
-      "@phpstan",
-      "@test"
-    ]
+    "static-analysis": "vendor/bin/phpstan analyze --memory-limit=1G"
   }
 }
