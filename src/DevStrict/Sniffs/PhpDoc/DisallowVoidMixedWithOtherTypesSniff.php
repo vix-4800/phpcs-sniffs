@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Sniffs\PhpDoc;
+namespace VixPHPCS\Sniffs\PhpDoc;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;

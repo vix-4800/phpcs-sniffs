@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Sniffs\ControlStructures;
+namespace VixPHPCS\Sniffs\ControlStructures;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;

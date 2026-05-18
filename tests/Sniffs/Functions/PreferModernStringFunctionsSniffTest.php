@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Tests\Common\Sniffs\Functions;
+namespace VixPHPCS\Tests\Common\Sniffs\Functions;
 
-use DevStrict\Tests\BaseTest;
+use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for PreferModernStringFunctionsSniff.
@@ -25,7 +25,7 @@ $haystack = "hello world";
 $needle = "world";
 if (strpos($haystack, $needle) !== false) {
     echo "Found";
-}', 'DevStrict.Functions.PreferModernStringFunctions');
+}', 'VixPHPCS.Functions.PreferModernStringFunctions');
 
         $this->assertContainsWarning($result, 'strpos()');
         $this->assertContainsWarning($result, 'str_contains()');
@@ -41,7 +41,7 @@ $haystack = "hello world";
 $needle = "hello";
 if (strpos($haystack, $needle) === 0) {
     echo "Starts with";
-}', 'DevStrict.Functions.PreferModernStringFunctions');
+}', 'VixPHPCS.Functions.PreferModernStringFunctions');
 
         $this->assertContainsWarning($result, 'strpos()');
         $this->assertContainsWarning($result, 'str_starts_with()');
@@ -55,7 +55,7 @@ if (strpos($haystack, $needle) === 0) {
         $result = $this->runPhpcs('<?php
 $haystack = "hello world";
 $needle = "world";
-$position = strpos($haystack, $needle);', 'DevStrict.Functions.PreferModernStringFunctions');
+$position = strpos($haystack, $needle);', 'VixPHPCS.Functions.PreferModernStringFunctions');
 
         $this->assertNoViolations($result);
     }
@@ -75,7 +75,7 @@ class Foo {
 $foo = new Foo();
 if ($foo->strpos("hello", "h") !== false) {
     echo "test";
-}', 'DevStrict.Functions.PreferModernStringFunctions');
+}', 'VixPHPCS.Functions.PreferModernStringFunctions');
 
         $this->assertNoViolations($result);
     }
@@ -94,7 +94,7 @@ class Foo {
 
 if (Foo::strpos("hello", "h") !== false) {
     echo "test";
-}', 'DevStrict.Functions.PreferModernStringFunctions');
+}', 'VixPHPCS.Functions.PreferModernStringFunctions');
 
         $this->assertNoViolations($result);
     }
@@ -109,7 +109,7 @@ $haystack = "hello world";
 $needle = "world";
 if (mb_strpos($haystack, $needle) !== false) {
     echo "Found";
-}', 'DevStrict.Functions.PreferModernStringFunctions');
+}', 'VixPHPCS.Functions.PreferModernStringFunctions');
 
         $this->assertContainsWarning($result, 'mb_strpos()');
         $this->assertContainsWarning($result, 'str_contains()');

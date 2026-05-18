@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Tests\Common\Sniffs\Functions;
+namespace VixPHPCS\Tests\Common\Sniffs\Functions;
 
-use DevStrict\Tests\BaseTest;
+use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowHttpFileGetContentsSniff.
@@ -21,7 +21,7 @@ class DisallowHttpFileGetContentsSniffTest extends BaseTest
     public function testHttpUrlTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$response = file_get_contents("http://example.com/api");', 'DevStrict.Functions.DisallowHttpFileGetContents');
+$response = file_get_contents("http://example.com/api");', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
 
         $this->assertContainsWarning($result, 'HTTP requests');
         $this->assertContainsWarning($result, 'HTTP client');
@@ -33,7 +33,7 @@ $response = file_get_contents("http://example.com/api");', 'DevStrict.Functions.
     public function testHttpsUrlTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$response = file_get_contents(\'https://example.com/api\');', 'DevStrict.Functions.DisallowHttpFileGetContents');
+$response = file_get_contents(\'https://example.com/api\');', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
 
         $this->assertContainsWarning($result, 'file_get_contents()');
     }
@@ -44,7 +44,7 @@ $response = file_get_contents(\'https://example.com/api\');', 'DevStrict.Functio
     public function testUrlSchemeIsCaseInsensitive(): void
     {
         $result = $this->runPhpcs('<?php
-$response = FILE_GET_CONTENTS("HTTPS://example.com/api");', 'DevStrict.Functions.DisallowHttpFileGetContents');
+$response = FILE_GET_CONTENTS("HTTPS://example.com/api");', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
 
         $this->assertContainsWarning($result, 'HTTP requests');
     }
@@ -55,7 +55,7 @@ $response = FILE_GET_CONTENTS("HTTPS://example.com/api");', 'DevStrict.Functions
     public function testInterpolatedHttpUrlTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$response = file_get_contents("https://$host/api");', 'DevStrict.Functions.DisallowHttpFileGetContents');
+$response = file_get_contents("https://$host/api");', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
 
         $this->assertContainsWarning($result, 'HTTP requests');
     }
@@ -67,7 +67,7 @@ $response = file_get_contents("https://$host/api");', 'DevStrict.Functions.Disal
     {
         $result = $this->runPhpcs('<?php
 $contents = file_get_contents(__DIR__ . "/file.txt");
-$contents = file_get_contents("php://input");', 'DevStrict.Functions.DisallowHttpFileGetContents');
+$contents = file_get_contents("php://input");', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
 
         $this->assertNoViolations($result);
     }
@@ -78,7 +78,7 @@ $contents = file_get_contents("php://input");', 'DevStrict.Functions.DisallowHtt
     public function testDynamicUrlDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$response = file_get_contents($url);', 'DevStrict.Functions.DisallowHttpFileGetContents');
+$response = file_get_contents($url);', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
 
         $this->assertNoViolations($result);
     }
@@ -90,7 +90,7 @@ $response = file_get_contents($url);', 'DevStrict.Functions.DisallowHttpFileGetC
     {
         $result = $this->runPhpcs('<?php
 $response = $client->file_get_contents("https://example.com/api");
-$response = Client::file_get_contents("https://example.com/api");', 'DevStrict.Functions.DisallowHttpFileGetContents');
+$response = Client::file_get_contents("https://example.com/api");', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
 
         $this->assertNoViolations($result);
     }
@@ -103,7 +103,7 @@ $response = Client::file_get_contents("https://example.com/api");', 'DevStrict.F
         $result = $this->runPhpcs('<?php
 function file_get_contents(string $url): string {
     return $url;
-}', 'DevStrict.Functions.DisallowHttpFileGetContents');
+}', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
 
         $this->assertNoViolations($result);
     }
@@ -118,7 +118,7 @@ $response = file_get_contents($path, false, stream_context_create([
     "http" => [
         "header" => "Referer: https://example.com",
     ],
-]));', 'DevStrict.Functions.DisallowHttpFileGetContents');
+]));', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
 
         $this->assertNoViolations($result);
     }

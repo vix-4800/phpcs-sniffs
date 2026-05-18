@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Tests\Common\Sniffs\ControlStructures;
+namespace VixPHPCS\Tests\Common\Sniffs\ControlStructures;
 
-use DevStrict\Tests\BaseTest;
+use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowGotoStatementSniff.
@@ -29,7 +29,7 @@ class DisallowGotoStatementSniffTest extends BaseTest
 goto label;
 echo "This is skipped";
 label:
-echo "This is executed";', 'DevStrict.ControlStructures.DisallowGotoStatement');
+echo "This is executed";', 'VixPHPCS.ControlStructures.DisallowGotoStatement');
 
         $this->assertContainsError($result, 'goto');
         $this->assertContainsError($result, 'anti-pattern');
@@ -46,7 +46,7 @@ if ($condition) {
 }
 echo "Middle";
 end:
-echo "End";', 'DevStrict.ControlStructures.DisallowGotoStatement');
+echo "End";', 'VixPHPCS.ControlStructures.DisallowGotoStatement');
 
         $this->assertContainsError($result, 'goto');
     }
@@ -63,7 +63,7 @@ for ($i = 0; $i < 10; $i++) {
     }
 }
 done:
-echo "Done";', 'DevStrict.ControlStructures.DisallowGotoStatement');
+echo "Done";', 'VixPHPCS.ControlStructures.DisallowGotoStatement');
 
         $this->assertContainsError($result, 'goto');
     }
@@ -83,7 +83,7 @@ if ($b) {
 label1:
 echo "Label 1";
 label2:
-echo "Label 2";', 'DevStrict.ControlStructures.DisallowGotoStatement');
+echo "Label 2";', 'VixPHPCS.ControlStructures.DisallowGotoStatement');
 
         $this->assertContainsError($result, 'goto');
         $errorCount = substr_count($result, 'goto');
@@ -110,7 +110,7 @@ while ($running) {
     if ($stop) {
         continue;
     }
-}', 'DevStrict.ControlStructures.DisallowGotoStatement');
+}', 'VixPHPCS.ControlStructures.DisallowGotoStatement');
 
         $this->assertNoViolations($result);
     }
@@ -131,7 +131,7 @@ function test($value) {
     }
 
     return true;
-}', 'DevStrict.ControlStructures.DisallowGotoStatement');
+}', 'VixPHPCS.ControlStructures.DisallowGotoStatement');
 
         $this->assertNoViolations($result);
     }
@@ -152,7 +152,7 @@ foreach ($items as $item) {
     }
 
     processItem($item);
-}', 'DevStrict.ControlStructures.DisallowGotoStatement');
+}', 'VixPHPCS.ControlStructures.DisallowGotoStatement');
 
         $this->assertNoViolations($result);
     }
@@ -166,7 +166,7 @@ foreach ($items as $item) {
 goto forward;
 echo "Skipped";
 forward:
-echo "Executed";', 'DevStrict.ControlStructures.DisallowGotoStatement');
+echo "Executed";', 'VixPHPCS.ControlStructures.DisallowGotoStatement');
 
         $this->assertContainsError($result, 'goto');
     }
@@ -182,7 +182,7 @@ start:
 $counter++;
 if ($counter < 5) {
     goto start;
-}', 'DevStrict.ControlStructures.DisallowGotoStatement');
+}', 'VixPHPCS.ControlStructures.DisallowGotoStatement');
 
         $this->assertContainsError($result, 'goto');
     }
@@ -197,7 +197,7 @@ if ($counter < 5) {
 // This test ensures we only flag the goto statement, not labels
 function test() {
     echo "Normal code";
-}', 'DevStrict.ControlStructures.DisallowGotoStatement');
+}', 'VixPHPCS.ControlStructures.DisallowGotoStatement');
 
         $this->assertNoViolations($result);
     }

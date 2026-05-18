@@ -1,53 +1,53 @@
 <?xml version="1.0"?>
 <ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    name="DevStrict">
-    <description>DevStrict Coding Standard - Main ruleset</description>
+    name="VixPHPCS">
+    <description>VixPHPCS Coding Standard - Main ruleset</description>
 
-    <rule ref="DevStrict.ControlStructures.DisallowThrowInTernary">
+    <rule ref="VixPHPCS.ControlStructures.DisallowThrowInTernary">
         <type>error</type>
     </rule>
 
-    <rule ref="DevStrict.ControlStructures.UseInArray">
+    <rule ref="VixPHPCS.ControlStructures.UseInArray">
         <type>warning</type>
     </rule>
 
-    <rule ref="DevStrict.Formatting.MethodChainingIndentation">
+    <rule ref="VixPHPCS.Formatting.MethodChainingIndentation">
         <type>warning</type>
     </rule>
 
-    <rule ref="DevStrict.Formatting.MethodChainingPerLine">
+    <rule ref="VixPHPCS.Formatting.MethodChainingPerLine">
         <type>warning</type>
     </rule>
 
-    <rule ref="DevStrict.Formatting.ConsistentStatementIndentation">
+    <rule ref="VixPHPCS.Formatting.ConsistentStatementIndentation">
         <type>warning</type>
     </rule>
 
-    <rule ref="DevStrict.Yii2.DisallowResponseFormatAssignment">
+    <rule ref="VixPHPCS.Yii2.DisallowResponseFormatAssignment">
         <type>warning</type>
     </rule>
 
-    <rule ref="DevStrict.Yii2.PreferActiveRecordShortcuts">
+    <rule ref="VixPHPCS.Yii2.PreferActiveRecordShortcuts">
         <type>warning</type>
     </rule>
 
-    <rule ref="DevStrict.Yii2.PreferExistsOverCount">
+    <rule ref="VixPHPCS.Yii2.PreferExistsOverCount">
         <type>warning</type>
     </rule>
 
-    <rule ref="DevStrict.Yii2.PreferIsGuestOverUserIdCheck">
+    <rule ref="VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck">
         <type>warning</type>
     </rule>
 
-    <rule ref="DevStrict.Yii2.PreferIdentityOverFindOne">
+    <rule ref="VixPHPCS.Yii2.PreferIdentityOverFindOne">
         <type>warning</type>
     </rule>
 
-    <rule ref="DevStrict.Objects.DisallowVariableStaticProperty">
+    <rule ref="VixPHPCS.Objects.DisallowVariableStaticProperty">
         <type>warning</type>
     </rule>
 
-    <rule ref="DevStrict.Attributes.ForbiddenAttributes">
+    <rule ref="VixPHPCS.Attributes.ForbiddenAttributes">
         <type>warning</type>
         <properties>
             <property name="forbiddenAttributes" type="array">
@@ -61,31 +61,31 @@
         </properties>
     </rule>
 
-    <rule ref="DevStrict.Functions.PreferModernStringFunctions">
+    <rule ref="VixPHPCS.Functions.PreferModernStringFunctions">
         <type>warning</type>
     </rule>
 
-    <rule ref="DevStrict.Functions.DisallowHttpFileGetContents">
+    <rule ref="VixPHPCS.Functions.DisallowHttpFileGetContents">
         <type>warning</type>
     </rule>
 
-    <rule ref="DevStrict.Functions.PreferJsonValidate">
+    <rule ref="VixPHPCS.Functions.PreferJsonValidate">
         <type>warning</type>
     </rule>
 
-    <rule ref="DevStrict.Formatting.DisallowMultipleThrowsPerLine">
+    <rule ref="VixPHPCS.Formatting.DisallowMultipleThrowsPerLine">
         <type>warning</type>
     </rule>
 
-    <rule ref="DevStrict.PhpDoc.DisallowUnusedTemplate">
+    <rule ref="VixPHPCS.PhpDoc.DisallowUnusedTemplate">
         <type>warning</type>
     </rule>
 
-    <rule ref="DevStrict.PhpDoc.DeprecatedTag">
+    <rule ref="VixPHPCS.PhpDoc.DeprecatedTag">
         <type>warning</type>
     </rule>
 
-    <rule ref="DevStrict.PhpDoc.DisallowVoidMixedWithOtherTypes">
+    <rule ref="VixPHPCS.PhpDoc.DisallowVoidMixedWithOtherTypes">
         <type>error</type>
     </rule>
 </ruleset>

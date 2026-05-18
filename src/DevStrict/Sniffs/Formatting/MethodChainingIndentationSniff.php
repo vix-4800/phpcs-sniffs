@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Sniffs\Formatting;
+namespace VixPHPCS\Sniffs\Formatting;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;

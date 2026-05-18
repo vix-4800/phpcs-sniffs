@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Tests\Common\Sniffs\Functions;
+namespace VixPHPCS\Tests\Common\Sniffs\Functions;
 
-use DevStrict\Tests\BaseTest;
+use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowCastFunctionsSniff.
@@ -22,7 +22,7 @@ class DisallowCastFunctionsSniffTest extends BaseTest
     {
         $result = $this->runPhpcs('<?php
 $var = "123";
-$str = strval($var);', 'DevStrict.Functions.DisallowCastFunctions');
+$str = strval($var);', 'VixPHPCS.Functions.DisallowCastFunctions');
 
         $this->assertContainsWarning($result, 'strval()');
         $this->assertContainsWarning($result, '(string)');
@@ -35,7 +35,7 @@ $str = strval($var);', 'DevStrict.Functions.DisallowCastFunctions');
     {
         $result = $this->runPhpcs('<?php
 $var = "123";
-$int = intval($var);', 'DevStrict.Functions.DisallowCastFunctions');
+$int = intval($var);', 'VixPHPCS.Functions.DisallowCastFunctions');
 
         $this->assertContainsWarning($result, 'intval()');
         $this->assertContainsWarning($result, '(int)');
@@ -48,7 +48,7 @@ $int = intval($var);', 'DevStrict.Functions.DisallowCastFunctions');
     {
         $result = $this->runPhpcs('<?php
 $var = "123.45";
-$float = floatval($var);', 'DevStrict.Functions.DisallowCastFunctions');
+$float = floatval($var);', 'VixPHPCS.Functions.DisallowCastFunctions');
 
         $this->assertContainsWarning($result, 'floatval()');
         $this->assertContainsWarning($result, '(float)');
@@ -61,7 +61,7 @@ $float = floatval($var);', 'DevStrict.Functions.DisallowCastFunctions');
     {
         $result = $this->runPhpcs('<?php
 $var = 1;
-$bool = boolval($var);', 'DevStrict.Functions.DisallowCastFunctions');
+$bool = boolval($var);', 'VixPHPCS.Functions.DisallowCastFunctions');
 
         $this->assertContainsWarning($result, 'boolval()');
         $this->assertContainsWarning($result, '(bool)');
@@ -76,7 +76,7 @@ $bool = boolval($var);', 'DevStrict.Functions.DisallowCastFunctions');
 $str = (string) $var;
 $int = (int) $var;
 $float = (float) $var;
-$bool = (bool) $var;', 'DevStrict.Functions.DisallowCastFunctions');
+$bool = (bool) $var;', 'VixPHPCS.Functions.DisallowCastFunctions');
 
         $this->assertNoViolations($result);
     }
@@ -93,7 +93,7 @@ class MyClass {
     }
 }
 $obj = new MyClass();
-$result = $obj->strval();', 'DevStrict.Functions.DisallowCastFunctions');
+$result = $obj->strval();', 'VixPHPCS.Functions.DisallowCastFunctions');
 
         $this->assertNoViolations($result);
     }
@@ -109,7 +109,7 @@ class MyClass {
         return 42;
     }
 }
-$result = MyClass::intval();', 'DevStrict.Functions.DisallowCastFunctions');
+$result = MyClass::intval();', 'VixPHPCS.Functions.DisallowCastFunctions');
 
         $this->assertNoViolations($result);
     }
@@ -122,7 +122,7 @@ $result = MyClass::intval();', 'DevStrict.Functions.DisallowCastFunctions');
         $result = $this->runPhpcs('<?php
 function strval($value) {
     return (string) $value;
-}', 'DevStrict.Functions.DisallowCastFunctions');
+}', 'VixPHPCS.Functions.DisallowCastFunctions');
 
         $this->assertNoViolations($result);
     }
@@ -135,7 +135,7 @@ function strval($value) {
         $result = $this->runPhpcs('<?php
 $str = STRVAL($var);
 $int = InTvAl($var);
-$float = FLOATVAL($var);', 'DevStrict.Functions.DisallowCastFunctions');
+$float = FLOATVAL($var);', 'VixPHPCS.Functions.DisallowCastFunctions');
 
         $this->assertContainsWarning($result, 'strval()');
         $this->assertContainsWarning($result, 'intval()');
@@ -151,7 +151,7 @@ $float = FLOATVAL($var);', 'DevStrict.Functions.DisallowCastFunctions');
 $str = strval($var1);
 $int = intval($var2);
 $float = floatval($var3);
-$bool = boolval($var4);', 'DevStrict.Functions.DisallowCastFunctions');
+$bool = boolval($var4);', 'VixPHPCS.Functions.DisallowCastFunctions');
 
         $this->assertContainsWarning($result, 'strval()');
         $this->assertContainsWarning($result, 'intval()');
@@ -166,7 +166,7 @@ $bool = boolval($var4);', 'DevStrict.Functions.DisallowCastFunctions');
     {
         $result = $this->runPhpcs('<?php
 $int = intval($var, 16);
-$float = floatval($var);', 'DevStrict.Functions.DisallowCastFunctions');
+$float = floatval($var);', 'VixPHPCS.Functions.DisallowCastFunctions');
 
         $this->assertContainsWarning($result, 'intval()');
         $this->assertContainsWarning($result, 'floatval()');
@@ -178,7 +178,7 @@ $float = floatval($var);', 'DevStrict.Functions.DisallowCastFunctions');
     public function testNestedFunctionCalls(): void
     {
         $result = $this->runPhpcs('<?php
-$result = strval(intval($var));', 'DevStrict.Functions.DisallowCastFunctions');
+$result = strval(intval($var));', 'VixPHPCS.Functions.DisallowCastFunctions');
 
         $this->assertContainsWarning($result, 'strval()');
         $this->assertContainsWarning($result, 'intval()');
@@ -194,7 +194,7 @@ $data = [
     "string" => strval($var),
     "int" => intval($var),
     "float" => floatval($var),
-];', 'DevStrict.Functions.DisallowCastFunctions');
+];', 'VixPHPCS.Functions.DisallowCastFunctions');
 
         $this->assertContainsWarning($result, 'strval()');
         $this->assertContainsWarning($result, 'intval()');
@@ -208,7 +208,7 @@ $data = [
     {
         $result = $this->runPhpcs('<?php
 function test($a, $b) {}
-test(strval($x), intval($y));', 'DevStrict.Functions.DisallowCastFunctions');
+test(strval($x), intval($y));', 'VixPHPCS.Functions.DisallowCastFunctions');
 
         $this->assertContainsWarning($result, 'strval()');
         $this->assertContainsWarning($result, 'intval()');

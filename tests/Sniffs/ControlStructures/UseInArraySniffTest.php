@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Tests\Common\Sniffs\ControlStructures;
+namespace VixPHPCS\Tests\Common\Sniffs\ControlStructures;
 
-use DevStrict\Tests\BaseTest;
+use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for UseInArraySniff.
@@ -24,7 +24,7 @@ class UseInArraySniffTest extends BaseTest
 $site_id = 1;
 if ($site_id === 1 || $site_id === 2 || $site_id === 3) {
     echo "match";
-}', 'DevStrict.ControlStructures.UseInArray');
+}', 'VixPHPCS.ControlStructures.UseInArray');
 
         $this->assertContainsWarning($result, 'in_array()');
     }
@@ -38,7 +38,7 @@ if ($site_id === 1 || $site_id === 2 || $site_id === 3) {
 $site_id = 1;
 if ($site_id !== 1 && $site_id !== 2 && $site_id !== 3) {
     echo "no match";
-}', 'DevStrict.ControlStructures.UseInArray');
+}', 'VixPHPCS.ControlStructures.UseInArray');
 
         $this->assertContainsWarning($result, '!in_array()');
     }
@@ -53,7 +53,7 @@ if ($site_id === SiteId::Chaturbate->value
     || $site_id === SiteId::StripChat->value
     || $site_id === SiteId::AdultWork->value) {
     echo "match";
-}', 'DevStrict.ControlStructures.UseInArray');
+}', 'VixPHPCS.ControlStructures.UseInArray');
 
         $this->assertContainsWarning($result, 'in_array()');
     }
@@ -66,7 +66,7 @@ if ($site_id === SiteId::Chaturbate->value
         $result = $this->runPhpcs('<?php
 if ($site_id === 1 || $site_id === 2) {
     echo "match";
-}', 'DevStrict.ControlStructures.UseInArray');
+}', 'VixPHPCS.ControlStructures.UseInArray');
 
         $this->assertNoViolations($result);
     }
@@ -79,7 +79,7 @@ if ($site_id === 1 || $site_id === 2) {
         $result = $this->runPhpcs('<?php
 if ($site_id === 1) {
     echo "match";
-}', 'DevStrict.ControlStructures.UseInArray');
+}', 'VixPHPCS.ControlStructures.UseInArray');
 
         $this->assertNoViolations($result);
     }
@@ -92,7 +92,7 @@ if ($site_id === 1) {
         $result = $this->runPhpcs('<?php
 if (in_array($site_id, [1, 2, 3], true)) {
     echo "match";
-}', 'DevStrict.ControlStructures.UseInArray');
+}', 'VixPHPCS.ControlStructures.UseInArray');
 
         $this->assertNoViolations($result);
     }
@@ -105,7 +105,7 @@ if (in_array($site_id, [1, 2, 3], true)) {
         $result = $this->runPhpcs('<?php
 if ($var1 === 1 || $var2 === 2 || $var3 === 3) {
     echo "match";
-}', 'DevStrict.ControlStructures.UseInArray');
+}', 'VixPHPCS.ControlStructures.UseInArray');
 
         $this->assertNoViolations($result);
     }
@@ -118,7 +118,7 @@ if ($var1 === 1 || $var2 === 2 || $var3 === 3) {
         $result = $this->runPhpcs('<?php
 if ($var === 1 || $var === 2 && $var === 3) {
     echo "match";
-}', 'DevStrict.ControlStructures.UseInArray');
+}', 'VixPHPCS.ControlStructures.UseInArray');
 
         $this->assertNoViolations($result);
     }
@@ -135,7 +135,7 @@ if ($a === 1 || $a === 2 || $a === 3) {
 
 if ($b !== 4 && $b !== 5 && $b !== 6) {
     echo "second";
-}', 'DevStrict.ControlStructures.UseInArray');
+}', 'VixPHPCS.ControlStructures.UseInArray');
 
         $this->assertContainsWarning($result, 'in_array()');
         $this->assertContainsWarning($result, '!in_array()');
@@ -149,7 +149,7 @@ if ($b !== 4 && $b !== 5 && $b !== 6) {
         $result = $this->runPhpcs('<?php
 if ($obj->prop === 1 || $obj->prop === 2 || $obj->prop === 3) {
     echo "match";
-}', 'DevStrict.ControlStructures.UseInArray');
+}', 'VixPHPCS.ControlStructures.UseInArray');
 
         $this->assertContainsWarning($result, 'in_array()');
     }
@@ -170,7 +170,7 @@ if ($next === false || $next === 2) {
 }
 if ($next === false || $next === 3) {
     return;
-}', 'DevStrict.ControlStructures.UseInArray');
+}', 'VixPHPCS.ControlStructures.UseInArray');
 
         // Each if statement has only 2 comparisons, so no warnings should be triggered
         $this->assertNoViolations($result);
@@ -187,7 +187,7 @@ if ($var === 1 || $var === 2 || $var === 3) {
 }
 if ($var === 4 || $var === 5 || $var === 6) {
     return;
-}', 'DevStrict.ControlStructures.UseInArray');
+}', 'VixPHPCS.ControlStructures.UseInArray');
 
         // Both if statements should trigger warnings
         $this->assertContainsWarning($result, 'in_array()');

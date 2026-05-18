@@ -44,7 +44,7 @@ Paste the PHPCS output here
 
 - PHP Version: [e.g. 8.2.0]
 - PHP_CodeSniffer Version: [e.g. 4.0.0]
-- DevStrict Version: [e.g. 0.1.0]
+- VixPHPCS Version: [e.g. 0.1.0]
 - OS: [e.g. Ubuntu 22.04]
 
 ## Additional Context
