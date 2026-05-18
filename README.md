@@ -20,7 +20,7 @@ quality standards in your projects.
 ### Install via Composer
 
 ```bash
-composer require --dev devstrict/phpcs
+composer require --dev vix/phpcs-sniffs
 ```
 
 ## Usage
