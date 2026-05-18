@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Tests\Common\Sniffs\Yii2;
+namespace VixPHPCS\Tests\Common\Sniffs\Yii2;
 
-use DevStrict\Tests\BaseTest;
+use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowResponseFormatAssignmentSniff.
@@ -30,7 +30,7 @@ class TestController
         Yii::$app->response->format = Response::FORMAT_JSON;
         return ["status" => "ok"];
     }
-}', 'DevStrict.Yii2.DisallowResponseFormatAssignment');
+}', 'VixPHPCS.Yii2.DisallowResponseFormatAssignment');
 
         $this->assertContainsWarning($result, 'Yii::$app->response->format');
     }
@@ -43,7 +43,7 @@ class TestController
         $result = $this->runPhpcs('<?php
 use yii\web\Response;
 
-Yii::$app->response->format = Response::FORMAT_XML;', 'DevStrict.Yii2.DisallowResponseFormatAssignment');
+Yii::$app->response->format = Response::FORMAT_XML;', 'VixPHPCS.Yii2.DisallowResponseFormatAssignment');
 
         $this->assertContainsWarning($result, 'Yii::$app->response->format');
     }
@@ -54,7 +54,7 @@ Yii::$app->response->format = Response::FORMAT_XML;', 'DevStrict.Yii2.DisallowRe
     public function testResponseFormatWithStringLiteralTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-Yii::$app->response->format = "json";', 'DevStrict.Yii2.DisallowResponseFormatAssignment');
+Yii::$app->response->format = "json";', 'VixPHPCS.Yii2.DisallowResponseFormatAssignment');
 
         $this->assertContainsWarning($result, 'Yii::$app->response->format');
     }
@@ -71,7 +71,7 @@ class TestController
     {
         return $this->asJson(["status" => "ok"]);
     }
-}', 'DevStrict.Yii2.DisallowResponseFormatAssignment');
+}', 'VixPHPCS.Yii2.DisallowResponseFormatAssignment');
 
         $this->assertNoViolations($result);
     }
@@ -85,7 +85,7 @@ class TestController
 $format = Yii::$app->response->format;
 if (Yii::$app->response->format === "json") {
     echo "JSON format";
-}', 'DevStrict.Yii2.DisallowResponseFormatAssignment');
+}', 'VixPHPCS.Yii2.DisallowResponseFormatAssignment');
 
         $this->assertNoViolations($result);
     }
@@ -97,7 +97,7 @@ if (Yii::$app->response->format === "json") {
     {
         $result = $this->runPhpcs('<?php
 Yii::$app->response->statusCode = 404;
-Yii::$app->response->headers->set("X-Custom", "value");', 'DevStrict.Yii2.DisallowResponseFormatAssignment');
+Yii::$app->response->headers->set("X-Custom", "value");', 'VixPHPCS.Yii2.DisallowResponseFormatAssignment');
 
         $this->assertNoViolations($result);
     }
@@ -110,7 +110,7 @@ Yii::$app->response->headers->set("X-Custom", "value");', 'DevStrict.Yii2.Disall
         $result = $this->runPhpcs('<?php
 use yii\web\Response;
 
-Yii :: $app -> response -> format = Response::FORMAT_JSON;', 'DevStrict.Yii2.DisallowResponseFormatAssignment');
+Yii :: $app -> response -> format = Response::FORMAT_JSON;', 'VixPHPCS.Yii2.DisallowResponseFormatAssignment');
 
         $this->assertContainsWarning($result, 'Yii::$app->response->format');
     }
@@ -128,7 +128,7 @@ class Test {
     public function Yii() {
         return null;
     }
-}', 'DevStrict.Yii2.DisallowResponseFormatAssignment');
+}', 'VixPHPCS.Yii2.DisallowResponseFormatAssignment');
 
         $this->assertNoViolations($result);
     }
@@ -154,7 +154,7 @@ class TestController
         Yii::$app->response->format = Response::FORMAT_XML;
         return ["status" => "ok"];
     }
-}', 'DevStrict.Yii2.DisallowResponseFormatAssignment');
+}', 'VixPHPCS.Yii2.DisallowResponseFormatAssignment');
 
         $this->assertContainsWarning($result, 'Yii::$app->response->format');
         // Should contain warnings for both assignments
@@ -189,7 +189,7 @@ class TestController
         Yii::$app->response->format = "custom";
         return $data;
     }
-}', 'DevStrict.Yii2.DisallowResponseFormatAssignment');
+}', 'VixPHPCS.Yii2.DisallowResponseFormatAssignment');
 
         $this->assertNoViolations($result);
     }

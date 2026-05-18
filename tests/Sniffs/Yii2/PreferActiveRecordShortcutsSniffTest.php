@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Tests\Common\Sniffs\Yii2;
+namespace VixPHPCS\Tests\Common\Sniffs\Yii2;
 
-use DevStrict\Tests\BaseTest;
+use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for PreferActiveRecordShortcutsSniff.
@@ -28,7 +28,7 @@ class User extends \yii\db\ActiveRecord
     {
         return self::find()->where(["id" => $id])->one();
     }
-}', 'DevStrict.Yii2.PreferActiveRecordShortcuts');
+}', 'VixPHPCS.Yii2.PreferActiveRecordShortcuts');
 
         $this->assertContainsWarning($result, 'Use findOne() shortcut method');
     }
@@ -46,7 +46,7 @@ class User extends \yii\db\ActiveRecord
     {
         return self::find()->where(["status" => $status])->all();
     }
-}', 'DevStrict.Yii2.PreferActiveRecordShortcuts');
+}', 'VixPHPCS.Yii2.PreferActiveRecordShortcuts');
 
         $this->assertContainsWarning($result, 'Use findAll() shortcut method');
     }
@@ -58,7 +58,7 @@ class User extends \yii\db\ActiveRecord
     {
         $result = $this->runPhpcs('<?php
 
-$user = User::find()->where(["email" => $email])->one();', 'DevStrict.Yii2.PreferActiveRecordShortcuts');
+$user = User::find()->where(["email" => $email])->one();', 'VixPHPCS.Yii2.PreferActiveRecordShortcuts');
 
         $this->assertContainsWarning($result, 'Use findOne() shortcut method');
     }
@@ -70,7 +70,7 @@ $user = User::find()->where(["email" => $email])->one();', 'DevStrict.Yii2.Prefe
     {
         $result = $this->runPhpcs('<?php
 
-$users = $model->find()->where(["active" => true])->all();', 'DevStrict.Yii2.PreferActiveRecordShortcuts');
+$users = $model->find()->where(["active" => true])->all();', 'VixPHPCS.Yii2.PreferActiveRecordShortcuts');
 
         $this->assertContainsWarning($result, 'Use findAll() shortcut method');
     }
@@ -86,7 +86,7 @@ $users = $model->find()->where(["active" => true])->all();', 'DevStrict.Yii2.Pre
 $user = User::find()
     ->where(["status" => 1])
     ->andWhere(["role" => "admin"])
-    ->one();', 'DevStrict.Yii2.PreferActiveRecordShortcuts');
+    ->one();', 'VixPHPCS.Yii2.PreferActiveRecordShortcuts');
 
         $this->assertNoViolations($result);
     }
@@ -102,7 +102,7 @@ $user = User::find()
 $users = User::find()
     ->where(["status" => 1])
     ->orderBy("created_at DESC")
-    ->all();', 'DevStrict.Yii2.PreferActiveRecordShortcuts');
+    ->all();', 'VixPHPCS.Yii2.PreferActiveRecordShortcuts');
 
         $this->assertNoViolations($result);
     }
@@ -114,7 +114,7 @@ $users = User::find()
     {
         $result = $this->runPhpcs('<?php
 
-$user = User::findOne($id);', 'DevStrict.Yii2.PreferActiveRecordShortcuts');
+$user = User::findOne($id);', 'VixPHPCS.Yii2.PreferActiveRecordShortcuts');
 
         $this->assertNoViolations($result);
     }
@@ -126,7 +126,7 @@ $user = User::findOne($id);', 'DevStrict.Yii2.PreferActiveRecordShortcuts');
     {
         $result = $this->runPhpcs('<?php
 
-$users = User::findAll(["status" => 1]);', 'DevStrict.Yii2.PreferActiveRecordShortcuts');
+$users = User::findAll(["status" => 1]);', 'VixPHPCS.Yii2.PreferActiveRecordShortcuts');
 
         $this->assertNoViolations($result);
     }
@@ -138,7 +138,7 @@ $users = User::findAll(["status" => 1]);', 'DevStrict.Yii2.PreferActiveRecordSho
     {
         $result = $this->runPhpcs('<?php
 
-$user = User::find()->one();', 'DevStrict.Yii2.PreferActiveRecordShortcuts');
+$user = User::find()->one();', 'VixPHPCS.Yii2.PreferActiveRecordShortcuts');
 
         $this->assertNoViolations($result);
     }
@@ -150,7 +150,7 @@ $user = User::find()->one();', 'DevStrict.Yii2.PreferActiveRecordShortcuts');
     {
         $result = $this->runPhpcs('<?php
 
-$users = User::find()->all();', 'DevStrict.Yii2.PreferActiveRecordShortcuts');
+$users = User::find()->all();', 'VixPHPCS.Yii2.PreferActiveRecordShortcuts');
 
         $this->assertNoViolations($result);
     }
@@ -162,7 +162,7 @@ $users = User::find()->all();', 'DevStrict.Yii2.PreferActiveRecordShortcuts');
     {
         $result = $this->runPhpcs('<?php
 
-$query = User::find()->where(["status" => 1]);', 'DevStrict.Yii2.PreferActiveRecordShortcuts');
+$query = User::find()->where(["status" => 1]);', 'VixPHPCS.Yii2.PreferActiveRecordShortcuts');
 
         $this->assertNoViolations($result);
     }
@@ -174,7 +174,7 @@ $query = User::find()->where(["status" => 1]);', 'DevStrict.Yii2.PreferActiveRec
     {
         $result = $this->runPhpcs('<?php
 
-$count = User::find()->where(["status" => 1])->count();', 'DevStrict.Yii2.PreferActiveRecordShortcuts');
+$count = User::find()->where(["status" => 1])->count();', 'VixPHPCS.Yii2.PreferActiveRecordShortcuts');
 
         $this->assertNoViolations($result);
     }
@@ -186,7 +186,7 @@ $count = User::find()->where(["status" => 1])->count();', 'DevStrict.Yii2.Prefer
     {
         $result = $this->runPhpcs('<?php
 
-$exists = User::find()->where(["email" => $email])->exists();', 'DevStrict.Yii2.PreferActiveRecordShortcuts');
+$exists = User::find()->where(["email" => $email])->exists();', 'VixPHPCS.Yii2.PreferActiveRecordShortcuts');
 
         $this->assertNoViolations($result);
     }

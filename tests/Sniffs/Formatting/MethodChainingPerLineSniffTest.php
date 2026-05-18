@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Tests\Common\Sniffs\Formatting;
+namespace VixPHPCS\Tests\Common\Sniffs\Formatting;
 
-use DevStrict\Tests\BaseTest;
+use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for MethodChainingPerLineSniff.
@@ -22,7 +22,7 @@ class MethodChainingPerLineSniffTest extends BaseTest
 User::find()
     ->where(["id" => $model->user_id])
     ->limit(10)->all();
-', 'DevStrict.Formatting.MethodChainingPerLine');
+', 'VixPHPCS.Formatting.MethodChainingPerLine');
 
         $this->assertContainsError($result, 'Only one chained method call is allowed per line');
     }
@@ -36,7 +36,7 @@ User::find()
     ->select(["id"])
     ->limit(10)
     ->all();
-', 'DevStrict.Formatting.MethodChainingPerLine');
+', 'VixPHPCS.Formatting.MethodChainingPerLine');
 
         $this->assertNoViolations($result);
     }
@@ -48,7 +48,7 @@ User::find()
 $service->firstCall()
     ->secondCall()
     ->thirdCall();
-', 'DevStrict.Formatting.MethodChainingPerLine');
+', 'VixPHPCS.Formatting.MethodChainingPerLine');
 
         $this->assertNoViolations($result);
     }
@@ -58,7 +58,7 @@ $service->firstCall()
         $result = $this->runPhpcs('<?php
 
 User::find()->where(["id" => $model->user_id])->all();
-', 'DevStrict.Formatting.MethodChainingPerLine');
+', 'VixPHPCS.Formatting.MethodChainingPerLine');
 
         $this->assertNoViolations($result);
     }
@@ -72,7 +72,7 @@ $names = User::find()
         return $user->profile->name;
     })
     ->all();
-', 'DevStrict.Formatting.MethodChainingPerLine');
+', 'VixPHPCS.Formatting.MethodChainingPerLine');
 
         $this->assertNoViolations($result);
     }

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Tests\Common\Sniffs\Formatting;
+namespace VixPHPCS\Tests\Common\Sniffs\Formatting;
 
-use DevStrict\Tests\BaseTest;
+use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for ConsistentStatementIndentationSniff.
@@ -15,7 +15,7 @@ use DevStrict\Tests\BaseTest;
  */
 class ConsistentStatementIndentationSniffTest extends BaseTest
 {
-    private const SNIFF = 'DevStrict.Formatting.ConsistentStatementIndentation';
+    private const SNIFF = 'VixPHPCS.Formatting.ConsistentStatementIndentation';
 
     public function testDetectsInconsistentEchoIndentation(): void
     {

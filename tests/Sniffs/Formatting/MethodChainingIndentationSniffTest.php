@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Tests\Common\Sniffs\Formatting;
+namespace VixPHPCS\Tests\Common\Sniffs\Formatting;
 
-use DevStrict\Tests\BaseTest;
+use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for MethodChainingIndentationSniff.
@@ -23,7 +23,7 @@ User::find()
 ->where(["id" => $model->user_id])
     ->select(["id"])
     ->all();
-', 'DevStrict.Formatting.MethodChainingIndentation');
+', 'VixPHPCS.Formatting.MethodChainingIndentation');
 
         $this->assertContainsError($result, 'First chained call must be indented');
     }
@@ -36,7 +36,7 @@ User::find()
     ->where(["id" => $model->user_id])
       ->select(["id"])
     ->all();
-', 'DevStrict.Formatting.MethodChainingIndentation');
+', 'VixPHPCS.Formatting.MethodChainingIndentation');
 
         $this->assertContainsError($result, 'Chained call indentation must match');
     }
@@ -54,7 +54,7 @@ function example(): array
         ->limit(10)
         ->all();
 }
-', 'DevStrict.Formatting.MethodChainingIndentation');
+', 'VixPHPCS.Formatting.MethodChainingIndentation');
 
         $this->assertNoViolations($result);
     }
@@ -64,7 +64,7 @@ function example(): array
         $result = $this->runPhpcs('<?php
 
 User::find()->where(["id" => $model->user_id])->all();
-', 'DevStrict.Formatting.MethodChainingIndentation');
+', 'VixPHPCS.Formatting.MethodChainingIndentation');
 
         $this->assertNoViolations($result);
     }

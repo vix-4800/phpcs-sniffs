@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Tests;
+namespace VixPHPCS\Tests;
 
 use PHPUnit\Framework\TestCase;
 
@@ -15,8 +15,8 @@ abstract class BaseTest extends TestCase
      * Run PHPCS on given content with specified sniff.
      *
      * @param string      $content PHP code to check
-     * @param string|null $sniff   Specific sniff to run (e.g., 'DevStrict.Functions.DisallowIsNull')
-     *                             If null, all DevStrict sniffs will be run
+     * @param string|null $sniff   Specific sniff to run (e.g., 'VixPHPCS.Functions.DisallowIsNull')
+     *                             If null, all VixPHPCS sniffs will be run
      *
      * @return string PHPCS output
      */
@@ -29,14 +29,14 @@ abstract class BaseTest extends TestCase
 
         if ($sniff !== null) {
             $command = sprintf(
-                '%s --standard=DevStrict --report-width=1000 --sniffs=%s %s 2>&1',
+                '%s --standard=VixPHPCS --report-width=1000 --sniffs=%s %s 2>&1',
                 escapeshellarg($phpcsPath),
                 escapeshellarg($sniff),
                 escapeshellarg($tempFile),
             );
         } else {
             $command = sprintf(
-                '%s --standard=DevStrict --report-width=1000 %s 2>&1',
+                '%s --standard=VixPHPCS --report-width=1000 %s 2>&1',
                 escapeshellarg($phpcsPath),
                 escapeshellarg($tempFile),
             );

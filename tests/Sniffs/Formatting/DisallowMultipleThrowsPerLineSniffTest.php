@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Tests\Common\Sniffs\Formatting;
+namespace VixPHPCS\Tests\Common\Sniffs\Formatting;
 
-use DevStrict\Tests\BaseTest;
+use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowMultipleThrowsPerLineSniff.
@@ -15,7 +15,7 @@ use DevStrict\Tests\BaseTest;
  */
 class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
 {
-    private const SNIFF = 'DevStrict.Formatting.DisallowMultipleThrowsPerLine';
+    private const SNIFF = 'VixPHPCS.Formatting.DisallowMultipleThrowsPerLine';
 
     public function testDetectsMultipleExceptionsOnSingleLine(): void
     {

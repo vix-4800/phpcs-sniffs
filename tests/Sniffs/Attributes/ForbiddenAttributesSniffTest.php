@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Tests\Sniffs\Attributes;
+namespace VixPHPCS\Tests\Sniffs\Attributes;
 
-use DevStrict\Tests\BaseTest;
+use VixPHPCS\Tests\BaseTest;
 
 /**
  * @internal
@@ -30,7 +30,7 @@ class ForbiddenAttributesSniffTest extends BaseTest
             }
             PHP;
 
-        $result = $this->runPhpcs($code, 'DevStrict.Attributes.ForbiddenAttributes');
+        $result = $this->runPhpcs($code, 'VixPHPCS.Attributes.ForbiddenAttributes');
         $this->assertContainsWarning($result, 'Usage of attribute "ArrayShape" is forbidden.');
     }
 
@@ -49,7 +49,7 @@ class ForbiddenAttributesSniffTest extends BaseTest
             }
             PHP;
 
-        $result = $this->runPhpcs($code, 'DevStrict.Attributes.ForbiddenAttributes');
+        $result = $this->runPhpcs($code, 'VixPHPCS.Attributes.ForbiddenAttributes');
         $this->assertContainsWarning($result, 'Usage of attribute "\JetBrains\PhpStorm\ArrayShape" is forbidden.');
     }
 
@@ -68,13 +68,13 @@ class ForbiddenAttributesSniffTest extends BaseTest
             }
             PHP;
 
-        $result = $this->runPhpcs($code, 'DevStrict.Attributes.ForbiddenAttributes');
+        $result = $this->runPhpcs($code, 'VixPHPCS.Attributes.ForbiddenAttributes');
         $this->assertNoViolations($result);
     }
 
     public function testCustomForbiddenAttribute(): void
     {
-        $sniffPath = __DIR__ . '/../../../src/DevStrict/Sniffs/Attributes/ForbiddenAttributesSniff.php';
+        $sniffPath = __DIR__ . '/../../../src/VixPHPCS/Sniffs/Attributes/ForbiddenAttributesSniff.php';
         $ruleset = <<<XML
             <?xml version="1.0"?>
             <ruleset name="Test">

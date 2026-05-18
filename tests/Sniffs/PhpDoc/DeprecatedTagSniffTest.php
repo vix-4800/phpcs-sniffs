@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Tests\Common\Sniffs\PhpDoc;
+namespace VixPHPCS\Tests\Common\Sniffs\PhpDoc;
 
-use DevStrict\Tests\BaseTest;
+use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DeprecatedTagSniff.
@@ -15,7 +15,7 @@ use DevStrict\Tests\BaseTest;
  */
 class DeprecatedTagSniffTest extends BaseTest
 {
-    private const SNIFF = 'DevStrict.PhpDoc.DeprecatedTag';
+    private const SNIFF = 'VixPHPCS.PhpDoc.DeprecatedTag';
 
     public function testFunctionWithDeprecatedTagTriggersWarning(): void
     {

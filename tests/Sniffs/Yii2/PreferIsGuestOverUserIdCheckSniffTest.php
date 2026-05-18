@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DevStrict\Tests\Common\Sniffs\Yii2;
+namespace VixPHPCS\Tests\Common\Sniffs\Yii2;
 
-use DevStrict\Tests\BaseTest;
+use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for PreferIsGuestOverUserIdCheckSniff.
@@ -24,7 +24,7 @@ class PreferIsGuestOverUserIdCheckSniffTest extends BaseTest
 
 if (empty(Yii::$app->user->id)) {
     // do something
-}', 'DevStrict.Yii2.PreferIsGuestOverUserIdCheck');
+}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
 
         $this->assertContainsWarning($result, 'Use Yii::$app->user->isGuest instead of empty(Yii::$app->user->id)');
     }
@@ -38,7 +38,7 @@ if (empty(Yii::$app->user->id)) {
 
 if (!empty(Yii::$app->user->id)) {
     // do something
-}', 'DevStrict.Yii2.PreferIsGuestOverUserIdCheck');
+}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
 
         $this->assertContainsWarning($result, 'Use !Yii::$app->user->isGuest instead of !empty(Yii::$app->user->id)');
     }
@@ -52,7 +52,7 @@ if (!empty(Yii::$app->user->id)) {
 
 if (Yii::$app->user->id === null) {
     // do something
-}', 'DevStrict.Yii2.PreferIsGuestOverUserIdCheck');
+}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
 
         $this->assertContainsWarning($result, 'Use Yii::$app->user->isGuest instead of Yii::$app->user->id === null');
     }
@@ -66,7 +66,7 @@ if (Yii::$app->user->id === null) {
 
 if (Yii::$app->user->id == null) {
     // do something
-}', 'DevStrict.Yii2.PreferIsGuestOverUserIdCheck');
+}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
 
         $this->assertContainsWarning($result, 'Use Yii::$app->user->isGuest instead of Yii::$app->user->id == null');
     }
@@ -80,7 +80,7 @@ if (Yii::$app->user->id == null) {
 
 if (Yii::$app->user->id !== null) {
     // do something
-}', 'DevStrict.Yii2.PreferIsGuestOverUserIdCheck');
+}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
 
         $this->assertContainsWarning($result, 'Use !Yii::$app->user->isGuest instead of Yii::$app->user->id !== null');
     }
@@ -94,7 +94,7 @@ if (Yii::$app->user->id !== null) {
 
 if (Yii::$app->user->id != null) {
     // do something
-}', 'DevStrict.Yii2.PreferIsGuestOverUserIdCheck');
+}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
 
         $this->assertContainsWarning($result, 'Use !Yii::$app->user->isGuest instead of Yii::$app->user->id != null');
     }
@@ -108,7 +108,7 @@ if (Yii::$app->user->id != null) {
 
 if (Yii:: $app -> user -> id === null) {
     // do something
-}', 'DevStrict.Yii2.PreferIsGuestOverUserIdCheck');
+}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
 
         $this->assertContainsWarning($result);
     }
@@ -122,7 +122,7 @@ if (Yii:: $app -> user -> id === null) {
 
 if (empty($userId)) {
     // do something
-}', 'DevStrict.Yii2.PreferIsGuestOverUserIdCheck');
+}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
 
         $this->assertNoViolations($result);
     }
@@ -140,7 +140,7 @@ if ($user->id === null) {
 
 if (Yii::$app->user->name === null) {
     // do something
-}', 'DevStrict.Yii2.PreferIsGuestOverUserIdCheck');
+}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
 
         $this->assertNoViolations($result);
     }
@@ -158,7 +158,7 @@ if (Yii::$app->user->isGuest) {
 
 if (!Yii::$app->user->isGuest) {
     // do something
-}', 'DevStrict.Yii2.PreferIsGuestOverUserIdCheck');
+}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
 
         $this->assertNoViolations($result);
     }
@@ -180,7 +180,7 @@ if (Yii::$app->user->id === null) {
 
 if (!empty(Yii::$app->user->id)) {
     // authenticated user
-}', 'DevStrict.Yii2.PreferIsGuestOverUserIdCheck');
+}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
 
         $this->assertContainsWarning($result);
         // Should have 3 warnings
@@ -195,7 +195,7 @@ if (!empty(Yii::$app->user->id)) {
     {
         $result = $this->runPhpcs('<?php
 
-$total = Yii::$app->user->id + 10;', 'DevStrict.Yii2.PreferIsGuestOverUserIdCheck');
+$total = Yii::$app->user->id + 10;', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
 
         $this->assertNoViolations($result);
     }
@@ -207,7 +207,7 @@ $total = Yii::$app->user->id + 10;', 'DevStrict.Yii2.PreferIsGuestOverUserIdChec
     {
         $result = $this->runPhpcs('<?php
 
-$userId = Yii::$app->user->id;', 'DevStrict.Yii2.PreferIsGuestOverUserIdCheck');
+$userId = Yii::$app->user->id;', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
 
         $this->assertNoViolations($result);
     }
