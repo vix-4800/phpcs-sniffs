@@ -1,64 +1,64 @@
 {
-    "name": "devstrict/phpcs",
-    "description": "Custom PHP_CodeSniffer ruleset for strict development standards",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Anton VIX",
-            "email": "Gordan.ei@protonmail.ch"
-        }
-    ],
-    "type": "phpcodesniffer-standard",
-    "keywords": [
-        "phpcs",
-        "dev",
-        "code-sniffer",
-        "coding-standards",
-        "static-analysis"
-    ],
-    "prefer-stable": true,
-    "config": {
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "phpstan/extension-installer": true
-        }
-    },
-    "require": {
-        "php": "^8.3",
-        "dealerdirect/phpcodesniffer-composer-installer": "^1.2.0",
-        "squizlabs/php_codesniffer": "^4.0.1"
-    },
-    "require-dev": {
-        "captainhook/captainhook": "^5.29.2",
-        "phpstan/phpstan": "^2.1.44",
-        "phpstan/extension-installer": "^1.4.3",
-        "phpstan/phpstan-strict-rules": "^2.0.10",
-        "friendsofphp/php-cs-fixer": "^3.94.2",
-        "phpunit/phpunit": "^13.0.5",
-        "slevomat/coding-standard": "^8.28.1"
-    },
-    "autoload": {
-        "psr-4": {
-            "DevStrict\\": "src/DevStrict/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "DevStrict\\Tests\\": "tests/"
-        }
-    },
-    "scripts": {
-        "post-autoload-dump": "vendor/bin/captainhook install --only-enabled -f -s",
-        "test": "phpunit",
-        "phpcs": "phpcs",
-        "phpcbf": "phpcbf",
-        "phpstan": "phpstan analyse --memory-limit=1G",
-        "cs-fix": "php-cs-fixer fix --config=.php-cs-fixer.php",
-        "cs-fix-dry": "@cs-fix --dry-run --diff",
-        "check": [
-            "@phpcs",
-            "@phpstan",
-            "@test"
-        ]
+  "name": "vix/phpcs-sniffs",
+  "description": "Custom PHP_CodeSniffer ruleset for strict development standards",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Anton VIX",
+      "email": "Gordan.ei@protonmail.ch"
     }
+  ],
+  "type": "phpcodesniffer-standard",
+  "keywords": [
+    "phpcs",
+    "dev",
+    "code-sniffer",
+    "coding-standards",
+    "static-analysis"
+  ],
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "phpstan/extension-installer": true
+    }
+  },
+  "require": {
+    "php": "^8.3",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.2.0",
+    "squizlabs/php_codesniffer": "^4.0.1"
+  },
+  "require-dev": {
+    "captainhook/captainhook": "^5.29.2",
+    "phpstan/phpstan": "^2.1.44",
+    "phpstan/extension-installer": "^1.4.3",
+    "phpstan/phpstan-strict-rules": "^2.0.10",
+    "friendsofphp/php-cs-fixer": "^3.94.2",
+    "phpunit/phpunit": "^13.0.5",
+    "slevomat/coding-standard": "^8.28.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "DevStrict\\": "src/DevStrict/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "DevStrict\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "post-autoload-dump": "vendor/bin/captainhook install --only-enabled -f -s",
+    "test": "phpunit",
+    "phpcs": "phpcs",
+    "phpcbf": "phpcbf",
+    "phpstan": "phpstan analyse --memory-limit=1G",
+    "cs-fix": "php-cs-fixer fix --config=.php-cs-fixer.php",
+    "cs-fix-dry": "@cs-fix --dry-run --diff",
+    "check": [
+      "@phpcs",
+      "@phpstan",
+      "@test"
+    ]
+  }
 }
