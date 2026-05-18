@@ -32,7 +32,7 @@ final class DisallowVoidMixedWithOtherTypesSniff implements Sniff
             return;
         }
 
-        $typeString = preg_split('/\s+/', $tokens[$nextToken]['content'], 2)[0];
+        $typeString = preg_split('/\s+/', $tokens[$nextToken]['content'], 2)[0] ?? '';
         $types = array_map('trim', explode('|', $typeString));
 
         if (!in_array('void', $types, true)) {
