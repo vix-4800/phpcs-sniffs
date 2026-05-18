@@ -124,12 +124,14 @@ final class DisallowVariableStaticPropertySniff implements Sniff
                 continue;
             }
 
-            if ($tokens[$ptr]['code'] === T_OPEN_PARENTHESIS) {
-                --$depth;
+            if ($tokens[$ptr]['code'] !== T_OPEN_PARENTHESIS) {
+                continue;
+            }
 
-                if ($depth === 0) {
-                    return $ptr;
-                }
+            --$depth;
+
+            if ($depth === 0) {
+                return $ptr;
             }
         }
 

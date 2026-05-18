@@ -84,19 +84,21 @@ final class UseInArraySniff implements Sniff
             $currentPtr = $nextComparison;
         }
 
-        if (count($comparisons) >= $this->minComparisons) {
-            $operator = $isIdentical ? 'OR (||)' : 'AND (&&)';
-            $function = $isIdentical ? 'in_array()' : '!in_array()';
-
-            $warning = sprintf(
-                'Multiple %s comparisons detected (%d comparisons). Consider using %s instead',
-                $operator,
-                count($comparisons),
-                $function,
-            );
-
-            $phpcsFile->addWarning($warning, $stackPtr, 'Found');
+        if (count($comparisons) < $this->minComparisons) {
+            return;
         }
+
+        $operator = $isIdentical ? 'OR (||)' : 'AND (&&)';
+        $function = $isIdentical ? 'in_array()' : '!in_array()';
+
+        $warning = sprintf(
+            'Multiple %s comparisons detected (%d comparisons). Consider using %s instead',
+            $operator,
+            count($comparisons),
+            $function,
+        );
+
+        $phpcsFile->addWarning($warning, $stackPtr, 'Found');
     }
 
     /**
@@ -129,20 +131,12 @@ final class UseInArraySniff implements Sniff
             while ($ptr !== false && isset($tokens[$ptr])) {
                 $code = $tokens[$ptr]['code'];
 
-                if (
-                    in_array($code, [
-                        T_VARIABLE,
-                        T_STRING,
-                        T_OBJECT_OPERATOR,
-                        T_DOUBLE_COLON,
-                        T_NULLSAFE_OBJECT_OPERATOR,
-                    ], true)
-                ) {
-                    $varTokens[] = $tokens[$ptr]['content'];
-                    $ptr = $phpcsFile->findPrevious(T_WHITESPACE, $ptr - 1, null, true);
-                } else {
+                if (!in_array($code, [T_VARIABLE, T_STRING, T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR,], true)) {
                     break;
                 }
+
+                $varTokens[] = $tokens[$ptr]['content'];
+                $ptr = $phpcsFile->findPrevious(T_WHITESPACE, $ptr - 1, null, true);
             }
 
             $varTokens = array_reverse($varTokens);
@@ -150,20 +144,12 @@ final class UseInArraySniff implements Sniff
             while ($ptr !== false && isset($tokens[$ptr])) {
                 $code = $tokens[$ptr]['code'];
 
-                if (
-                    in_array($code, [
-                        T_VARIABLE,
-                        T_STRING,
-                        T_OBJECT_OPERATOR,
-                        T_DOUBLE_COLON,
-                        T_NULLSAFE_OBJECT_OPERATOR,
-                    ], true)
-                ) {
-                    $varTokens[] = $tokens[$ptr]['content'];
-                    $ptr = $phpcsFile->findNext(T_WHITESPACE, $ptr + 1, null, true);
-                } else {
+                if (!in_array($code, [T_VARIABLE, T_STRING, T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR,], true)) {
                     break;
                 }
+
+                $varTokens[] = $tokens[$ptr]['content'];
+                $ptr = $phpcsFile->findNext(T_WHITESPACE, $ptr + 1, null, true);
             }
         }
 

@@ -70,9 +70,11 @@ final class PreferIsGuestOverUserIdCheckSniff implements Sniff
         $content = '';
 
         for ($i = $start; $i < $end; ++$i) {
-            if ($tokens[$i]['code'] !== T_WHITESPACE) {
-                $content .= $tokens[$i]['content'];
+            if ($tokens[$i]['code'] === T_WHITESPACE) {
+                continue;
             }
+
+            $content .= $tokens[$i]['content'];
         }
 
         return $content === 'Yii::$app->user->id';

@@ -142,7 +142,7 @@ final class PreferExistsOverCountSniff implements Sniff
         $phpcsFile->addWarning(
             'Use ->exists() instead of ->one() when checking for record existence',
             $stackPtr,
-            'PreferExistsOverOne'
+            'PreferExistsOverOne',
         );
     }
 

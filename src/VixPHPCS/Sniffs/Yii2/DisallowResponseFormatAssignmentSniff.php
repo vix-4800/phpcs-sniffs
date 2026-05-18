@@ -162,7 +162,7 @@ final class DisallowResponseFormatAssignmentSniff implements Sniff
         $methodName = $formatType === 'json' ? 'asJson()' : 'asXml()';
         $error = sprintf(
             'Direct assignment to Yii::$app->response->format is discouraged; use $this->%s instead',
-            $methodName
+            $methodName,
         );
         $phpcsFile->addWarning($error, $stackPtr, 'Found');
     }

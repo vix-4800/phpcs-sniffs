@@ -52,14 +52,16 @@ final class ForbiddenAttributesSniff implements Sniff
         // Check if the attribute is in the forbidden list.
         // We check both the exact match and the name without the leading backslash.
         foreach ($this->forbiddenAttributes as $forbidden) {
-            if ($name === $forbidden || mb_ltrim($name, '\\') === $forbidden) {
-                $phpcsFile->addWarning(
-                    'Usage of attribute "%s" is forbidden.',
-                    $attributeNameStart,
-                    'Found',
-                    [$name],
-                );
+            if ($name !== $forbidden && mb_ltrim($name, '\\') !== $forbidden) {
+                continue;
             }
+
+            $phpcsFile->addWarning(
+                'Usage of attribute "%s" is forbidden.',
+                $attributeNameStart,
+                'Found',
+                [$name],
+            );
         }
     }
 }

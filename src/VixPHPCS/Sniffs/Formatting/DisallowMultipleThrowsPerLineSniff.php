@@ -58,15 +58,19 @@ final class DisallowMultipleThrowsPerLineSniff implements Sniff
 
         $exceptionTypes = $tokens[$nextToken]['content'];
 
-        if (str_contains($exceptionTypes, '|')) {
-            $types = array_map(trim(...), explode('|', $exceptionTypes));
-            $types = array_filter($types, static fn($type): bool => $type !== '');
-
-            if (count($types) > 1) {
-                $error = 'Each @throws annotation must contain only one exception type. Found: %s. Use separate @throws for each exception.';
-                $data = [implode(', ', $types)];
-                $phpcsFile->addWarning($error, $stackPtr, 'MultipleExceptions', $data);
-            }
+        if (!str_contains($exceptionTypes, '|')) {
+            return;
         }
+
+        $types = array_map(trim(...), explode('|', $exceptionTypes));
+        $types = array_filter($types, static fn($type): bool => $type !== '');
+
+        if (count($types) <= 1) {
+            return;
+        }
+
+        $error = 'Each @throws annotation must contain only one exception type. Found: %s. Use separate @throws for each exception.';
+        $data = [implode(', ', $types)];
+        $phpcsFile->addWarning($error, $stackPtr, 'MultipleExceptions', $data);
     }
 }

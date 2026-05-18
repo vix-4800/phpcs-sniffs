@@ -75,19 +75,23 @@ final class ConsistentStatementIndentationSniff implements Sniff
         $prevIndent = $tokens[$prevStatement]['column'] - 1;
 
         // If indentation differs and current has more spaces, report warning
-        if ($currentIndent !== $prevIndent && $currentIndent > $prevIndent) {
-            $error = sprintf(
-                'Statement indentation is inconsistent with previous statement at same level; found %d spaces but previous statement has %d',
-                $currentIndent,
-                $prevIndent,
-            );
-
-            $fix = $phpcsFile->addFixableWarning($error, $stackPtr, 'InconsistentIndentation');
-
-            if ($fix === true) {
-                $this->fixIndentation($phpcsFile, $stackPtr, (int) $prevIndent);
-            }
+        if ($currentIndent === $prevIndent || $currentIndent <= $prevIndent) {
+            return;
         }
+
+        $error = sprintf(
+            'Statement indentation is inconsistent with previous statement at same level; found %d spaces but previous statement has %d',
+            $currentIndent,
+            $prevIndent,
+        );
+
+        $fix = $phpcsFile->addFixableWarning($error, $stackPtr, 'InconsistentIndentation');
+
+        if ($fix !== true) {
+            return;
+        }
+
+        $this->fixIndentation($phpcsFile, $stackPtr, (int) $prevIndent);
     }
 
     /**
@@ -98,8 +102,12 @@ final class ConsistentStatementIndentationSniff implements Sniff
      * @param int             $level
      * @param array<int, int> $conditions
      */
-    private function findPreviousStatementAtSameLevel(File $phpcsFile, int $stackPtr, int $level, array $conditions): ?int
-    {
+    private function findPreviousStatementAtSameLevel(
+        File $phpcsFile,
+        int $stackPtr,
+        int $level,
+        array $conditions,
+    ): ?int {
         $tokens = $phpcsFile->getTokens();
         $currentLine = $tokens[$stackPtr]['line'];
 
@@ -115,7 +123,7 @@ final class ConsistentStatementIndentationSniff implements Sniff
             T_TRY,
             T_THROW,
             T_VARIABLE,
-            T_STRING, // For static method calls like Modal::end()
+            T_STRING,
         ];
 
         // Search backwards for the previous statement

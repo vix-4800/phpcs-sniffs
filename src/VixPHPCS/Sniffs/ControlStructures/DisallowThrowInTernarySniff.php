@@ -43,11 +43,13 @@ final class DisallowThrowInTernarySniff implements Sniff
 
         $tokenCode = $tokens[$operatorToken]['code'];
 
-        if (in_array($tokenCode, [T_INLINE_THEN, T_INLINE_ELSE, T_COALESCE], true)) {
-            $error = 'Throwing exceptions inside ternary or null coalescing operators is not allowed.
-                Use if-else statement or extract to a separate expression for better readability.';
-
-            $phpcsFile->addError($error, $stackPtr, 'Found');
+        if (!in_array($tokenCode, [T_INLINE_THEN, T_INLINE_ELSE, T_COALESCE], true)) {
+            return;
         }
+
+        $error = 'Throwing exceptions inside ternary or null coalescing operators is not allowed.
+			Use if-else statement or extract to a separate expression for better readability.';
+
+        $phpcsFile->addError($error, $stackPtr, 'Found');
     }
 }

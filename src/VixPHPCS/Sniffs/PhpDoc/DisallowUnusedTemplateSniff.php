@@ -153,7 +153,7 @@ final class DisallowUnusedTemplateSniff implements Sniff
         int $start,
         int $end,
         string $templateName,
-        ?int $declarationTag
+        ?int $declarationTag,
     ): bool {
         $tokens = $phpcsFile->getTokens();
         $declarationLine = $declarationTag === null ? null : $tokens[$declarationTag]['line'];

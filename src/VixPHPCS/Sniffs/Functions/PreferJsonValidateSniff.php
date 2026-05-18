@@ -59,9 +59,11 @@ final class PreferJsonValidateSniff implements Sniff
             return;
         }
 
-        if ($this->isUsedOnlyForValidation($phpcsFile, $stackPtr) || $this->hasJsonThrowOnErrorFlag($phpcsFile, $stackPtr)) {
-            $this->addJsonValidateWarning($phpcsFile, $stackPtr);
+        if (!$this->isUsedOnlyForValidation($phpcsFile, $stackPtr) && !$this->hasJsonThrowOnErrorFlag($phpcsFile, $stackPtr)) {
+            return;
         }
+
+        $this->addJsonValidateWarning($phpcsFile, $stackPtr);
     }
 
     /**

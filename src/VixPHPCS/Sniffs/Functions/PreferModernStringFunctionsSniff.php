@@ -82,15 +82,17 @@ final class PreferModernStringFunctionsSniff implements Sniff
 
         $modernFunction = $this->getModernFunctionSuggestion($phpcsFile, $comparisonToken, $functionName);
 
-        if ($modernFunction !== null) {
-            $warning = sprintf(
-                'Use of %s() with comparison is discouraged; use %s() for better readability (PHP 8.0+)',
-                $functionName,
-                $modernFunction,
-            );
-
-            $phpcsFile->addWarning($warning, $stackPtr, 'Found');
+        if ($modernFunction === null) {
+            return;
         }
+
+        $warning = sprintf(
+            'Use of %s() with comparison is discouraged; use %s() for better readability (PHP 8.0+)',
+            $functionName,
+            $modernFunction,
+        );
+
+        $phpcsFile->addWarning($warning, $stackPtr, 'Found');
     }
 
     /**

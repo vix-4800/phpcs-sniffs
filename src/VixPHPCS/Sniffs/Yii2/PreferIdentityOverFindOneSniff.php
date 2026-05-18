@@ -52,9 +52,11 @@ final class PreferIdentityOverFindOneSniff implements Sniff
             $this->processFindOne($phpcsFile, $stackPtr, $methodToken);
         }
 
-        if ($methodName === 'find') {
-            $this->processFindWhere($phpcsFile, $stackPtr, $methodToken);
+        if ($methodName !== 'find') {
+            return;
         }
+
+        $this->processFindWhere($phpcsFile, $stackPtr, $methodToken);
     }
 
     /**
@@ -80,17 +82,19 @@ final class PreferIdentityOverFindOneSniff implements Sniff
 
         $closeParen = $tokens[$openParen]['parenthesis_closer'];
 
-        if ($this->containsYiiUserId($phpcsFile, $openParen + 1, $closeParen)) {
-            $className = $tokens[$classPtr]['content'];
-            $phpcsFile->addWarning(
-                sprintf(
-                    'Use Yii::$app->user->identity instead of %s::findOne(Yii::$app->user->id)',
-                    $className
-                ),
-                $classPtr,
-                'PreferIdentityOverFindOne'
-            );
+        if (!$this->containsYiiUserId($phpcsFile, $openParen + 1, $closeParen)) {
+            return;
         }
+
+        $className = $tokens[$classPtr]['content'];
+        $phpcsFile->addWarning(
+            sprintf(
+                'Use Yii::$app->user->identity instead of %s::findOne(Yii::$app->user->id)',
+                $className,
+            ),
+            $classPtr,
+            'PreferIdentityOverFindOne',
+        );
     }
 
     /**
@@ -142,54 +146,58 @@ final class PreferIdentityOverFindOneSniff implements Sniff
 
         $whereCloseParen = $tokens[$whereOpenParen]['parenthesis_closer'];
 
-        if ($this->containsIdYiiUserId($phpcsFile, $whereOpenParen + 1, $whereCloseParen)) {
-            $current = $whereCloseParen;
-            $hasOne = false;
-
-            while (true) {
-                $nextArrow = $phpcsFile->findNext(T_WHITESPACE, $current + 1, null, true);
-
-                if ($nextArrow === false || $tokens[$nextArrow]['code'] !== T_OBJECT_OPERATOR) {
-                    break;
-                }
-
-                $nextMethod = $phpcsFile->findNext(T_WHITESPACE, $nextArrow + 1, null, true);
-
-                if ($nextMethod === false || $tokens[$nextMethod]['code'] !== T_STRING) {
-                    break;
-                }
-
-                if ($tokens[$nextMethod]['content'] === 'one') {
-                    $hasOne = true;
-
-                    break;
-                }
-
-                $nextOpenParen = $phpcsFile->findNext(T_WHITESPACE, $nextMethod + 1, null, true);
-
-                if ($nextOpenParen === false || $tokens[$nextOpenParen]['code'] !== T_OPEN_PARENTHESIS) {
-                    break;
-                }
-
-                if (!isset($tokens[$nextOpenParen]['parenthesis_closer'])) {
-                    break;
-                }
-
-                $current = $tokens[$nextOpenParen]['parenthesis_closer'];
-            }
-
-            if ($hasOne) {
-                $className = $tokens[$classPtr]['content'];
-                $phpcsFile->addWarning(
-                    sprintf(
-                        'Use Yii::$app->user->identity instead of %s::find()->where([\'id\' => Yii::$app->user->id])->one()',
-                        $className
-                    ),
-                    $classPtr,
-                    'PreferIdentityOverFindWhere'
-                );
-            }
+        if (!$this->containsIdYiiUserId($phpcsFile, $whereOpenParen + 1, $whereCloseParen)) {
+            return;
         }
+
+        $current = $whereCloseParen;
+        $hasOne = false;
+
+        while (true) {
+            $nextArrow = $phpcsFile->findNext(T_WHITESPACE, $current + 1, null, true);
+
+            if ($nextArrow === false || $tokens[$nextArrow]['code'] !== T_OBJECT_OPERATOR) {
+                break;
+            }
+
+            $nextMethod = $phpcsFile->findNext(T_WHITESPACE, $nextArrow + 1, null, true);
+
+            if ($nextMethod === false || $tokens[$nextMethod]['code'] !== T_STRING) {
+                break;
+            }
+
+            if ($tokens[$nextMethod]['content'] === 'one') {
+                $hasOne = true;
+
+                break;
+            }
+
+            $nextOpenParen = $phpcsFile->findNext(T_WHITESPACE, $nextMethod + 1, null, true);
+
+            if ($nextOpenParen === false || $tokens[$nextOpenParen]['code'] !== T_OPEN_PARENTHESIS) {
+                break;
+            }
+
+            if (!isset($tokens[$nextOpenParen]['parenthesis_closer'])) {
+                break;
+            }
+
+            $current = $tokens[$nextOpenParen]['parenthesis_closer'];
+        }
+
+        if (!$hasOne) {
+            return;
+        }
+
+        $className = $tokens[$classPtr]['content'];
+        $phpcsFile->addWarning(
+            sprintf(
+                'Use Yii::$app->user->identity instead of %s::find()->where([\'id\' => Yii::$app->user->id])->one()',
+                $className,
+            ),
+            $classPtr,
+            'PreferIdentityOverFindWhere',
+        );
     }
 
     /**
@@ -205,9 +213,11 @@ final class PreferIdentityOverFindOneSniff implements Sniff
         $content = '';
 
         for ($i = $start; $i < $end; ++$i) {
-            if ($tokens[$i]['code'] !== T_WHITESPACE) {
-                $content .= $tokens[$i]['content'];
+            if ($tokens[$i]['code'] === T_WHITESPACE) {
+                continue;
             }
+
+            $content .= $tokens[$i]['content'];
         }
 
         return str_contains($content, 'Yii::$app->user->id')
@@ -228,16 +238,20 @@ final class PreferIdentityOverFindOneSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         for ($i = $start; $i < $end; ++$i) {
-            if (in_array($tokens[$i]['code'], [T_CONSTANT_ENCAPSED_STRING, T_DOUBLE_QUOTED_STRING], true)) {
-                $value = mb_trim($tokens[$i]['content'], '"\'');
+            if (!in_array($tokens[$i]['code'], [T_CONSTANT_ENCAPSED_STRING, T_DOUBLE_QUOTED_STRING], true)) {
+                continue;
+            }
 
-                if ($value === 'id') {
-                    $arrow = $phpcsFile->findNext(T_WHITESPACE, $i + 1, $end, true);
+            $value = mb_trim($tokens[$i]['content'], '"\'');
 
-                    if ($arrow !== false && $tokens[$arrow]['code'] === T_DOUBLE_ARROW && $this->containsYiiUserId($phpcsFile, $arrow + 1, $end)) {
-                        return true;
-                    }
-                }
+            if ($value !== 'id') {
+                continue;
+            }
+
+            $arrow = $phpcsFile->findNext(T_WHITESPACE, $i + 1, $end, true);
+
+            if ($arrow !== false && $tokens[$arrow]['code'] === T_DOUBLE_ARROW && $this->containsYiiUserId($phpcsFile, $arrow + 1, $end)) {
+                return true;
             }
         }
 

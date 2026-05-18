@@ -54,9 +54,11 @@ final class DisallowCountInLoopSniff implements Sniff
         $semicolons = [];
 
         for ($i = $openParenthesis + 1; $i < $closeParenthesis; ++$i) {
-            if ($tokens[$i]['code'] === T_SEMICOLON) {
-                $semicolons[] = $i;
+            if ($tokens[$i]['code'] !== T_SEMICOLON) {
+                continue;
             }
+
+            $semicolons[] = $i;
         }
 
         if (count($semicolons) !== self::EXPECTED_SEMICOLON_COUNT) {
