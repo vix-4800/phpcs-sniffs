@@ -87,6 +87,7 @@ final class DisallowMixedArrayKeysSniff implements Sniff
         $hasUnkeyedElement = false;
         $elementHasContent = false;
         $elementIsKeyed = false;
+        $elementStartsWithSpread = false;
         $arrowFunctionsToSkip = 0;
 
         for ($i = $contentStart; $i <= $contentEnd; ++$i) {
@@ -98,6 +99,7 @@ final class DisallowMixedArrayKeysSniff implements Sniff
                     $hasUnkeyedElement,
                     $elementHasContent,
                     $elementIsKeyed,
+                    $elementStartsWithSpread,
                 );
 
                 if ($hasKeyedElement && $hasUnkeyedElement) {
@@ -106,6 +108,7 @@ final class DisallowMixedArrayKeysSniff implements Sniff
 
                 $elementHasContent = false;
                 $elementIsKeyed = false;
+                $elementStartsWithSpread = false;
                 $arrowFunctionsToSkip = 0;
 
                 continue;
@@ -122,6 +125,10 @@ final class DisallowMixedArrayKeysSniff implements Sniff
 
             if ($this->isIgnorableToken($code)) {
                 continue;
+            }
+
+            if (!$elementHasContent && $code === T_ELLIPSIS) {
+                $elementStartsWithSpread = true;
             }
 
             $elementHasContent = true;
@@ -145,7 +152,13 @@ final class DisallowMixedArrayKeysSniff implements Sniff
             $elementIsKeyed = true;
         }
 
-        return $this->markElementType($hasKeyedElement, $hasUnkeyedElement, $elementHasContent, $elementIsKeyed);
+        return $this->markElementType(
+            $hasKeyedElement,
+            $hasUnkeyedElement,
+            $elementHasContent,
+            $elementIsKeyed,
+            $elementStartsWithSpread,
+        );
     }
 
     /**
@@ -156,8 +169,13 @@ final class DisallowMixedArrayKeysSniff implements Sniff
         bool $hasUnkeyedElement,
         bool $elementHasContent,
         bool $elementIsKeyed,
+        bool $elementStartsWithSpread,
     ): array {
         if (!$elementHasContent) {
+            return [$hasKeyedElement, $hasUnkeyedElement];
+        }
+
+        if ($elementStartsWithSpread && !$elementIsKeyed) {
             return [$hasKeyedElement, $hasUnkeyedElement];
         }
 

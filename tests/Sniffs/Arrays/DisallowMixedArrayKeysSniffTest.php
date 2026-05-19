@@ -80,7 +80,7 @@ $callbacks = [
         $this->assertNoViolations($result);
     }
 
-    public function testArrayUnpackWithKeyedElementsTriggersWarning(): void
+    public function testArrayUnpackDoesNotCountAsExplicitUnkeyedElement(): void
     {
         $result = $this->runPhpcs('<?php
 $extra = ["role" => "admin"];
@@ -89,6 +89,18 @@ $data = [
     ...$extra,
 ];', 'VixPHPCS.Arrays.DisallowMixedArrayKeys');
 
-        $this->assertContainsWarning($result, 'must not mix keyed and unkeyed elements');
+        $this->assertNoViolations($result);
+    }
+
+    public function testArrayUnpackWithUnkeyedElementsDoesNotTriggerWarning(): void
+    {
+        $result = $this->runPhpcs('<?php
+$extra = ["admin"];
+$data = [
+    "Anton",
+    ...$extra,
+];', 'VixPHPCS.Arrays.DisallowMixedArrayKeys');
+
+        $this->assertNoViolations($result);
     }
 }
