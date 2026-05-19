@@ -3,6 +3,10 @@
     name="VixPHPCS">
     <description>VixPHPCS Coding Standard - Main ruleset</description>
 
+    <rule ref="VixPHPCS.Arrays.DuplicateArrayKey">
+        <type>error</type>
+    </rule>
+
     <rule ref="VixPHPCS.ControlStructures.DisallowThrowInTernary">
         <type>error</type>
     </rule>
@@ -49,6 +53,10 @@
 
     <rule ref="VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation">
         <type>warning</type>
+    </rule>
+
+    <rule ref="VixPHPCS.Objects.DisallowReturnInConstructorDestructor">
+        <type>error</type>
     </rule>
 
     <rule ref="VixPHPCS.Attributes.ForbiddenAttributes">
