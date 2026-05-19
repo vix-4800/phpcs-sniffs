@@ -45,7 +45,7 @@ Create a `phpcs.xml` file in your project root:
 
 ### VixPHPCS
 
-The package ships with the `VixPHPCS` ruleset plus additional standalone sniffs you can enable manually. See [docs/SNIFFS.md](docs/SNIFFS.md) for the full catalog, examples, and configurable parameters.
+The package ships with the `VixPHPCS` ruleset plus additional standalone sniffs you can enable manually. The catalog includes general PHP checks such as foreach key/value misuse detection, formatting rules, and framework-specific sniffs. See [docs/SNIFFS.md](docs/SNIFFS.md) for the full catalog, examples, and configurable parameters.
 
 ## Development
 
