@@ -172,7 +172,6 @@ final class DuplicateArrayKeySniff implements Sniff
     private function getKeyData(File $phpcsFile, int $start, int $end): ?array
     {
         $tokens = $phpcsFile->getTokens();
-        $sign = '';
         $keyTokens = [];
         $pointer = null;
 
@@ -194,7 +193,7 @@ final class DuplicateArrayKeySniff implements Sniff
         }
 
         if (count($keyTokens) === 2 && in_array($keyTokens[0]['code'], [T_PLUS, T_MINUS], true) && in_array($keyTokens[1]['code'], [T_LNUMBER, T_DNUMBER], true)) {
-            $sign = $keyTokens[0]['content'];
+            $content = $keyTokens[0]['content'] . $keyTokens[1]['content'];
             $keyTokens = [$keyTokens[1]];
         }
 
@@ -203,7 +202,7 @@ final class DuplicateArrayKeySniff implements Sniff
         }
 
         $token = $keyTokens[0];
-        $content = $sign . $token['content'];
+        $content ??= $token['content'];
 
         return match ($token['code']) {
             T_LNUMBER => $this->createIntegerKeyData($content, $pointer),
