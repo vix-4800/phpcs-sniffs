@@ -192,17 +192,11 @@ final class DuplicateArrayKeySniff implements Sniff
             return null;
         }
 
-        if (count($keyTokens) === 2 && in_array($keyTokens[0]['code'], [T_PLUS, T_MINUS], true) && in_array($keyTokens[1]['code'], [T_LNUMBER, T_DNUMBER], true)) {
-            $content = $keyTokens[0]['content'] . $keyTokens[1]['content'];
-            $keyTokens = [$keyTokens[1]];
-        }
+        [$token, $content] = $this->normalizeKeyToken($keyTokens);
 
-        if (count($keyTokens) !== 1) {
+        if ($token === null || $content === null) {
             return null;
         }
-
-        $token = $keyTokens[0];
-        $content ??= $token['content'];
 
         return match ($token['code']) {
             T_LNUMBER => $this->createIntegerKeyData($content, $pointer),
@@ -213,6 +207,28 @@ final class DuplicateArrayKeySniff implements Sniff
             T_NULL => $this->createEffectiveKeyData('', $pointer),
             default => null,
         };
+    }
+
+    /**
+     * @param list<array{code: int|string, content: string}> $keyTokens
+     *
+     * @return array{0: array{code: int|string, content: string}|null, 1: string|null}
+     */
+    private function normalizeKeyToken(array $keyTokens): array
+    {
+        if (count($keyTokens) === 1) {
+            return [$keyTokens[0], $keyTokens[0]['content']];
+        }
+
+        if (
+            count($keyTokens) === 2
+            && in_array($keyTokens[0]['code'], [T_PLUS, T_MINUS], true)
+            && in_array($keyTokens[1]['code'], [T_LNUMBER, T_DNUMBER], true)
+        ) {
+            return [$keyTokens[1], $keyTokens[0]['content'] . $keyTokens[1]['content']];
+        }
+
+        return [null, null];
     }
 
     /**
