@@ -262,20 +262,20 @@ final class MixedArrayKeyTypesSniff implements Sniff
 
     private function normalizeStringLiteral(string $literal): ?string
     {
-        $value = mb_ltrim($literal, 'bB');
+        $value = ltrim($literal, 'bB');
         $quote = $value[0] ?? null;
 
         if ($quote === null || !in_array($quote, ['\'', '"'], true)) {
             return null;
         }
 
-        $lastChar = mb_substr($value, -1);
+        $lastChar = substr($value, -1);
 
         if ($lastChar !== $quote) {
             return null;
         }
 
-        $unquoted = mb_substr($value, 1, -1);
+        $unquoted = substr($value, 1, -1);
 
         if (str_contains($unquoted, '\\') || ($quote === '"' && str_contains($unquoted, '$'))) {
             return null;
