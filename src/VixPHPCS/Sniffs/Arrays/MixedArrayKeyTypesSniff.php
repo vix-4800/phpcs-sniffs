@@ -257,7 +257,7 @@ final class MixedArrayKeyTypesSniff implements Sniff
             return 'string';
         }
 
-        return preg_match('/^-?\d+$/', $literal) === 1 ? 'integer' : 'string';
+        return preg_match('/^-?(0|[1-9]\d*)$/', $literal) === 1 ? 'integer' : 'string';
     }
 
     private function normalizeStringLiteral(string $literal): ?string
@@ -275,6 +275,12 @@ final class MixedArrayKeyTypesSniff implements Sniff
             return null;
         }
 
-        return stripcslashes(mb_substr($value, 1, -1));
+        $unquoted = mb_substr($value, 1, -1);
+
+        if (str_contains($unquoted, '\\') || ($quote === '"' && str_contains($unquoted, '$'))) {
+            return null;
+        }
+
+        return $unquoted;
     }
 }

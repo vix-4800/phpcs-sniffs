@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace VixPHPCS\Tests\Common\Sniffs\Arrays;
+namespace VixPHPCS\Tests\Sniffs\Arrays;
 
 use VixPHPCS\Tests\BaseTest;
 
