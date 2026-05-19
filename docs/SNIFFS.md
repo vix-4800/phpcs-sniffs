@@ -8,6 +8,8 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
 
 - [VixPHPCS Sniff Catalog](#vixphpcs-sniff-catalog)
   - [Table of Contents](#table-of-contents)
+  - [Arrays](#arrays)
+    - [VixPHPCS.Arrays.DisallowMixedArrayKeys](#vixphpcsarraysdisallowmixedarraykeys)
   - [Attributes](#attributes)
     - [VixPHPCS.Attributes.ForbiddenAttributes](#vixphpcsattributesforbiddenattributes)
   - [Control Structures](#control-structures)
@@ -37,6 +39,42 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Yii2.PreferExistsOverCount](#vixphpcsyii2preferexistsovercount)
     - [VixPHPCS.Yii2.PreferIdentityOverFindOne](#vixphpcsyii2preferidentityoverfindone)
     - [VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck](#vixphpcsyii2preferisguestoveruseridcheck)
+
+## Arrays
+
+### VixPHPCS.Arrays.DisallowMixedArrayKeys
+
+**Level:** Warning
+
+Disallows array literals that combine keyed (`'name' => 'Anton'`) and unkeyed (`42`) elements. Mixed arrays are harder to scan and often hide accidental omissions of a key.
+
+**Bad:**
+
+```php
+$user = [
+    'name' => 'Anton',
+    42,
+];
+
+$settings = array(
+    'theme' => 'dark',
+    true,
+);
+```
+
+**Good:**
+
+```php
+$user = [
+    'name' => 'Anton',
+    'age' => 42,
+];
+
+$values = [
+    'Anton',
+    42,
+];
+```
 
 ## Attributes
 

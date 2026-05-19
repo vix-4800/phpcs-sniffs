@@ -45,7 +45,7 @@ Create a `phpcs.xml` file in your project root:
 
 ### VixPHPCS
 
-The package ships with the `VixPHPCS` ruleset plus additional standalone sniffs you can enable manually. See [docs/SNIFFS.md](docs/SNIFFS.md) for the full catalog, examples, and configurable parameters.
+The package ships with the `VixPHPCS` ruleset plus additional standalone sniffs you can enable manually, including array consistency rules such as disallowing mixed keyed and unkeyed array literals. See [docs/SNIFFS.md](docs/SNIFFS.md) for the full catalog, examples, and configurable parameters.
 
 ## Development
 
