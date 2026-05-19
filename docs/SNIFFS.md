@@ -13,6 +13,7 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
   - [Control Structures](#control-structures)
     - [VixPHPCS.ControlStructures.DisallowCountInLoop](#vixphpcscontrolstructuresdisallowcountinloop)
     - [VixPHPCS.ControlStructures.DisallowGotoStatement](#vixphpcscontrolstructuresdisallowgotostatement)
+    - [VixPHPCS.ControlStructures.DisallowLogicalOperators](#vixphpcscontrolstructuresdisallowlogicaloperators)
     - [VixPHPCS.ControlStructures.DisallowThrowInTernary](#vixphpcscontrolstructuresdisallowthrowinternary)
     - [VixPHPCS.ControlStructures.UseInArray](#vixphpcscontrolstructuresuseinarray)
   - [Formatting](#formatting)
@@ -154,6 +155,32 @@ if ($failed) {
 }
 
 runTask();
+```
+
+### VixPHPCS.ControlStructures.DisallowLogicalOperators
+
+**Level:** Warning
+
+Prefers the boolean `&&` and `||` operators over the logical `and` and `or` operators. The symbolic operators are more common in conditionals and avoid precedence surprises when mixed with assignments or other expressions.
+
+**Bad:**
+
+```php
+if ($isReady and $isValid) {
+    runTask();
+}
+
+$visible = $isPreview or $isAdmin;
+```
+
+**Good:**
+
+```php
+if ($isReady && $isValid) {
+    runTask();
+}
+
+$visible = $isPreview || $isAdmin;
 ```
 
 ### VixPHPCS.ControlStructures.DisallowThrowInTernary

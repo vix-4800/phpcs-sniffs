@@ -7,6 +7,10 @@
         <type>error</type>
     </rule>
 
+    <rule ref="VixPHPCS.ControlStructures.DisallowLogicalOperators">
+        <type>warning</type>
+    </rule>
+
     <rule ref="VixPHPCS.ControlStructures.UseInArray">
         <type>warning</type>
     </rule>
