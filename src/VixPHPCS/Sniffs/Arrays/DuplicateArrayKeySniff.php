@@ -258,11 +258,15 @@ final class DuplicateArrayKeySniff implements Sniff
     /**
      * @param int $pointer
      *
-     * @return array{normalized: string, effective: int|string, pointer: int}
+     * @return array{normalized: string, effective: int|string, pointer: int}|null
      */
-    private function createStringKeyData(string $content, int $pointer): array
+    private function createStringKeyData(string $content, int $pointer): ?array
     {
         $value = $this->stripStringQuotes($content);
+
+        if ($value === null) {
+            return null;
+        }
 
         if (preg_match('/^-?(0|[1-9][0-9]*)$/', $value) === 1) {
             return $this->createEffectiveKeyData((int) $value, $pointer);
@@ -290,7 +294,7 @@ final class DuplicateArrayKeySniff implements Sniff
         ];
     }
 
-    private function stripStringQuotes(string $content): string
+    private function stripStringQuotes(string $content): ?string
     {
         $string = $content;
 
@@ -310,7 +314,11 @@ final class DuplicateArrayKeySniff implements Sniff
         }
 
         if ($quote === '"') {
-            return stripcslashes($value);
+            if (str_contains($value, '\\') || str_contains($value, '$')) {
+                return null;
+            }
+
+            return $value;
         }
 
         return $value;

@@ -74,6 +74,8 @@ $config = [
 ];', self::SNIFF);
 
         $this->assertContainsError($result, 'Duplicate array key \'inner\'');
+        $this->assertStringContainsString(' 5 | ERROR |', $result);
+        $this->assertContainsError($result, 'line 4');
         $this->assertSame(1, substr_count($result, 'Duplicate array key'));
     }
 
