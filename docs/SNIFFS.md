@@ -30,6 +30,8 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
   - [Objects](#objects)
     - [VixPHPCS.Objects.DisallowReturnInConstructorDestructor](#vixphpcsobjectsdisallowreturninconstructordestructor)
     - [VixPHPCS.Objects.DisallowVariableStaticProperty](#vixphpcsobjectsdisallowvariablestaticproperty)
+  - [Operators](#operators)
+    - [VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation](#vixphpcsoperatorspreferbooleancastoverdoublenegation)
   - [PhpDoc](#phpdoc)
     - [VixPHPCS.PhpDoc.DeprecatedTag](#vixphpcsphpdocdeprecatedtag)
     - [VixPHPCS.PhpDoc.DisallowUnusedTemplate](#vixphpcsphpdocdisallowunusedtemplate)
@@ -574,6 +576,28 @@ $value = ($service)::$cache['key'];
 ```php
 $toast = User::$toastArray[$model->toast];
 $value = self::$cache['key'];
+```
+
+## Operators
+
+### VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation
+
+**Level:** Warning
+
+Suggests an explicit `(bool)` cast instead of `!!` for boolean coercion. Cast syntax makes the intent clearer and avoids the visual noise of stacked negations.
+
+**Bad:**
+
+```php
+$isActive = !!$user->active;
+$hasItems = !!count($items);
+```
+
+**Good:**
+
+```php
+$isActive = (bool) $user->active;
+$hasItems = (bool) count($items);
 ```
 
 ## PhpDoc

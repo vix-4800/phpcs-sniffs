@@ -51,6 +51,10 @@
         <type>warning</type>
     </rule>
 
+    <rule ref="VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation">
+        <type>warning</type>
+    </rule>
+
     <rule ref="VixPHPCS.Objects.DisallowReturnInConstructorDestructor">
         <type>error</type>
     </rule>
