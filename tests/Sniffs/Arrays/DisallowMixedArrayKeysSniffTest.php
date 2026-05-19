@@ -21,7 +21,7 @@ $data = [
     42,
 ];', 'VixPHPCS.Arrays.DisallowMixedArrayKeys');
 
-        $this->assertContainsWarning($result, 'mix keyed and unkeyed elements');
+        $this->assertContainsWarning($result, 'must not mix keyed and unkeyed elements');
     }
 
     public function testArraySyntaxWithMixedKeysTriggersWarning(): void
@@ -32,7 +32,7 @@ $data = array(
     42,
 );', 'VixPHPCS.Arrays.DisallowMixedArrayKeys');
 
-        $this->assertContainsWarning($result, 'mix keyed and unkeyed elements');
+        $this->assertContainsWarning($result, 'must not mix keyed and unkeyed elements');
     }
 
     public function testAllKeyedElementsDoNotTriggerWarning(): void
@@ -65,7 +65,7 @@ $data = [
     ["city" => "Berlin", 7],
 ];', 'VixPHPCS.Arrays.DisallowMixedArrayKeys');
 
-        $warningCount = substr_count($result, 'mix keyed and unkeyed elements');
+        $warningCount = substr_count($result, 'must not mix keyed and unkeyed elements');
         $this->assertSame(2, $warningCount);
     }
 
@@ -89,6 +89,6 @@ $data = [
     ...$extra,
 ];', 'VixPHPCS.Arrays.DisallowMixedArrayKeys');
 
-        $this->assertContainsWarning($result, 'mix keyed and unkeyed elements');
+        $this->assertContainsWarning($result, 'must not mix keyed and unkeyed elements');
     }
 }
