@@ -12,6 +12,8 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Arrays.DuplicateArrayKey](#vixphpcsarraysduplicatearraykey)
   - [Attributes](#attributes)
     - [VixPHPCS.Attributes.ForbiddenAttributes](#vixphpcsattributesforbiddenattributes)
+  - [Constants](#constants)
+    - [VixPHPCS.Constants.UppercaseMagicConstants](#vixphpcsconstantsuppercasemagicconstants)
   - [Control Structures](#control-structures)
     - [VixPHPCS.ControlStructures.DisallowCountInLoop](#vixphpcscontrolstructuresdisallowcountinloop)
     - [VixPHPCS.ControlStructures.DisallowGotoStatement](#vixphpcscontrolstructuresdisallowgotostatement)
@@ -133,6 +135,32 @@ function calculate(): int
     </properties>
 </rule>
 ```
+
+## Constants
+
+### VixPHPCS.Constants.UppercaseMagicConstants
+
+**Level:** Warning
+
+Enforces uppercase spelling for PHP native magic constants. Mixed-case variants still work in PHP, but the canonical uppercase form is easier to scan and keeps built-in language constructs visually distinct from user-defined identifiers.
+
+**Bad:**
+
+```php
+$path = __file__;
+$directory = __Dir__;
+$method = __method__;
+```
+
+**Good:**
+
+```php
+$path = __FILE__;
+$directory = __DIR__;
+$method = __METHOD__;
+```
+
+This sniff checks PHP native magic constants such as `__CLASS__`, `__DIR__`, `__FILE__`, `__FUNCTION__`, `__LINE__`, `__METHOD__`, `__NAMESPACE__`, `__PROPERTY__`, and `__TRAIT__` when the active PHP runtime exposes the corresponding tokenizer tokens.
 
 ## Control Structures
 
