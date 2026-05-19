@@ -28,6 +28,7 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Functions.PreferModernStringFunctions](#vixphpcsfunctionsprefermodernstringfunctions)
     - [VixPHPCS.Functions.PreferJsonValidate](#vixphpcsfunctionspreferjsonvalidate)
   - [Objects](#objects)
+    - [VixPHPCS.Objects.DisallowReturnInConstructorDestructor](#vixphpcsobjectsdisallowreturninconstructordestructor)
     - [VixPHPCS.Objects.DisallowVariableStaticProperty](#vixphpcsobjectsdisallowvariablestaticproperty)
   - [PhpDoc](#phpdoc)
     - [VixPHPCS.PhpDoc.DeprecatedTag](#vixphpcsphpdocdeprecatedtag)
@@ -514,6 +515,46 @@ $data = json_decode($json, true);
 ```
 
 ## Objects
+
+### VixPHPCS.Objects.DisallowReturnInConstructorDestructor
+
+**Level:** Error
+
+Rejects `return` statements inside `__construct()` and `__destruct()`. Object lifecycle methods should run to completion without explicit returns, and returning a value there is invalid PHP.
+
+**Bad:**
+
+```php
+class Example
+{
+    public function __construct()
+    {
+        return;
+    }
+
+    public function __destruct()
+    {
+        return $this->cleanup();
+    }
+}
+```
+
+**Good:**
+
+```php
+class Example
+{
+    public function __construct()
+    {
+        $this->boot();
+    }
+
+    public function __destruct()
+    {
+        $this->cleanup();
+    }
+}
+```
 
 ### VixPHPCS.Objects.DisallowVariableStaticProperty
 
