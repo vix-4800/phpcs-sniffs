@@ -80,7 +80,7 @@ $callbacks = [
         $this->assertNoViolations($result);
     }
 
-    public function testArrayUnpackIsTreatedAsUnkeyedElement(): void
+    public function testArrayUnpackWithKeyedElementsTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $extra = ["role" => "admin"];
