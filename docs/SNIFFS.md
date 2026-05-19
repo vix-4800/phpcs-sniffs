@@ -8,6 +8,8 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
 
 - [VixPHPCS Sniff Catalog](#vixphpcs-sniff-catalog)
   - [Table of Contents](#table-of-contents)
+  - [Arrays](#arrays)
+    - [VixPHPCS.Arrays.DuplicateArrayKey](#vixphpcsarraysduplicatearraykey)
   - [Attributes](#attributes)
     - [VixPHPCS.Attributes.ForbiddenAttributes](#vixphpcsattributesforbiddenattributes)
   - [Control Structures](#control-structures)
@@ -38,6 +40,42 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Yii2.PreferExistsOverCount](#vixphpcsyii2preferexistsovercount)
     - [VixPHPCS.Yii2.PreferIdentityOverFindOne](#vixphpcsyii2preferidentityoverfindone)
     - [VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck](#vixphpcsyii2preferisguestoveruseridcheck)
+
+## Arrays
+
+### VixPHPCS.Arrays.DuplicateArrayKey
+
+**Level:** Error
+
+Detects duplicate explicit keys in array declarations. Duplicate keys silently overwrite earlier values, which usually means part of the array definition is dead code or a bug.
+
+**Bad:**
+
+```php
+$config = [
+    'host' => 'primary',
+    'host' => 'secondary',
+];
+
+$map = array(
+    '1' => 'one',
+    1 => 'duplicate',
+);
+```
+
+**Good:**
+
+```php
+$config = [
+    'host' => 'primary',
+    'port' => 443,
+];
+
+$map = [
+    '1' => 'one',
+    '01' => 'distinct string key',
+];
+```
 
 ## Attributes
 
