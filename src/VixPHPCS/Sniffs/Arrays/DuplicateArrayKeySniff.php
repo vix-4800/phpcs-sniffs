@@ -35,6 +35,19 @@ final class DuplicateArrayKeySniff implements Sniff
     ];
 
     /**
+     * @var list<int|string>
+     */
+    private const array IGNORED_KEY_TOKENS = [
+        T_WHITESPACE,
+        T_COMMENT,
+        T_DOC_COMMENT_OPEN_TAG,
+        T_DOC_COMMENT_CLOSE_TAG,
+        T_DOC_COMMENT_STRING,
+        T_DOC_COMMENT_TAG,
+        T_DOC_COMMENT_WHITESPACE,
+    ];
+
+    /**
      * @return list<int|string>
      */
     public function register(): array
@@ -168,7 +181,7 @@ final class DuplicateArrayKeySniff implements Sniff
                 continue;
             }
 
-            if (in_array($tokens[$i]['code'], [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT_OPEN_TAG, T_DOC_COMMENT_CLOSE_TAG, T_DOC_COMMENT_STRING, T_DOC_COMMENT_TAG, T_DOC_COMMENT_WHITESPACE,], true)) {
+            if (in_array($tokens[$i]['code'], self::IGNORED_KEY_TOKENS, true)) {
                 continue;
             }
 
@@ -183,7 +196,6 @@ final class DuplicateArrayKeySniff implements Sniff
         if (count($keyTokens) === 2 && in_array($keyTokens[0]['code'], [T_PLUS, T_MINUS], true) && in_array($keyTokens[1]['code'], [T_LNUMBER, T_DNUMBER], true)) {
             $sign = $keyTokens[0]['content'];
             $keyTokens = [$keyTokens[1]];
-            $pointer = $pointer;
         }
 
         if (count($keyTokens) !== 1) {
