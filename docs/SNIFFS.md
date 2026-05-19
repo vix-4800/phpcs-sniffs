@@ -27,6 +27,7 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Functions.PreferJsonValidate](#vixphpcsfunctionspreferjsonvalidate)
   - [Objects](#objects)
     - [VixPHPCS.Objects.DisallowVariableStaticProperty](#vixphpcsobjectsdisallowvariablestaticproperty)
+    - [VixPHPCS.Objects.StaticInFinalClass](#vixphpcsobjectsstaticinfinalclass)
   - [PhpDoc](#phpdoc)
     - [VixPHPCS.PhpDoc.DeprecatedTag](#vixphpcsphpdocdeprecatedtag)
     - [VixPHPCS.PhpDoc.DisallowUnusedTemplate](#vixphpcsphpdocdisallowunusedtemplate)
@@ -495,6 +496,36 @@ $value = ($service)::$cache['key'];
 ```php
 $toast = User::$toastArray[$model->toast];
 $value = self::$cache['key'];
+```
+
+### VixPHPCS.Objects.StaticInFinalClass
+
+**Level:** Warning
+
+Warns when a method inside a `final` class declares `static` as its return type. Because the class cannot be extended, `self` communicates the same type more directly.
+
+**Bad:**
+
+```php
+final class UserFactory
+{
+    public static function make(): static
+    {
+        return new self();
+    }
+}
+```
+
+**Good:**
+
+```php
+final class UserFactory
+{
+    public static function make(): self
+    {
+        return new self();
+    }
+}
 ```
 
 ## PhpDoc
