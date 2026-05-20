@@ -39,9 +39,11 @@ final class UppercaseMagicConstantsSniff implements Sniff
         $tokens = [];
 
         foreach (array_keys(self::MAGIC_CONSTANTS) as $tokenType) {
-            if (defined($tokenType)) {
-                $tokens[] = constant($tokenType);
+            if (!defined($tokenType)) {
+                continue;
             }
+
+            $tokens[] = constant($tokenType);
         }
 
         return $tokens;

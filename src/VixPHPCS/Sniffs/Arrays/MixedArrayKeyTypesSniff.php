@@ -70,7 +70,11 @@ final class MixedArrayKeyTypesSniff implements Sniff
                 continue;
             }
 
-            if ($depth !== 0 || $tokenCode !== T_COMMA) {
+            if ($depth !== 0) {
+                continue;
+            }
+
+            if ($tokenCode !== T_COMMA) {
                 continue;
             }
 

@@ -232,7 +232,8 @@ final class DuplicateArrayKeySniff implements Sniff
     }
 
     /**
-     * @param int $pointer
+     * @param string $content
+     * @param int    $pointer
      *
      * @return array{normalized: string, effective: int|string, pointer: int}
      */
@@ -244,7 +245,8 @@ final class DuplicateArrayKeySniff implements Sniff
     }
 
     /**
-     * @param int $pointer
+     * @param string $content
+     * @param int    $pointer
      *
      * @return array{normalized: string, effective: int|string, pointer: int}
      */
@@ -256,7 +258,8 @@ final class DuplicateArrayKeySniff implements Sniff
     }
 
     /**
-     * @param int $pointer
+     * @param string $content
+     * @param int    $pointer
      *
      * @return array{normalized: string, effective: int|string, pointer: int}|null
      */
@@ -298,7 +301,7 @@ final class DuplicateArrayKeySniff implements Sniff
     {
         $string = $content;
 
-        if (($string[0] ?? '') === 'b' || ($string[0] ?? '') === 'B') {
+        if (in_array($string[0] ?? '', ['b', 'B'], true)) {
             $string = mb_substr($string, 1);
         }
 
