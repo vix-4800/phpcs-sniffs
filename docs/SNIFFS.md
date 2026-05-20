@@ -33,6 +33,7 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Functions.PreferJsonValidate](#vixphpcsfunctionspreferjsonvalidate)
   - [Objects](#objects)
     - [VixPHPCS.Objects.DisallowReturnInConstructorDestructor](#vixphpcsobjectsdisallowreturninconstructordestructor)
+    - [VixPHPCS.Objects.RequireStringableInterface](#vixphpcsobjectsrequirestringableinterface)
     - [VixPHPCS.Objects.DisallowVariableStaticProperty](#vixphpcsobjectsdisallowvariablestaticproperty)
   - [Operators](#operators)
     - [VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation](#vixphpcsoperatorspreferbooleancastoverdoublenegation)
@@ -636,6 +637,36 @@ class Example
     public function __destruct()
     {
         $this->cleanup();
+    }
+}
+```
+
+### VixPHPCS.Objects.RequireStringableInterface
+
+**Level:** Warning
+
+Requires classes that declare `__toString()` to also implement `Stringable`. This keeps the contract explicit for consumers and matches the intent of PHP's dedicated string-conversion interface.
+
+**Bad:**
+
+```php
+class Example
+{
+    public function __toString(): string
+    {
+        return 'example';
+    }
+}
+```
+
+**Good:**
+
+```php
+class Example implements Stringable
+{
+    public function __toString(): string
+    {
+        return 'example';
     }
 }
 ```
