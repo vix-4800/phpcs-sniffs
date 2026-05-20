@@ -133,11 +133,26 @@ final class DisallowNullableBoolReturnTypeSniff implements Sniff
         $commentCloser = $tokens[$stackPtr]['comment_closer'];
         $nextToken = $phpcsFile->findNext(T_DOC_COMMENT_WHITESPACE, $stackPtr + 1, $commentCloser, true);
 
-        if ($nextToken === false || $tokens[$nextToken]['code'] !== T_DOC_COMMENT_STRING) {
+        if ($nextToken === false) {
             return null;
         }
 
-        return preg_split('/\s+/', trim((string) $tokens[$nextToken]['content']), 2)[0] ?? null;
+        $line = $tokens[$stackPtr]['line'];
+        $content = '';
+
+        for ($pointer = $nextToken; $pointer < $commentCloser; ++$pointer) {
+            if ($tokens[$pointer]['line'] !== $line) {
+                break;
+            }
+
+            if ($tokens[$pointer]['code'] === T_DOC_COMMENT_TAG) {
+                break;
+            }
+
+            $content .= (string) $tokens[$pointer]['content'];
+        }
+
+        return $this->extractLeadingTypeExpression($content);
     }
 
     private function findFunctionOwner(File $phpcsFile, int $commentCloser): ?int
@@ -203,6 +218,74 @@ final class DisallowNullableBoolReturnTypeSniff implements Sniff
         );
 
         return in_array('bool', $types, true) && in_array('null', $types, true);
+    }
+
+    private function extractLeadingTypeExpression(string $content): ?string
+    {
+        $trimmedContent = trim($content);
+
+        if ($trimmedContent === '') {
+            return null;
+        }
+
+        $type = '';
+        $length = strlen($trimmedContent);
+
+        for ($index = 0; $index < $length; ++$index) {
+            $character = $trimmedContent[$index];
+
+            if (ctype_space($character)) {
+                $previousCharacter = $this->findPreviousNonWhitespaceCharacter($trimmedContent, $index - 1);
+                $nextCharacter = $this->findNextNonWhitespaceCharacter($trimmedContent, $index + 1);
+
+                if (
+                    $previousCharacter !== null
+                    && $nextCharacter !== null
+                    && ($this->isTypeSeparator($previousCharacter) || $this->isTypeSeparator($nextCharacter))
+                ) {
+                    $type .= $character;
+
+                    continue;
+                }
+
+                break;
+            }
+
+            $type .= $character;
+        }
+
+        $trimmedType = trim($type);
+
+        return $trimmedType !== '' ? $trimmedType : null;
+    }
+
+    private function findNextNonWhitespaceCharacter(string $content, int $start): ?string
+    {
+        $length = strlen($content);
+
+        for ($index = $start; $index < $length; ++$index) {
+            if (!ctype_space($content[$index])) {
+                return $content[$index];
+            }
+        }
+
+        return null;
+    }
+
+    private function findPreviousNonWhitespaceCharacter(string $content, int $start): ?string
+    {
+        for ($index = $start; $index >= 0; --$index) {
+            if (!ctype_space($content[$index])) {
+                return $content[$index];
+            }
+        }
+
+        return null;
+    }
+
+    private function isTypeSeparator(string $character): bool
+    {
+        return in_array($character, ['|', '&', '<', '>', '(', ')', '{', '}', '[', ']', ',', ':', '?'], true);
     }
 
     /**

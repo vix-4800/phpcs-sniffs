@@ -77,6 +77,21 @@ final class Checker
         $this->assertContainsError($result, 'Do not use nullable "bool" in @return; return true/false instead of null.');
     }
 
+    public function testNullableBoolDocblockWithSpacesTriggersError(): void
+    {
+        $result = $this->runPhpcs('<?php
+
+/**
+ * @return bool | null Explanation
+ */
+function isVisible()
+{
+    return null;
+}', self::SNIFF);
+
+        $this->assertContainsError($result, 'Do not use nullable "bool" in @return; return true/false instead of null.');
+    }
+
     public function testPlainBoolReturnTypeIsAllowed(): void
     {
         $result = $this->runPhpcs('<?php
