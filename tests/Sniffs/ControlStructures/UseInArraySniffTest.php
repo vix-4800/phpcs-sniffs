@@ -255,8 +255,13 @@ if ($site_id === 1 || $site_id === 2) {
 
             $output = shell_exec($command);
         } finally {
-            unlink($rulesetPath);
-            unlink($tempFile);
+            if (file_exists($rulesetPath)) {
+                unlink($rulesetPath);
+            }
+
+            if ($tempFile !== false && file_exists($tempFile)) {
+                unlink($tempFile);
+            }
         }
 
         return $output ?? '';
