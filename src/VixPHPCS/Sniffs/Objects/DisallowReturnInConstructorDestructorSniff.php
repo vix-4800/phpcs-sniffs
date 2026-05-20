@@ -20,7 +20,7 @@ final class DisallowReturnInConstructorDestructorSniff implements Sniff
     public function process(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
-        $functionPtr = $this->findDirectFunctionOwner($tokens[$stackPtr]['conditions'] ?? []);
+        $functionPtr = $this->findDirectFunctionOwner($tokens[$stackPtr]['conditions']);
 
         if ($functionPtr === null) {
             return;

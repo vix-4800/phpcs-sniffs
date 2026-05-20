@@ -110,8 +110,8 @@ final class DisallowVariableStaticPropertySniff implements Sniff
     /**
      * Simple matcher to locate the opening parenthesis for a closing parenthesis pointer.
      *
-     * @param array<int, array<string, mixed>> $tokens
-     * @param int                              $closePtr
+     * @param CsTokens $tokens
+     * @param int      $closePtr
      */
     private function findMatchingOpener(array $tokens, int $closePtr): ?int
     {

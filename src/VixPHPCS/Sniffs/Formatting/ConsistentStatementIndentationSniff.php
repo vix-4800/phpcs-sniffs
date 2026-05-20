@@ -44,7 +44,7 @@ final class ConsistentStatementIndentationSniff implements Sniff
     /**
      * {@inheritDoc}
      */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
         $token = $tokens[$stackPtr];
@@ -61,8 +61,8 @@ final class ConsistentStatementIndentationSniff implements Sniff
         }
 
         // Get the nesting level and conditions of this token
-        $currentLevel = $token['level'] ?? 0;
-        $currentConditions = $token['conditions'] ?? [];
+        $currentLevel = $token['level'];
+        $currentConditions = $token['conditions'];
         $currentIndent = $token['column'] - 1;
 
         // Find the previous statement at the same level with same conditions
@@ -97,10 +97,10 @@ final class ConsistentStatementIndentationSniff implements Sniff
     /**
      * Find the previous statement at the same nesting level with same conditions.
      *
-     * @param File            $phpcsFile
-     * @param int             $stackPtr
-     * @param int             $level
-     * @param array<int, int> $conditions
+     * @param File                   $phpcsFile
+     * @param int                    $stackPtr
+     * @param int                    $level
+     * @param array<int, int|string> $conditions
      */
     private function findPreviousStatementAtSameLevel(
         File $phpcsFile,
@@ -152,8 +152,8 @@ final class ConsistentStatementIndentationSniff implements Sniff
             }
 
             // Check level and conditions
-            $tokenLevel = $token['level'] ?? 0;
-            $tokenConditions = $token['conditions'] ?? [];
+            $tokenLevel = $token['level'];
+            $tokenConditions = $token['conditions'];
 
             if ($tokenLevel === $level && $tokenConditions === $conditions) {
                 return $i;

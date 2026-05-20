@@ -1,5 +1,5 @@
 parameters:
-    level: 8
+    level: max
     paths:
         - src
 
@@ -10,6 +10,9 @@ parameters:
     bootstrapFiles:
         - phpstan-bootstrap.php
 
+    stubFiles:
+        - phpstan-stubs/PHP_CodeSniffer.stub.php
+
     scanDirectories:
         - vendor/squizlabs/php_codesniffer/src
 
@@ -19,3 +22,7 @@ parameters:
 
     # Additional checks
     treatPhpDocTypesAsCertain: false
+
+    typeAliases:
+        CsToken: 'array{code: int|string, content: string, type: string, line: int, column: int, level: int, conditions: array<int, int|string>, nested_parenthesis?: array<int, int>, scope_opener?: int, scope_closer?: int, scope_condition?: int, parenthesis_opener?: int, parenthesis_closer?: int, parenthesis_owner?: int, bracket_opener?: int, bracket_closer?: int, attribute_closer?: int, comment_opener?: int, comment_closer?: int}'
+        CsTokens: 'array<int, CsToken>'

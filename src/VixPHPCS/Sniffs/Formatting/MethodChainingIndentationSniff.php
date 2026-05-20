@@ -28,7 +28,7 @@ final class MethodChainingIndentationSniff implements Sniff
     /**
      * {@inheritDoc}
      */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
         if (!$this->isMultiLineOperator($phpcsFile, $stackPtr)) {
             return;
@@ -158,8 +158,8 @@ final class MethodChainingIndentationSniff implements Sniff
     /**
      * Finds the pointer representing the first token on the given line.
      *
-     * @param array<int, array<string, mixed>> $tokens
-     * @param int                              $ptr
+     * @param CsTokens $tokens
+     * @param int      $ptr
      */
     private function findLineStartPtr(array $tokens, int $ptr): int
     {
@@ -176,9 +176,9 @@ final class MethodChainingIndentationSniff implements Sniff
     /**
      * Finds the first non-whitespace token on a line between the provided bounds.
      *
-     * @param array<int, array<string, mixed>> $tokens
-     * @param int                              $startPtr
-     * @param int                              $endPtr
+     * @param CsTokens $tokens
+     * @param int      $startPtr
+     * @param int      $endPtr
      */
     private function findFirstCodeOnLine(array $tokens, int $startPtr, int $endPtr): ?int
     {

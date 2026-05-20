@@ -59,6 +59,11 @@ final class DisallowUnusedTemplateSniff implements Sniff
     private function findTemplateName(File $phpcsFile, int $stackPtr): ?string
     {
         $tokens = $phpcsFile->getTokens();
+
+        if (!isset($tokens[$stackPtr]['comment_closer'])) {
+            return null;
+        }
+
         $commentCloser = $tokens[$stackPtr]['comment_closer'];
         $nextToken = $phpcsFile->findNext(T_DOC_COMMENT_WHITESPACE, $stackPtr + 1, $commentCloser, true);
 
@@ -78,6 +83,11 @@ final class DisallowUnusedTemplateSniff implements Sniff
     private function isTemplateUsed(File $phpcsFile, int $stackPtr, string $templateName): bool
     {
         $tokens = $phpcsFile->getTokens();
+
+        if (!isset($tokens[$stackPtr]['comment_opener'], $tokens[$stackPtr]['comment_closer'])) {
+            return false;
+        }
+
         $commentOpener = $tokens[$stackPtr]['comment_opener'];
         $commentCloser = $tokens[$stackPtr]['comment_closer'];
 

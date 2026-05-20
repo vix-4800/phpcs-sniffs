@@ -32,7 +32,7 @@ final class MethodChainingPerLineSniff implements Sniff
     /**
      * {@inheritDoc}
      */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
         if (!$this->isMultiLineOperator($phpcsFile, $stackPtr)) {
             return;
@@ -144,9 +144,9 @@ final class MethodChainingPerLineSniff implements Sniff
     /**
      * Checks whether two operators share the same chain context (scope and parenthesis nesting).
      *
-     * @param array<int, array<string, mixed>> $tokens
-     * @param int                              $firstPtr
-     * @param int                              $secondPtr
+     * @param CsTokens $tokens
+     * @param int      $firstPtr
+     * @param int      $secondPtr
      */
     private function isSameChainContext(array $tokens, int $firstPtr, int $secondPtr): bool
     {
@@ -157,11 +157,11 @@ final class MethodChainingPerLineSniff implements Sniff
     /**
      * Creates a comparable context key from nested parenthesis and conditions info.
      *
-     * @param array<string, mixed> $token
+     * @param CsToken $token
      */
     private function buildContextKey(array $token): string
     {
-        $conditions = $token['conditions'] ?? [];
+        $conditions = $token['conditions'];
         $nested = $token['nested_parenthesis'] ?? [];
 
         $conditionPart = $conditions === [] ? '' : implode(',', array_keys($conditions));

@@ -47,7 +47,7 @@ final class RequireStringableInterfaceSniff implements Sniff
                 continue;
             }
 
-            if ($this->findDirectClassOwner($tokens[$ptr]['conditions'] ?? []) !== $classPtr) {
+            if ($this->findDirectClassOwner($tokens[$ptr]['conditions']) !== $classPtr) {
                 continue;
             }
 
@@ -63,6 +63,9 @@ final class RequireStringableInterfaceSniff implements Sniff
 
     private function implementsStringable(File $phpcsFile, int $classPtr): bool
     {
+        /**
+         * @var false|list<string> $implementedInterfaceNames
+         */
         $implementedInterfaceNames = $phpcsFile->findImplementedInterfaceNames($classPtr);
 
         if (!is_array($implementedInterfaceNames)) {

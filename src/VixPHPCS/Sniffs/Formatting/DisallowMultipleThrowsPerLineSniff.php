@@ -33,7 +33,7 @@ final class DisallowMultipleThrowsPerLineSniff implements Sniff
     /**
      * {@inheritDoc}
      */
-    public function process(File $phpcsFile, $stackPtr): void
+    public function process(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
 

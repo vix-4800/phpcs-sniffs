@@ -60,7 +60,7 @@ final class RequireFinalTraitMethodsSniff implements Sniff
         }
 
         $tokens = $phpcsFile->getTokens();
-        $conditions = $tokens[$stackPtr]['conditions'] ?? [];
+        $conditions = $tokens[$stackPtr]['conditions'];
 
         foreach (array_reverse($conditions, true) as $conditionCode) {
             if (!isset(Tokens::OO_SCOPE_TOKENS[$conditionCode])) {

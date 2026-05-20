@@ -77,7 +77,7 @@ final class DisallowCountInLoopSniff implements Sniff
                 continue;
             }
 
-            $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, (int) $i - 1, null, true);
+            $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, $i - 1, null, true);
 
             if ($prevToken !== false) {
                 $prevTokenCode = $tokens[$prevToken]['code'];

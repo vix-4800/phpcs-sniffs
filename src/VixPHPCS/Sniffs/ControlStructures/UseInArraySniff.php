@@ -131,7 +131,7 @@ final class UseInArraySniff implements Sniff
             while ($ptr !== false && isset($tokens[$ptr])) {
                 $code = $tokens[$ptr]['code'];
 
-                if (!in_array($code, [T_VARIABLE, T_STRING, T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR,], true)) {
+                if (!in_array($code, [T_VARIABLE, T_STRING, T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR], true)) {
                     break;
                 }
 
@@ -144,7 +144,7 @@ final class UseInArraySniff implements Sniff
             while ($ptr !== false && isset($tokens[$ptr])) {
                 $code = $tokens[$ptr]['code'];
 
-                if (!in_array($code, [T_VARIABLE, T_STRING, T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR,], true)) {
+                if (!in_array($code, [T_VARIABLE, T_STRING, T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR], true)) {
                     break;
                 }
 
@@ -204,17 +204,17 @@ final class UseInArraySniff implements Sniff
     /**
      * Finds the next comparison of the specified type after the current position.
      *
-     * @param File     $phpcsFile
-     * @param int      $stackPtr
-     * @param int      $comparisonType The comparison type to look for (T_IS_IDENTICAL or T_IS_NOT_IDENTICAL)
-     * @param int|null $endPtr         Maximum position to search until
+     * @param File       $phpcsFile
+     * @param int        $stackPtr
+     * @param int|string $comparisonType The comparison type to look for (T_IS_IDENTICAL or T_IS_NOT_IDENTICAL)
+     * @param int|null   $endPtr         Maximum position to search until
      *
      * @return false|int Position of the comparison or false if not found
      */
     private function findNextComparison(
         File $phpcsFile,
         int $stackPtr,
-        int $comparisonType,
+        int|string $comparisonType,
         ?int $endPtr = null,
     ): false|int {
         return $phpcsFile->findNext(
