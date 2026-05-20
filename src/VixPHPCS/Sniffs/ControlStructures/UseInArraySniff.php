@@ -26,7 +26,7 @@ final class UseInArraySniff implements Sniff
     public int $minComparisons = 3;
 
     /**
-     * Configurable threshold that overrides minComparisons when set.
+     * Minimum number of repeated comparisons required before reporting.
      */
     public ?int $threshold = null;
 
@@ -234,6 +234,8 @@ final class UseInArraySniff implements Sniff
 
     /**
      * Returns the configured comparison threshold.
+     *
+     * @return int The active comparison threshold value.
      */
     private function getThreshold(): int
     {
