@@ -9,6 +9,9 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
 - [VixPHPCS Sniff Catalog](#vixphpcs-sniff-catalog)
   - [Table of Contents](#table-of-contents)
   - [Arrays](#arrays)
+    - [VixPHPCS.Arrays.DisallowMixedArrayKeys](#vixphpcsarraysdisallowmixedarraykeys)
+    - [VixPHPCS.Arrays.MixedArrayKeyTypes](#vixphpcsarraysmixedarraykeytypes)
+    - [VixPHPCS.Arrays.DisallowNonIntStringArrayKey](#vixphpcsarraysdisallownonintstringarraykey)
     - [VixPHPCS.Arrays.DuplicateArrayKey](#vixphpcsarraysduplicatearraykey)
   - [Attributes](#attributes)
     - [VixPHPCS.Attributes.ForbiddenAttributes](#vixphpcsattributesforbiddenattributes)
@@ -33,6 +36,7 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
   - [Objects](#objects)
     - [VixPHPCS.Objects.DisallowReturnInConstructorDestructor](#vixphpcsobjectsdisallowreturninconstructordestructor)
     - [VixPHPCS.Objects.StaticInFinalClass](#vixphpcsobjectsstaticinfinalclass)
+    - [VixPHPCS.Objects.RequireStringableInterface](#vixphpcsobjectsrequirestringableinterface)
     - [VixPHPCS.Objects.DisallowVariableStaticProperty](#vixphpcsobjectsdisallowvariablestaticproperty)
   - [Operators](#operators)
     - [VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation](#vixphpcsoperatorspreferbooleancastoverdoublenegation)
@@ -48,6 +52,101 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck](#vixphpcsyii2preferisguestoveruseridcheck)
 
 ## Arrays
+
+### VixPHPCS.Arrays.DisallowMixedArrayKeys
+
+**Level:** Warning
+
+Disallows array literals that combine keyed (`'name' => 'Anton'`) and unkeyed (`42`) elements. Mixed arrays are harder to scan and often hide accidental omissions of a key.
+
+**Bad:**
+
+```php
+$user = [
+    'name' => 'Anton',
+    42,
+];
+
+$settings = array(
+    'theme' => 'dark',
+    true,
+);
+```
+
+**Good:**
+
+```php
+$user = [
+    'name' => 'Anton',
+    'age' => 42,
+];
+
+$values = [
+    'Anton',
+    42,
+];
+```
+
+### VixPHPCS.Arrays.MixedArrayKeyTypes
+
+**Level:** Warning
+
+Flags array literals that mix integer and string keys. Keeping one key style per array makes shapes easier to scan and avoids hidden key casting rules.
+
+**Bad:**
+
+```php
+$data = [
+    'id' => 1,
+    0 => 'Anton',
+];
+
+$data = [
+    'id' => 1,
+    'Anton',
+];
+```
+
+**Good:**
+
+```php
+$data = [
+    'id' => 1,
+    'name' => 'Anton',
+];
+
+$data = [
+    0 => 'first',
+    1 => 'second',
+    'third',
+];
+```
+
+### VixPHPCS.Arrays.DisallowNonIntStringArrayKey
+
+**Level:** Error
+
+Requires explicit array keys to be declared as integer or string literals. This prevents implicit key casting from values such as floats, booleans, `null`, or other expressions that make array shapes harder to reason about.
+
+**Bad:**
+
+```php
+return [
+    true => 'enabled',
+    1.5 => 'half',
+    $dynamicKey => 'value',
+];
+```
+
+**Good:**
+
+```php
+return [
+    1 => 'enabled',
+    -2 => 'disabled',
+    'status' => 'active',
+];
+```
 
 ### VixPHPCS.Arrays.DuplicateArrayKey
 
@@ -640,6 +739,36 @@ final class UserFactory
     public static function make(): self
     {
         return new self();
+    }
+}
+```
+
+### VixPHPCS.Objects.RequireStringableInterface
+
+**Level:** Warning
+
+Requires classes that declare `__toString()` to also implement `Stringable`. This keeps the contract explicit for consumers and matches the intent of PHP's dedicated string-conversion interface.
+
+**Bad:**
+
+```php
+class Example
+{
+    public function __toString(): string
+    {
+        return 'example';
+    }
+}
+```
+
+**Good:**
+
+```php
+class Example implements Stringable
+{
+    public function __toString(): string
+    {
+        return 'example';
     }
 }
 ```

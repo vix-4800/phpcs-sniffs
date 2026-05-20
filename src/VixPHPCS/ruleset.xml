@@ -3,6 +3,18 @@
     name="VixPHPCS">
     <description>VixPHPCS Coding Standard - Main ruleset</description>
 
+    <rule ref="VixPHPCS.Arrays.DisallowMixedArrayKeys">
+        <type>warning</type>
+    </rule>
+
+    <rule ref="VixPHPCS.Arrays.MixedArrayKeyTypes">
+        <type>warning</type>
+    </rule>
+
+    <rule ref="VixPHPCS.Arrays.DisallowNonIntStringArrayKey">
+        <type>error</type>
+    </rule>
+
     <rule ref="VixPHPCS.Arrays.DuplicateArrayKey">
         <type>error</type>
     </rule>
@@ -60,6 +72,10 @@
     </rule>
 
     <rule ref="VixPHPCS.Objects.StaticInFinalClass">
+        <type>warning</type>
+    </rule>
+
+    <rule ref="VixPHPCS.Objects.RequireStringableInterface">
         <type>warning</type>
     </rule>
 
