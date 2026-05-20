@@ -29,6 +29,7 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
   - [Functions](#functions)
     - [VixPHPCS.Functions.DisallowCastFunctions](#vixphpcsfunctionsdisallowcastfunctions)
     - [VixPHPCS.Functions.DisallowHttpFileGetContents](#vixphpcsfunctionsdisallowhttpfilegetcontents)
+    - [VixPHPCS.Functions.DisallowNullableBoolReturnType](#vixphpcsfunctionsdisallownullableboolreturntype)
     - [VixPHPCS.Functions.PreferModernStringFunctions](#vixphpcsfunctionsprefermodernstringfunctions)
     - [VixPHPCS.Functions.PreferJsonValidate](#vixphpcsfunctionspreferjsonvalidate)
   - [Objects](#objects)
@@ -539,6 +540,46 @@ $feed = file_get_contents('http://example.com/feed.xml');
 ```php
 $response = $httpClient->request('GET', 'https://example.com/api');
 $feed = $httpClient->request('GET', 'http://example.com/feed.xml');
+```
+
+### VixPHPCS.Functions.DisallowNullableBoolReturnType
+
+**Level:** Error
+
+Rejects nullable `bool` return declarations in both native signatures and `@return` annotations. If a function or method returns a boolean state, it should return `true` or `false`, not `null`.
+
+**Bad:**
+
+```php
+function isEnabled(): ?bool
+{
+    return null;
+}
+
+/**
+ * @return bool|null
+ */
+function isVisible()
+{
+    return null;
+}
+```
+
+**Good:**
+
+```php
+function isEnabled(): bool
+{
+    return false;
+}
+
+/**
+ * @return bool
+ */
+function isVisible(): bool
+{
+    return true;
+}
 ```
 
 ### VixPHPCS.Functions.PreferModernStringFunctions
