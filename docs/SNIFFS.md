@@ -355,6 +355,7 @@ if (!in_array($status, ['pending', 'processing', 'queued'], true)) {
 **Parameters:**
 
 - `threshold`: minimum number of repeated comparisons required before the sniff reports a condition. Default: `3`.
+- `minComparisons`: legacy alias for `threshold`. If both are set, `threshold` takes precedence.
 
 ```xml
 <rule ref="VixPHPCS.ControlStructures.UseInArray">
