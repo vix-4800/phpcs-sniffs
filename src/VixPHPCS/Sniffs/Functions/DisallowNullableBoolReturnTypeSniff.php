@@ -130,7 +130,12 @@ final class DisallowNullableBoolReturnTypeSniff implements Sniff
     private function getDocCommentReturnType(File $phpcsFile, int $stackPtr): ?string
     {
         $tokens = $phpcsFile->getTokens();
-        $commentCloser = $tokens[$stackPtr]['comment_closer'];
+        $commentCloser = $tokens[$stackPtr]['comment_closer'] ?? null;
+
+        if ($commentCloser === null) {
+            return null;
+        }
+
         $nextToken = $phpcsFile->findNext(T_DOC_COMMENT_WHITESPACE, $stackPtr + 1, $commentCloser, true);
 
         if ($nextToken === false) {
