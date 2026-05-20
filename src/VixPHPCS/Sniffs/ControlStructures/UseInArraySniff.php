@@ -26,6 +26,11 @@ final class UseInArraySniff implements Sniff
     public int $minComparisons = 3;
 
     /**
+     * Minimum number of comparisons to trigger the sniff.
+     */
+    public ?int $threshold = null;
+
+    /**
      * Returns an array of tokens this test wants to listen for.
      *
      * @return list<int|string>
@@ -84,7 +89,9 @@ final class UseInArraySniff implements Sniff
             $currentPtr = $nextComparison;
         }
 
-        if (count($comparisons) < $this->minComparisons) {
+        $threshold = $this->getThreshold();
+
+        if (count($comparisons) < $threshold) {
             return;
         }
 
@@ -223,5 +230,17 @@ final class UseInArraySniff implements Sniff
             $endPtr,
             false,
         );
+    }
+
+    /**
+     * Returns the configured comparison threshold.
+     */
+    private function getThreshold(): int
+    {
+        if ($this->threshold !== null) {
+            return $this->threshold;
+        }
+
+        return $this->minComparisons;
     }
 }

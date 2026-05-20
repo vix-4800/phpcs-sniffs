@@ -194,4 +194,71 @@ if ($var === 4 || $var === 5 || $var === 6) {
         $warningCount = substr_count($result, 'in_array()');
         $this->assertGreaterThanOrEqual(2, $warningCount, 'Expected at least 2 warnings for 2 separate if statements');
     }
+
+    /**
+     * Test that a custom threshold can require more comparisons.
+     */
+    public function testCustomThresholdCanRequireMoreComparisons(): void
+    {
+        $result = $this->runPhpcsWithThreshold('<?php
+if ($site_id === 1 || $site_id === 2 || $site_id === 3) {
+    echo "match";
+}', 4);
+
+        $this->assertNoViolations($result);
+    }
+
+    /**
+     * Test that a custom threshold can allow fewer comparisons.
+     */
+    public function testCustomThresholdCanAllowFewerComparisons(): void
+    {
+        $result = $this->runPhpcsWithThreshold('<?php
+if ($site_id === 1 || $site_id === 2) {
+    echo "match";
+}', 2);
+
+        $this->assertContainsWarning($result, 'in_array()');
+    }
+
+    /**
+     * Run PHPCS with a custom threshold for the UseInArray sniff.
+     */
+    private function runPhpcsWithThreshold(string $content, int $threshold): string
+    {
+        $sniffPath = __DIR__ . '/../../../src/VixPHPCS/Sniffs/ControlStructures/UseInArraySniff.php';
+        $ruleset = <<<XML
+            <?xml version="1.0"?>
+            <ruleset name="Test">
+                <rule ref="{$sniffPath}">
+                    <properties>
+                        <property name="threshold" value="{$threshold}" />
+                    </properties>
+                </rule>
+            </ruleset>
+            XML;
+
+        $rulesetFile = tempnam(sys_get_temp_dir(), 'phpcs_ruleset_');
+        $rulesetPath = $rulesetFile . '.xml';
+        rename($rulesetFile, $rulesetPath);
+        file_put_contents($rulesetPath, $ruleset);
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'phpcs_test_');
+        file_put_contents($tempFile, $content);
+
+        $phpcsPath = __DIR__ . '/../../../vendor/bin/phpcs';
+        $command = sprintf(
+            '%s --standard=%s --report-width=1000 %s 2>&1',
+            escapeshellarg($phpcsPath),
+            escapeshellarg($rulesetPath),
+            escapeshellarg($tempFile),
+        );
+
+        $output = shell_exec($command);
+
+        unlink($rulesetPath);
+        unlink($tempFile);
+
+        return $output ?? '';
+    }
 }
