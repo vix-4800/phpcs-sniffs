@@ -11,7 +11,15 @@
         <type>error</type>
     </rule>
 
+    <rule ref="VixPHPCS.ControlStructures.DisallowLogicalOperators">
+        <type>warning</type>
+    </rule>
+
     <rule ref="VixPHPCS.ControlStructures.UseInArray">
+        <type>warning</type>
+    </rule>
+
+    <rule ref="VixPHPCS.Constants.UppercaseMagicConstants">
         <type>warning</type>
     </rule>
 
@@ -52,6 +60,10 @@
     </rule>
 
     <rule ref="VixPHPCS.Objects.StaticInFinalClass">
+        <type>warning</type>
+    </rule>
+
+    <rule ref="VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation">
         <type>warning</type>
     </rule>
 
