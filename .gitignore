@@ -13,13 +13,6 @@ composer.lock
 /phpstan.neon.dist
 /.phpstan/
 
-# PHP-CS-Fixer
-/.php-cs-fixer.cache
-/.php_cs.cache
-
-# Rector
-/.rector-tmp/
-
 # IDE
 /.idea/
 /.vscode/
