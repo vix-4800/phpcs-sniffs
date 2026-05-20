@@ -31,7 +31,7 @@ final class DisallowReturnInSetterSniff implements Sniff
     public function process(File $phpcsFile, int $stackPtr): void
     {
         $tokens = $phpcsFile->getTokens();
-        $methodPtr = $this->findDirectSetterMethodOwner($tokens[$stackPtr]['conditions'] ?? []);
+        $methodPtr = $this->findDirectSetterMethodOwner($tokens[$stackPtr]['conditions']);
 
         if ($methodPtr === null) {
             return;

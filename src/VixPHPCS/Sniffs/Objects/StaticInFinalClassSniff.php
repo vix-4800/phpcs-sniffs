@@ -49,7 +49,7 @@ final class StaticInFinalClassSniff implements Sniff
     private function findEnclosingClassPtr(File $phpcsFile, int $stackPtr): ?int
     {
         $tokens = $phpcsFile->getTokens();
-        $conditions = $tokens[$stackPtr]['conditions'] ?? [];
+        $conditions = $tokens[$stackPtr]['conditions'];
 
         foreach (array_reverse($conditions, true) as $conditionPtr => $conditionCode) {
             if ($conditionCode === T_CLASS) {

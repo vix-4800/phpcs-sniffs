@@ -47,7 +47,7 @@ final class RequireStringableInterfaceSniff implements Sniff
                 continue;
             }
 
-            if ($this->findDirectClassOwner($tokens[$ptr]['conditions'] ?? []) !== $classPtr) {
+            if ($this->findDirectClassOwner($tokens[$ptr]['conditions']) !== $classPtr) {
                 continue;
             }
 

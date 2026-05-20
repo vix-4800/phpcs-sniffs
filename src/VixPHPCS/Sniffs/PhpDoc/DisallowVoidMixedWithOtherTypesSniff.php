@@ -25,6 +25,10 @@ final class DisallowVoidMixedWithOtherTypesSniff implements Sniff
             return;
         }
 
+        if (!isset($tokens[$stackPtr]['comment_closer'])) {
+            return;
+        }
+
         $commentCloser = $tokens[$stackPtr]['comment_closer'];
         $nextToken = $phpcsFile->findNext(T_DOC_COMMENT_WHITESPACE, $stackPtr + 1, $commentCloser, true);
 

@@ -26,6 +26,10 @@ final class DeprecatedTagSniff implements Sniff
             return;
         }
 
+        if (!isset($tokens[$stackPtr]['comment_closer'])) {
+            return;
+        }
+
         $commentCloser = $tokens[$stackPtr]['comment_closer'];
 
         if ($this->findScopeOwner($phpcsFile, $commentCloser) === null) {
