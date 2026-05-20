@@ -27,6 +27,7 @@ final class UseInArraySniff implements Sniff
 
     /**
      * Minimum number of repeated comparisons required before reporting.
+     * Takes precedence over minComparisons when set.
      */
     public ?int $threshold = null;
 
