@@ -26,7 +26,7 @@ final class UseInArraySniff implements Sniff
     public int $minComparisons = 3;
 
     /**
-     * Minimum number of comparisons to trigger the sniff.
+     * Configurable threshold that overrides minComparisons when set.
      */
     public ?int $threshold = null;
 

@@ -238,26 +238,26 @@ if ($site_id === 1 || $site_id === 2) {
             </ruleset>
             XML;
 
-        $rulesetFile = tempnam(sys_get_temp_dir(), 'phpcs_ruleset_');
-        $rulesetPath = $rulesetFile . '.xml';
-        rename($rulesetFile, $rulesetPath);
-        file_put_contents($rulesetPath, $ruleset);
-
+        $rulesetPath = sprintf('%s/phpcs_ruleset_%s.xml', sys_get_temp_dir(), uniqid('', true));
         $tempFile = tempnam(sys_get_temp_dir(), 'phpcs_test_');
+
+        file_put_contents($rulesetPath, $ruleset);
         file_put_contents($tempFile, $content);
 
-        $phpcsPath = __DIR__ . '/../../../vendor/bin/phpcs';
-        $command = sprintf(
-            '%s --standard=%s --report-width=1000 %s 2>&1',
-            escapeshellarg($phpcsPath),
-            escapeshellarg($rulesetPath),
-            escapeshellarg($tempFile),
-        );
+        try {
+            $phpcsPath = __DIR__ . '/../../../vendor/bin/phpcs';
+            $command = sprintf(
+                '%s --standard=%s --report-width=1000 %s 2>&1',
+                escapeshellarg($phpcsPath),
+                escapeshellarg($rulesetPath),
+                escapeshellarg($tempFile),
+            );
 
-        $output = shell_exec($command);
-
-        unlink($rulesetPath);
-        unlink($tempFile);
+            $output = shell_exec($command);
+        } finally {
+            unlink($rulesetPath);
+            unlink($tempFile);
+        }
 
         return $output ?? '';
     }
