@@ -9,12 +9,19 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
 - [VixPHPCS Sniff Catalog](#vixphpcs-sniff-catalog)
   - [Table of Contents](#table-of-contents)
   - [Arrays](#arrays)
+    - [VixPHPCS.Arrays.DisallowMixedArrayKeys](#vixphpcsarraysdisallowmixedarraykeys)
+    - [VixPHPCS.Arrays.MixedArrayKeyTypes](#vixphpcsarraysmixedarraykeytypes)
+    - [VixPHPCS.Arrays.DisallowNonIntStringArrayKey](#vixphpcsarraysdisallownonintstringarraykey)
     - [VixPHPCS.Arrays.DuplicateArrayKey](#vixphpcsarraysduplicatearraykey)
   - [Attributes](#attributes)
     - [VixPHPCS.Attributes.ForbiddenAttributes](#vixphpcsattributesforbiddenattributes)
+  - [Constants](#constants)
+    - [VixPHPCS.Constants.UppercaseMagicConstants](#vixphpcsconstantsuppercasemagicconstants)
   - [Control Structures](#control-structures)
     - [VixPHPCS.ControlStructures.DisallowCountInLoop](#vixphpcscontrolstructuresdisallowcountinloop)
     - [VixPHPCS.ControlStructures.DisallowGotoStatement](#vixphpcscontrolstructuresdisallowgotostatement)
+    - [VixPHPCS.ControlStructures.DisallowSameKeyAndValueInForeach](#vixphpcscontrolstructuresdisallowsamekeyandvalueinforeach)
+    - [VixPHPCS.ControlStructures.DisallowLogicalOperators](#vixphpcscontrolstructuresdisallowlogicaloperators)
     - [VixPHPCS.ControlStructures.DisallowThrowInTernary](#vixphpcscontrolstructuresdisallowthrowinternary)
     - [VixPHPCS.ControlStructures.UseInArray](#vixphpcscontrolstructuresuseinarray)
   - [Formatting](#formatting)
@@ -28,8 +35,13 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Functions.PreferModernStringFunctions](#vixphpcsfunctionsprefermodernstringfunctions)
     - [VixPHPCS.Functions.PreferJsonValidate](#vixphpcsfunctionspreferjsonvalidate)
   - [Objects](#objects)
+    - [VixPHPCS.Objects.DisallowReturnInConstructorDestructor](#vixphpcsobjectsdisallowreturninconstructordestructor)
+    - [VixPHPCS.Objects.StaticInFinalClass](#vixphpcsobjectsstaticinfinalclass)
+    - [VixPHPCS.Objects.RequireStringableInterface](#vixphpcsobjectsrequirestringableinterface)
     - [VixPHPCS.Objects.DisallowVariableStaticProperty](#vixphpcsobjectsdisallowvariablestaticproperty)
     - [VixPHPCS.Objects.RequireFinalTraitMethods](#vixphpcsobjectsrequirefinaltraitmethods)
+  - [Operators](#operators)
+    - [VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation](#vixphpcsoperatorspreferbooleancastoverdoublenegation)
   - [PhpDoc](#phpdoc)
     - [VixPHPCS.PhpDoc.DeprecatedTag](#vixphpcsphpdocdeprecatedtag)
     - [VixPHPCS.PhpDoc.DisallowUnusedTemplate](#vixphpcsphpdocdisallowunusedtemplate)
@@ -42,6 +54,101 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck](#vixphpcsyii2preferisguestoveruseridcheck)
 
 ## Arrays
+
+### VixPHPCS.Arrays.DisallowMixedArrayKeys
+
+**Level:** Warning
+
+Disallows array literals that combine keyed (`'name' => 'Anton'`) and unkeyed (`42`) elements. Mixed arrays are harder to scan and often hide accidental omissions of a key.
+
+**Bad:**
+
+```php
+$user = [
+    'name' => 'Anton',
+    42,
+];
+
+$settings = array(
+    'theme' => 'dark',
+    true,
+);
+```
+
+**Good:**
+
+```php
+$user = [
+    'name' => 'Anton',
+    'age' => 42,
+];
+
+$values = [
+    'Anton',
+    42,
+];
+```
+
+### VixPHPCS.Arrays.MixedArrayKeyTypes
+
+**Level:** Warning
+
+Flags array literals that mix integer and string keys. Keeping one key style per array makes shapes easier to scan and avoids hidden key casting rules.
+
+**Bad:**
+
+```php
+$data = [
+    'id' => 1,
+    0 => 'Anton',
+];
+
+$data = [
+    'id' => 1,
+    'Anton',
+];
+```
+
+**Good:**
+
+```php
+$data = [
+    'id' => 1,
+    'name' => 'Anton',
+];
+
+$data = [
+    0 => 'first',
+    1 => 'second',
+    'third',
+];
+```
+
+### VixPHPCS.Arrays.DisallowNonIntStringArrayKey
+
+**Level:** Error
+
+Requires explicit array keys to be declared as integer or string literals. This prevents implicit key casting from values such as floats, booleans, `null`, or other expressions that make array shapes harder to reason about.
+
+**Bad:**
+
+```php
+return [
+    true => 'enabled',
+    1.5 => 'half',
+    $dynamicKey => 'value',
+];
+```
+
+**Good:**
+
+```php
+return [
+    1 => 'enabled',
+    -2 => 'disabled',
+    'status' => 'active',
+];
+```
 
 ### VixPHPCS.Arrays.DuplicateArrayKey
 
@@ -131,6 +238,32 @@ function calculate(): int
 </rule>
 ```
 
+## Constants
+
+### VixPHPCS.Constants.UppercaseMagicConstants
+
+**Level:** Warning
+
+Enforces uppercase spelling for PHP native magic constants. Mixed-case variants still work in PHP, but the canonical uppercase form is easier to scan and keeps built-in language constructs visually distinct from user-defined identifiers.
+
+**Bad:**
+
+```php
+$path = __file__;
+$directory = __Dir__;
+$method = __method__;
+```
+
+**Good:**
+
+```php
+$path = __FILE__;
+$directory = __DIR__;
+$method = __METHOD__;
+```
+
+This sniff checks PHP native magic constants such as `__CLASS__`, `__DIR__`, `__FILE__`, `__FUNCTION__`, `__LINE__`, `__METHOD__`, `__NAMESPACE__`, `__PROPERTY__`, and `__TRAIT__` when the active PHP runtime exposes the corresponding tokenizer tokens.
+
 ## Control Structures
 
 ### VixPHPCS.ControlStructures.DisallowCountInLoop
@@ -193,6 +326,62 @@ if ($failed) {
 }
 
 runTask();
+```
+
+### VixPHPCS.ControlStructures.DisallowSameKeyAndValueInForeach
+
+**Level:** Warning
+
+Warns when a `foreach` loop uses the same variable for both the key and value. Reusing one variable name for both positions hides the key immediately and makes the loop harder to read.
+
+**Bad:**
+
+```php
+foreach ($items as $item => $item) {
+    echo $item;
+}
+
+foreach ($items as $entry => &$entry) {
+    $entry = normalize($entry);
+}
+```
+
+**Good:**
+
+```php
+foreach ($items as $key => $item) {
+    echo $item;
+}
+
+foreach ($items as $entryKey => &$entry) {
+    $entry = normalize($entry);
+}
+```
+
+### VixPHPCS.ControlStructures.DisallowLogicalOperators
+
+**Level:** Warning
+
+Prefers the boolean `&&` and `||` operators over the logical `and` and `or` operators. The symbolic operators are more common in conditionals and avoid precedence surprises when mixed with assignments or other expressions.
+
+**Bad:**
+
+```php
+if ($isReady and $isValid) {
+    runTask();
+}
+
+$visible = $isPreview or $isAdmin;
+```
+
+**Good:**
+
+```php
+if ($isReady && $isValid) {
+    runTask();
+}
+
+$visible = $isPreview || $isAdmin;
 ```
 
 ### VixPHPCS.ControlStructures.DisallowThrowInTernary
@@ -516,6 +705,106 @@ $data = json_decode($json, true);
 
 ## Objects
 
+### VixPHPCS.Objects.DisallowReturnInConstructorDestructor
+
+**Level:** Error
+
+Rejects `return` statements inside `__construct()` and `__destruct()`. Object lifecycle methods should run to completion without explicit returns, and returning a value there is invalid PHP.
+
+**Bad:**
+
+```php
+class Example
+{
+    public function __construct()
+    {
+        return;
+    }
+
+    public function __destruct()
+    {
+        return $this->cleanup();
+    }
+}
+```
+
+**Good:**
+
+```php
+class Example
+{
+    public function __construct()
+    {
+        $this->boot();
+    }
+
+    public function __destruct()
+    {
+        $this->cleanup();
+    }
+}
+```
+
+### VixPHPCS.Objects.StaticInFinalClass
+
+**Level:** Warning
+
+Warns when a method inside a `final` class declares `static` as its return type. Because the class cannot be extended, `self` communicates the same type more directly.
+
+**Bad:**
+
+```php
+final class UserFactory
+{
+    public static function make(): static
+    {
+        return new self();
+    }
+}
+```
+
+**Good:**
+
+```php
+final class UserFactory
+{
+    public static function make(): self
+    {
+        return new self();
+    }
+}
+```
+
+### VixPHPCS.Objects.RequireStringableInterface
+
+**Level:** Warning
+
+Requires classes that declare `__toString()` to also implement `Stringable`. This keeps the contract explicit for consumers and matches the intent of PHP's dedicated string-conversion interface.
+
+**Bad:**
+
+```php
+class Example
+{
+    public function __toString(): string
+    {
+        return 'example';
+    }
+}
+```
+
+**Good:**
+
+```php
+class Example implements Stringable
+{
+    public function __toString(): string
+    {
+        return 'example';
+    }
+}
+```
+
 ### VixPHPCS.Objects.DisallowVariableStaticProperty
 
 **Level:** Warning
@@ -579,6 +868,28 @@ trait PublishesEvents
 
     abstract protected function logger(): LoggerInterface;
 }
+```
+
+## Operators
+
+### VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation
+
+**Level:** Warning
+
+Suggests an explicit `(bool)` cast instead of `!!` for boolean coercion. Cast syntax makes the intent clearer and avoids the visual noise of stacked negations.
+
+**Bad:**
+
+```php
+$isActive = !!$user->active;
+$hasItems = !!count($items);
+```
+
+**Good:**
+
+```php
+$isActive = (bool) $user->active;
+$hasItems = (bool) count($items);
 ```
 
 ## PhpDoc

@@ -46,6 +46,7 @@ Create a `phpcs.xml` file in your project root:
 ### VixPHPCS
 
 The package ships with the `VixPHPCS` ruleset plus additional standalone sniffs you can enable manually. See [docs/SNIFFS.md](docs/SNIFFS.md) for the full catalog, examples, and configurable parameters.
+
 ## Development
 
 ### Guidelines
@@ -53,7 +54,7 @@ The package ships with the `VixPHPCS` ruleset plus additional standalone sniffs 
 - All new sniffs must have tests
 - Follow the existing code style
 - Update documentation when necessary
-- Ensure all checks pass (`composer check`)
+- Ensure all checks pass (`composer test` and `composer static-analysis`)
 
 ## License
 
