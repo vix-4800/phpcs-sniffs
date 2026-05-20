@@ -29,8 +29,8 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Functions.PreferJsonValidate](#vixphpcsfunctionspreferjsonvalidate)
   - [Objects](#objects)
     - [VixPHPCS.Objects.DisallowReturnInConstructorDestructor](#vixphpcsobjectsdisallowreturninconstructordestructor)
-    - [VixPHPCS.Objects.DisallowVariableStaticProperty](#vixphpcsobjectsdisallowvariablestaticproperty)
     - [VixPHPCS.Objects.StaticInFinalClass](#vixphpcsobjectsstaticinfinalclass)
+    - [VixPHPCS.Objects.DisallowVariableStaticProperty](#vixphpcsobjectsdisallowvariablestaticproperty)
   - [PhpDoc](#phpdoc)
     - [VixPHPCS.PhpDoc.DeprecatedTag](#vixphpcsphpdocdeprecatedtag)
     - [VixPHPCS.PhpDoc.DisallowUnusedTemplate](#vixphpcsphpdocdisallowunusedtemplate)
@@ -557,26 +557,6 @@ class Example
 }
 ```
 
-### VixPHPCS.Objects.DisallowVariableStaticProperty
-
-**Level:** Warning
-
-Forbids static property access through an object variable such as `$object::$property`. Static state should always be accessed through a class name, `self`, or `static`.
-
-**Bad:**
-
-```php
-$toast = $model::$toastArray[$model->toast];
-$value = ($service)::$cache['key'];
-```
-
-**Good:**
-
-```php
-$toast = User::$toastArray[$model->toast];
-$value = self::$cache['key'];
-```
-
 ### VixPHPCS.Objects.StaticInFinalClass
 
 **Level:** Warning
@@ -605,6 +585,26 @@ final class UserFactory
         return new self();
     }
 }
+```
+
+### VixPHPCS.Objects.DisallowVariableStaticProperty
+
+**Level:** Warning
+
+Forbids static property access through an object variable such as `$object::$property`. Static state should always be accessed through a class name, `self`, or `static`.
+
+**Bad:**
+
+```php
+$toast = $model::$toastArray[$model->toast];
+$value = ($service)::$cache['key'];
+```
+
+**Good:**
+
+```php
+$toast = User::$toastArray[$model->toast];
+$value = self::$cache['key'];
 ```
 
 ## PhpDoc
