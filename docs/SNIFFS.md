@@ -9,6 +9,9 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
 - [VixPHPCS Sniff Catalog](#vixphpcs-sniff-catalog)
   - [Table of Contents](#table-of-contents)
   - [Arrays](#arrays)
+    - [VixPHPCS.Arrays.DisallowMixedArrayKeys](#vixphpcsarraysdisallowmixedarraykeys)
+    - [VixPHPCS.Arrays.MixedArrayKeyTypes](#vixphpcsarraysmixedarraykeytypes)
+    - [VixPHPCS.Arrays.DisallowNonIntStringArrayKey](#vixphpcsarraysdisallownonintstringarraykey)
     - [VixPHPCS.Arrays.DuplicateArrayKey](#vixphpcsarraysduplicatearraykey)
   - [Attributes](#attributes)
     - [VixPHPCS.Attributes.ForbiddenAttributes](#vixphpcsattributesforbiddenattributes)
@@ -17,6 +20,7 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
   - [Control Structures](#control-structures)
     - [VixPHPCS.ControlStructures.DisallowCountInLoop](#vixphpcscontrolstructuresdisallowcountinloop)
     - [VixPHPCS.ControlStructures.DisallowGotoStatement](#vixphpcscontrolstructuresdisallowgotostatement)
+    - [VixPHPCS.ControlStructures.DisallowSameKeyAndValueInForeach](#vixphpcscontrolstructuresdisallowsamekeyandvalueinforeach)
     - [VixPHPCS.ControlStructures.DisallowLogicalOperators](#vixphpcscontrolstructuresdisallowlogicaloperators)
     - [VixPHPCS.ControlStructures.DisallowThrowInTernary](#vixphpcscontrolstructuresdisallowthrowinternary)
     - [VixPHPCS.ControlStructures.UseInArray](#vixphpcscontrolstructuresuseinarray)
@@ -33,7 +37,10 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
   - [Objects](#objects)
     - [VixPHPCS.Objects.DisallowReturnInConstructorDestructor](#vixphpcsobjectsdisallowreturninconstructordestructor)
     - [VixPHPCS.Objects.DisallowReturnInSetter](#vixphpcsobjectsdisallowreturninsetter)
+    - [VixPHPCS.Objects.StaticInFinalClass](#vixphpcsobjectsstaticinfinalclass)
+    - [VixPHPCS.Objects.RequireStringableInterface](#vixphpcsobjectsrequirestringableinterface)
     - [VixPHPCS.Objects.DisallowVariableStaticProperty](#vixphpcsobjectsdisallowvariablestaticproperty)
+    - [VixPHPCS.Objects.RequireFinalTraitMethods](#vixphpcsobjectsrequirefinaltraitmethods)
   - [Operators](#operators)
     - [VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation](#vixphpcsoperatorspreferbooleancastoverdoublenegation)
   - [PhpDoc](#phpdoc)
@@ -48,6 +55,101 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck](#vixphpcsyii2preferisguestoveruseridcheck)
 
 ## Arrays
+
+### VixPHPCS.Arrays.DisallowMixedArrayKeys
+
+**Level:** Warning
+
+Disallows array literals that combine keyed (`'name' => 'Anton'`) and unkeyed (`42`) elements. Mixed arrays are harder to scan and often hide accidental omissions of a key.
+
+**Bad:**
+
+```php
+$user = [
+    'name' => 'Anton',
+    42,
+];
+
+$settings = array(
+    'theme' => 'dark',
+    true,
+);
+```
+
+**Good:**
+
+```php
+$user = [
+    'name' => 'Anton',
+    'age' => 42,
+];
+
+$values = [
+    'Anton',
+    42,
+];
+```
+
+### VixPHPCS.Arrays.MixedArrayKeyTypes
+
+**Level:** Warning
+
+Flags array literals that mix integer and string keys. Keeping one key style per array makes shapes easier to scan and avoids hidden key casting rules.
+
+**Bad:**
+
+```php
+$data = [
+    'id' => 1,
+    0 => 'Anton',
+];
+
+$data = [
+    'id' => 1,
+    'Anton',
+];
+```
+
+**Good:**
+
+```php
+$data = [
+    'id' => 1,
+    'name' => 'Anton',
+];
+
+$data = [
+    0 => 'first',
+    1 => 'second',
+    'third',
+];
+```
+
+### VixPHPCS.Arrays.DisallowNonIntStringArrayKey
+
+**Level:** Error
+
+Requires explicit array keys to be declared as integer or string literals. This prevents implicit key casting from values such as floats, booleans, `null`, or other expressions that make array shapes harder to reason about.
+
+**Bad:**
+
+```php
+return [
+    true => 'enabled',
+    1.5 => 'half',
+    $dynamicKey => 'value',
+];
+```
+
+**Good:**
+
+```php
+return [
+    1 => 'enabled',
+    -2 => 'disabled',
+    'status' => 'active',
+];
+```
 
 ### VixPHPCS.Arrays.DuplicateArrayKey
 
@@ -225,6 +327,36 @@ if ($failed) {
 }
 
 runTask();
+```
+
+### VixPHPCS.ControlStructures.DisallowSameKeyAndValueInForeach
+
+**Level:** Warning
+
+Warns when a `foreach` loop uses the same variable for both the key and value. Reusing one variable name for both positions hides the key immediately and makes the loop harder to read.
+
+**Bad:**
+
+```php
+foreach ($items as $item => $item) {
+    echo $item;
+}
+
+foreach ($items as $entry => &$entry) {
+    $entry = normalize($entry);
+}
+```
+
+**Good:**
+
+```php
+foreach ($items as $key => $item) {
+    echo $item;
+}
+
+foreach ($items as $entryKey => &$entry) {
+    $entry = normalize($entry);
+}
 ```
 
 ### VixPHPCS.ControlStructures.DisallowLogicalOperators
@@ -654,6 +786,66 @@ class Example
 }
 ```
 
+### VixPHPCS.Objects.StaticInFinalClass
+
+**Level:** Warning
+
+Warns when a method inside a `final` class declares `static` as its return type. Because the class cannot be extended, `self` communicates the same type more directly.
+
+**Bad:**
+
+```php
+final class UserFactory
+{
+    public static function make(): static
+    {
+        return new self();
+    }
+}
+```
+
+**Good:**
+
+```php
+final class UserFactory
+{
+    public static function make(): self
+    {
+        return new self();
+    }
+}
+```
+
+### VixPHPCS.Objects.RequireStringableInterface
+
+**Level:** Warning
+
+Requires classes that declare `__toString()` to also implement `Stringable`. This keeps the contract explicit for consumers and matches the intent of PHP's dedicated string-conversion interface.
+
+**Bad:**
+
+```php
+class Example
+{
+    public function __toString(): string
+    {
+        return 'example';
+    }
+}
+```
+
+**Good:**
+
+```php
+class Example implements Stringable
+{
+    public function __toString(): string
+    {
+        return 'example';
+    }
+}
+```
+
 ### VixPHPCS.Objects.DisallowVariableStaticProperty
 
 **Level:** Warning
@@ -672,6 +864,51 @@ $value = ($service)::$cache['key'];
 ```php
 $toast = User::$toastArray[$model->toast];
 $value = self::$cache['key'];
+```
+
+### VixPHPCS.Objects.RequireFinalTraitMethods
+
+**Level:** Warning
+
+Requires concrete trait methods that are not private to be declared `final`. This keeps trait behavior stable and makes intended extension points explicit through private or abstract methods instead of silent overrides.
+
+**Bad:**
+
+```php
+trait PublishesEvents
+{
+    public function dispatchEvent(string $eventName): void
+    {
+    }
+
+    protected static function normalizePayload(array $payload): array
+    {
+        return $payload;
+    }
+}
+```
+
+**Good:**
+
+```php
+trait PublishesEvents
+{
+    final public function dispatchEvent(string $eventName): void
+    {
+    }
+
+    final protected static function normalizePayload(array $payload): array
+    {
+        return $payload;
+    }
+
+    private function buildChannelName(): string
+    {
+        return 'events';
+    }
+
+    abstract protected function logger(): LoggerInterface;
+}
 ```
 
 ## Operators
