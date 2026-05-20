@@ -35,6 +35,7 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Functions.PreferJsonValidate](#vixphpcsfunctionspreferjsonvalidate)
   - [Objects](#objects)
     - [VixPHPCS.Objects.DisallowReturnInConstructorDestructor](#vixphpcsobjectsdisallowreturninconstructordestructor)
+    - [VixPHPCS.Objects.StaticInFinalClass](#vixphpcsobjectsstaticinfinalclass)
     - [VixPHPCS.Objects.RequireStringableInterface](#vixphpcsobjectsrequirestringableinterface)
     - [VixPHPCS.Objects.DisallowVariableStaticProperty](#vixphpcsobjectsdisallowvariablestaticproperty)
   - [Operators](#operators)
@@ -708,6 +709,36 @@ class Example
     public function __destruct()
     {
         $this->cleanup();
+    }
+}
+```
+
+### VixPHPCS.Objects.StaticInFinalClass
+
+**Level:** Warning
+
+Warns when a method inside a `final` class declares `static` as its return type. Because the class cannot be extended, `self` communicates the same type more directly.
+
+**Bad:**
+
+```php
+final class UserFactory
+{
+    public static function make(): static
+    {
+        return new self();
+    }
+}
+```
+
+**Good:**
+
+```php
+final class UserFactory
+{
+    public static function make(): self
+    {
+        return new self();
     }
 }
 ```
