@@ -31,6 +31,10 @@
         <type>warning</type>
     </rule>
 
+    <rule ref="VixPHPCS.ControlStructures.DisallowSameKeyAndValueInForeach">
+        <type>warning</type>
+    </rule>
+
     <rule ref="VixPHPCS.Constants.UppercaseMagicConstants">
         <type>warning</type>
     </rule>

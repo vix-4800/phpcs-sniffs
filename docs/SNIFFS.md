@@ -20,6 +20,7 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
   - [Control Structures](#control-structures)
     - [VixPHPCS.ControlStructures.DisallowCountInLoop](#vixphpcscontrolstructuresdisallowcountinloop)
     - [VixPHPCS.ControlStructures.DisallowGotoStatement](#vixphpcscontrolstructuresdisallowgotostatement)
+    - [VixPHPCS.ControlStructures.DisallowSameKeyAndValueInForeach](#vixphpcscontrolstructuresdisallowsamekeyandvalueinforeach)
     - [VixPHPCS.ControlStructures.DisallowLogicalOperators](#vixphpcscontrolstructuresdisallowlogicaloperators)
     - [VixPHPCS.ControlStructures.DisallowThrowInTernary](#vixphpcscontrolstructuresdisallowthrowinternary)
     - [VixPHPCS.ControlStructures.UseInArray](#vixphpcscontrolstructuresuseinarray)
@@ -324,6 +325,36 @@ if ($failed) {
 }
 
 runTask();
+```
+
+### VixPHPCS.ControlStructures.DisallowSameKeyAndValueInForeach
+
+**Level:** Warning
+
+Warns when a `foreach` loop uses the same variable for both the key and value. Reusing one variable name for both positions hides the key immediately and makes the loop harder to read.
+
+**Bad:**
+
+```php
+foreach ($items as $item => $item) {
+    echo $item;
+}
+
+foreach ($items as $entry => &$entry) {
+    $entry = normalize($entry);
+}
+```
+
+**Good:**
+
+```php
+foreach ($items as $key => $item) {
+    echo $item;
+}
+
+foreach ($items as $entryKey => &$entry) {
+    $entry = normalize($entry);
+}
 ```
 
 ### VixPHPCS.ControlStructures.DisallowLogicalOperators
