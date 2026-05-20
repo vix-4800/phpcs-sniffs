@@ -32,6 +32,7 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Functions.PreferJsonValidate](#vixphpcsfunctionspreferjsonvalidate)
   - [Objects](#objects)
     - [VixPHPCS.Objects.DisallowReturnInConstructorDestructor](#vixphpcsobjectsdisallowreturninconstructordestructor)
+    - [VixPHPCS.Objects.DisallowReturnInSetter](#vixphpcsobjectsdisallowreturninsetter)
     - [VixPHPCS.Objects.DisallowVariableStaticProperty](#vixphpcsobjectsdisallowvariablestaticproperty)
   - [Operators](#operators)
     - [VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation](#vixphpcsoperatorspreferbooleancastoverdoublenegation)
@@ -609,6 +610,46 @@ class Example
     public function __destruct()
     {
         $this->cleanup();
+    }
+}
+```
+
+### VixPHPCS.Objects.DisallowReturnInSetter
+
+**Level:** Error
+
+Rejects `return` statements inside setter-like methods whose names match `set...()`. Setters should update object state and finish normally instead of returning early or returning a value for chaining.
+
+**Bad:**
+
+```php
+class Example
+{
+    public function setName(string $name): void
+    {
+        return;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        return $this;
+    }
+}
+```
+
+**Good:**
+
+```php
+class Example
+{
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function setEnabled(bool $enabled): void
+    {
+        $this->enabled = $enabled;
     }
 }
 ```

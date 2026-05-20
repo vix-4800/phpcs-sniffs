@@ -67,6 +67,10 @@
         <type>error</type>
     </rule>
 
+    <rule ref="VixPHPCS.Objects.DisallowReturnInSetter">
+        <type>error</type>
+    </rule>
+
     <rule ref="VixPHPCS.Attributes.ForbiddenAttributes">
         <type>warning</type>
         <properties>
