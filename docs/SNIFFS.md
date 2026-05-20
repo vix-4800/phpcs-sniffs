@@ -39,6 +39,7 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Objects.StaticInFinalClass](#vixphpcsobjectsstaticinfinalclass)
     - [VixPHPCS.Objects.RequireStringableInterface](#vixphpcsobjectsrequirestringableinterface)
     - [VixPHPCS.Objects.DisallowVariableStaticProperty](#vixphpcsobjectsdisallowvariablestaticproperty)
+    - [VixPHPCS.Objects.RequireFinalTraitMethods](#vixphpcsobjectsrequirefinaltraitmethods)
   - [Operators](#operators)
     - [VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation](#vixphpcsoperatorspreferbooleancastoverdoublenegation)
   - [PhpDoc](#phpdoc)
@@ -822,6 +823,51 @@ $value = ($service)::$cache['key'];
 ```php
 $toast = User::$toastArray[$model->toast];
 $value = self::$cache['key'];
+```
+
+### VixPHPCS.Objects.RequireFinalTraitMethods
+
+**Level:** Warning
+
+Requires concrete trait methods that are not private to be declared `final`. This keeps trait behavior stable and makes intended extension points explicit through private or abstract methods instead of silent overrides.
+
+**Bad:**
+
+```php
+trait PublishesEvents
+{
+    public function dispatchEvent(string $eventName): void
+    {
+    }
+
+    protected static function normalizePayload(array $payload): array
+    {
+        return $payload;
+    }
+}
+```
+
+**Good:**
+
+```php
+trait PublishesEvents
+{
+    final public function dispatchEvent(string $eventName): void
+    {
+    }
+
+    final protected static function normalizePayload(array $payload): array
+    {
+        return $payload;
+    }
+
+    private function buildChannelName(): string
+    {
+        return 'events';
+    }
+
+    abstract protected function logger(): LoggerInterface;
+}
 ```
 
 ## Operators
