@@ -7,11 +7,23 @@
         <type>error</type>
     </rule>
 
+    <rule ref="VixPHPCS.Arrays.DuplicateArrayKey">
+        <type>error</type>
+    </rule>
+
     <rule ref="VixPHPCS.ControlStructures.DisallowThrowInTernary">
         <type>error</type>
     </rule>
 
+    <rule ref="VixPHPCS.ControlStructures.DisallowLogicalOperators">
+        <type>warning</type>
+    </rule>
+
     <rule ref="VixPHPCS.ControlStructures.UseInArray">
+        <type>warning</type>
+    </rule>
+
+    <rule ref="VixPHPCS.Constants.UppercaseMagicConstants">
         <type>warning</type>
     </rule>
 
@@ -49,6 +61,14 @@
 
     <rule ref="VixPHPCS.Objects.DisallowVariableStaticProperty">
         <type>warning</type>
+    </rule>
+
+    <rule ref="VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation">
+        <type>warning</type>
+    </rule>
+
+    <rule ref="VixPHPCS.Objects.DisallowReturnInConstructorDestructor">
+        <type>error</type>
     </rule>
 
     <rule ref="VixPHPCS.Attributes.ForbiddenAttributes">

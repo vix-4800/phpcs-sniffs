@@ -10,11 +10,15 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
   - [Table of Contents](#table-of-contents)
   - [Arrays](#arrays)
     - [VixPHPCS.Arrays.DisallowNonIntStringArrayKey](#vixphpcsarraysdisallownonintstringarraykey)
+    - [VixPHPCS.Arrays.DuplicateArrayKey](#vixphpcsarraysduplicatearraykey)
   - [Attributes](#attributes)
     - [VixPHPCS.Attributes.ForbiddenAttributes](#vixphpcsattributesforbiddenattributes)
+  - [Constants](#constants)
+    - [VixPHPCS.Constants.UppercaseMagicConstants](#vixphpcsconstantsuppercasemagicconstants)
   - [Control Structures](#control-structures)
     - [VixPHPCS.ControlStructures.DisallowCountInLoop](#vixphpcscontrolstructuresdisallowcountinloop)
     - [VixPHPCS.ControlStructures.DisallowGotoStatement](#vixphpcscontrolstructuresdisallowgotostatement)
+    - [VixPHPCS.ControlStructures.DisallowLogicalOperators](#vixphpcscontrolstructuresdisallowlogicaloperators)
     - [VixPHPCS.ControlStructures.DisallowThrowInTernary](#vixphpcscontrolstructuresdisallowthrowinternary)
     - [VixPHPCS.ControlStructures.UseInArray](#vixphpcscontrolstructuresuseinarray)
   - [Formatting](#formatting)
@@ -28,7 +32,10 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Functions.PreferModernStringFunctions](#vixphpcsfunctionsprefermodernstringfunctions)
     - [VixPHPCS.Functions.PreferJsonValidate](#vixphpcsfunctionspreferjsonvalidate)
   - [Objects](#objects)
+    - [VixPHPCS.Objects.DisallowReturnInConstructorDestructor](#vixphpcsobjectsdisallowreturninconstructordestructor)
     - [VixPHPCS.Objects.DisallowVariableStaticProperty](#vixphpcsobjectsdisallowvariablestaticproperty)
+  - [Operators](#operators)
+    - [VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation](#vixphpcsoperatorspreferbooleancastoverdoublenegation)
   - [PhpDoc](#phpdoc)
     - [VixPHPCS.PhpDoc.DeprecatedTag](#vixphpcsphpdocdeprecatedtag)
     - [VixPHPCS.PhpDoc.DisallowUnusedTemplate](#vixphpcsphpdocdisallowunusedtemplate)
@@ -65,6 +72,40 @@ return [
     1 => 'enabled',
     -2 => 'disabled',
     'status' => 'active',
+];
+```
+
+### VixPHPCS.Arrays.DuplicateArrayKey
+
+**Level:** Error
+
+Detects duplicate explicit keys in array declarations. Duplicate keys silently overwrite earlier values, which usually means part of the array definition is dead code or a bug.
+
+**Bad:**
+
+```php
+$config = [
+    'host' => 'primary',
+    'host' => 'secondary',
+];
+
+$map = array(
+    '1' => 'one',
+    1 => 'duplicate',
+);
+```
+
+**Good:**
+
+```php
+$config = [
+    'host' => 'primary',
+    'port' => 443,
+];
+
+$map = [
+    '1' => 'one',
+    '01' => 'distinct string key',
 ];
 ```
 
@@ -121,6 +162,32 @@ function calculate(): int
     </properties>
 </rule>
 ```
+
+## Constants
+
+### VixPHPCS.Constants.UppercaseMagicConstants
+
+**Level:** Warning
+
+Enforces uppercase spelling for PHP native magic constants. Mixed-case variants still work in PHP, but the canonical uppercase form is easier to scan and keeps built-in language constructs visually distinct from user-defined identifiers.
+
+**Bad:**
+
+```php
+$path = __file__;
+$directory = __Dir__;
+$method = __method__;
+```
+
+**Good:**
+
+```php
+$path = __FILE__;
+$directory = __DIR__;
+$method = __METHOD__;
+```
+
+This sniff checks PHP native magic constants such as `__CLASS__`, `__DIR__`, `__FILE__`, `__FUNCTION__`, `__LINE__`, `__METHOD__`, `__NAMESPACE__`, `__PROPERTY__`, and `__TRAIT__` when the active PHP runtime exposes the corresponding tokenizer tokens.
 
 ## Control Structures
 
@@ -184,6 +251,32 @@ if ($failed) {
 }
 
 runTask();
+```
+
+### VixPHPCS.ControlStructures.DisallowLogicalOperators
+
+**Level:** Warning
+
+Prefers the boolean `&&` and `||` operators over the logical `and` and `or` operators. The symbolic operators are more common in conditionals and avoid precedence surprises when mixed with assignments or other expressions.
+
+**Bad:**
+
+```php
+if ($isReady and $isValid) {
+    runTask();
+}
+
+$visible = $isPreview or $isAdmin;
+```
+
+**Good:**
+
+```php
+if ($isReady && $isValid) {
+    runTask();
+}
+
+$visible = $isPreview || $isAdmin;
 ```
 
 ### VixPHPCS.ControlStructures.DisallowThrowInTernary
@@ -507,6 +600,46 @@ $data = json_decode($json, true);
 
 ## Objects
 
+### VixPHPCS.Objects.DisallowReturnInConstructorDestructor
+
+**Level:** Error
+
+Rejects `return` statements inside `__construct()` and `__destruct()`. Object lifecycle methods should run to completion without explicit returns, and returning a value there is invalid PHP.
+
+**Bad:**
+
+```php
+class Example
+{
+    public function __construct()
+    {
+        return;
+    }
+
+    public function __destruct()
+    {
+        return $this->cleanup();
+    }
+}
+```
+
+**Good:**
+
+```php
+class Example
+{
+    public function __construct()
+    {
+        $this->boot();
+    }
+
+    public function __destruct()
+    {
+        $this->cleanup();
+    }
+}
+```
+
 ### VixPHPCS.Objects.DisallowVariableStaticProperty
 
 **Level:** Warning
@@ -525,6 +658,28 @@ $value = ($service)::$cache['key'];
 ```php
 $toast = User::$toastArray[$model->toast];
 $value = self::$cache['key'];
+```
+
+## Operators
+
+### VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation
+
+**Level:** Warning
+
+Suggests an explicit `(bool)` cast instead of `!!` for boolean coercion. Cast syntax makes the intent clearer and avoids the visual noise of stacked negations.
+
+**Bad:**
+
+```php
+$isActive = !!$user->active;
+$hasItems = !!count($items);
+```
+
+**Good:**
+
+```php
+$isActive = (bool) $user->active;
+$hasItems = (bool) count($items);
 ```
 
 ## PhpDoc
