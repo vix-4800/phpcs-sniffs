@@ -9,6 +9,7 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
 - [VixPHPCS Sniff Catalog](#vixphpcs-sniff-catalog)
   - [Table of Contents](#table-of-contents)
   - [Arrays](#arrays)
+    - [VixPHPCS.Arrays.MixedArrayKeyTypes](#vixphpcsarraysmixedarraykeytypes)
     - [VixPHPCS.Arrays.DisallowNonIntStringArrayKey](#vixphpcsarraysdisallownonintstringarraykey)
     - [VixPHPCS.Arrays.DuplicateArrayKey](#vixphpcsarraysduplicatearraykey)
   - [Attributes](#attributes)
@@ -49,6 +50,41 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck](#vixphpcsyii2preferisguestoveruseridcheck)
 
 ## Arrays
+
+### VixPHPCS.Arrays.MixedArrayKeyTypes
+
+**Level:** Warning
+
+Flags array literals that mix integer and string keys. Keeping one key style per array makes shapes easier to scan and avoids hidden key casting rules.
+
+**Bad:**
+
+```php
+$data = [
+    'id' => 1,
+    0 => 'Anton',
+];
+
+$data = [
+    'id' => 1,
+    'Anton',
+];
+```
+
+**Good:**
+
+```php
+$data = [
+    'id' => 1,
+    'name' => 'Anton',
+];
+
+$data = [
+    0 => 'first',
+    1 => 'second',
+    'third',
+];
+```
 
 ### VixPHPCS.Arrays.DisallowNonIntStringArrayKey
 
