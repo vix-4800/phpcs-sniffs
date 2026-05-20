@@ -10,6 +10,7 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
   - [Table of Contents](#table-of-contents)
   - [Arrays](#arrays)
     - [VixPHPCS.Arrays.MixedArrayKeyTypes](#vixphpcsarraysmixedarraykeytypes)
+    - [VixPHPCS.Arrays.DisallowNonIntStringArrayKey](#vixphpcsarraysdisallownonintstringarraykey)
     - [VixPHPCS.Arrays.DuplicateArrayKey](#vixphpcsarraysduplicatearraykey)
   - [Attributes](#attributes)
     - [VixPHPCS.Attributes.ForbiddenAttributes](#vixphpcsattributesforbiddenattributes)
@@ -82,6 +83,32 @@ $data = [
     0 => 'first',
     1 => 'second',
     'third',
+];
+```
+
+### VixPHPCS.Arrays.DisallowNonIntStringArrayKey
+
+**Level:** Error
+
+Requires explicit array keys to be declared as integer or string literals. This prevents implicit key casting from values such as floats, booleans, `null`, or other expressions that make array shapes harder to reason about.
+
+**Bad:**
+
+```php
+return [
+    true => 'enabled',
+    1.5 => 'half',
+    $dynamicKey => 'value',
+];
+```
+
+**Good:**
+
+```php
+return [
+    1 => 'enabled',
+    -2 => 'disabled',
+    'status' => 'active',
 ];
 ```
 

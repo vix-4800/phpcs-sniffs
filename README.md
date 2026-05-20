@@ -45,7 +45,7 @@ Create a `phpcs.xml` file in your project root:
 
 ### VixPHPCS
 
-The package ships with the `VixPHPCS` ruleset plus additional standalone sniffs you can enable manually. The default ruleset includes best-practice checks such as consistent array key types, alongside formatting, function, PHPDoc, object, and Yii2-focused rules. See [docs/SNIFFS.md](docs/SNIFFS.md) for the full catalog, examples, and configurable parameters.
+The package ships with the `VixPHPCS` ruleset plus additional standalone sniffs you can enable manually. See [docs/SNIFFS.md](docs/SNIFFS.md) for the full catalog, examples, and configurable parameters.
 
 ## Development
 
