@@ -9,7 +9,6 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
 - [VixPHPCS Sniff Catalog](#vixphpcs-sniff-catalog)
   - [Table of Contents](#table-of-contents)
   - [Arrays](#arrays)
-    - [VixPHPCS.Arrays.DisallowMixedArrayKeys](#vixphpcsarraysdisallowmixedarraykeys)
     - [VixPHPCS.Arrays.MixedArrayKeyTypes](#vixphpcsarraysmixedarraykeytypes)
     - [VixPHPCS.Arrays.DisallowNonIntStringArrayKey](#vixphpcsarraysdisallownonintstringarraykey)
     - [VixPHPCS.Arrays.DuplicateArrayKey](#vixphpcsarraysduplicatearraykey)
@@ -19,9 +18,7 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Constants.UppercaseMagicConstants](#vixphpcsconstantsuppercasemagicconstants)
   - [Control Structures](#control-structures)
     - [VixPHPCS.ControlStructures.DisallowCountInLoop](#vixphpcscontrolstructuresdisallowcountinloop)
-    - [VixPHPCS.ControlStructures.DisallowGotoStatement](#vixphpcscontrolstructuresdisallowgotostatement)
     - [VixPHPCS.ControlStructures.DisallowSameKeyAndValueInForeach](#vixphpcscontrolstructuresdisallowsamekeyandvalueinforeach)
-    - [VixPHPCS.ControlStructures.DisallowLogicalOperators](#vixphpcscontrolstructuresdisallowlogicaloperators)
     - [VixPHPCS.ControlStructures.DisallowThrowInTernary](#vixphpcscontrolstructuresdisallowthrowinternary)
     - [VixPHPCS.ControlStructures.UseInArray](#vixphpcscontrolstructuresuseinarray)
   - [Formatting](#formatting)
@@ -55,40 +52,6 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck](#vixphpcsyii2preferisguestoveruseridcheck)
 
 ## Arrays
-
-### VixPHPCS.Arrays.DisallowMixedArrayKeys
-
-**Level:** Warning
-
-Disallows array literals that combine keyed (`'name' => 'Anton'`) and unkeyed (`42`) elements. Mixed arrays are harder to scan and often hide accidental omissions of a key.
-
-**Bad:**
-
-```php
-$user = [
-    'name' => 'Anton',
-    42,
-];
-
-$settings = array(
-    'theme' => 'dark',
-    true,
-);
-```
-
-**Good:**
-
-```php
-$user = [
-    'name' => 'Anton',
-    'age' => 42,
-];
-
-$values = [
-    'Anton',
-    42,
-];
-```
 
 ### VixPHPCS.Arrays.MixedArrayKeyTypes
 
@@ -299,36 +262,6 @@ foreach ($this->rows as $row) {
 }
 ```
 
-### VixPHPCS.ControlStructures.DisallowGotoStatement
-
-**Level:** Error
-
-Rejects `goto` statements. Structured control flow with loops, conditionals, early returns, and `try/finally` blocks is easier to follow and safer to maintain.
-
-**Bad:**
-
-```php
-if ($failed) {
-    goto cleanup;
-}
-
-runTask();
-
-cleanup:
-closeConnection();
-```
-
-**Good:**
-
-```php
-if ($failed) {
-    closeConnection();
-    return;
-}
-
-runTask();
-```
-
 ### VixPHPCS.ControlStructures.DisallowSameKeyAndValueInForeach
 
 **Level:** Warning
@@ -357,32 +290,6 @@ foreach ($items as $key => $item) {
 foreach ($items as $entryKey => &$entry) {
     $entry = normalize($entry);
 }
-```
-
-### VixPHPCS.ControlStructures.DisallowLogicalOperators
-
-**Level:** Warning
-
-Prefers the boolean `&&` and `||` operators over the logical `and` and `or` operators. The symbolic operators are more common in conditionals and avoid precedence surprises when mixed with assignments or other expressions.
-
-**Bad:**
-
-```php
-if ($isReady and $isValid) {
-    runTask();
-}
-
-$visible = $isPreview or $isAdmin;
-```
-
-**Good:**
-
-```php
-if ($isReady && $isValid) {
-    runTask();
-}
-
-$visible = $isPreview || $isAdmin;
 ```
 
 ### VixPHPCS.ControlStructures.DisallowThrowInTernary

@@ -3,10 +3,6 @@
     name="VixPHPCS">
     <description>VixPHPCS Coding Standard - Main ruleset</description>
 
-    <rule ref="VixPHPCS.Arrays.DisallowMixedArrayKeys">
-        <type>warning</type>
-    </rule>
-
     <rule ref="VixPHPCS.Arrays.MixedArrayKeyTypes">
         <type>warning</type>
     </rule>
@@ -23,7 +19,7 @@
         <type>error</type>
     </rule>
 
-    <rule ref="VixPHPCS.ControlStructures.DisallowLogicalOperators">
+    <rule ref="VixPHPCS.ControlStructures.DisallowCountInLoop">
         <type>warning</type>
     </rule>
 
