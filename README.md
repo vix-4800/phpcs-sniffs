@@ -41,11 +41,9 @@ Create a `phpcs.xml` file in your project root:
 </ruleset>
 ```
 
-## Rulesets
+## Sniffs
 
-### VixPHPCS
-
-The package ships with the `VixPHPCS` ruleset plus additional standalone sniffs you can enable manually. See [docs/SNIFFS.md](docs/SNIFFS.md) for the full catalog, examples, and configurable parameters.
+The package ships with the `VixPHPCS` ruleset. Alternatively, individual standalone sniffs can be enabled manually. See [docs/SNIFFS.md](docs/SNIFFS.md) for the full catalog, examples, and configurable parameters.
 
 ## Development
 
