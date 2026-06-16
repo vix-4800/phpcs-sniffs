@@ -1045,7 +1045,7 @@ alternatives unreachable or unnecessary.
 
 **Level:** Error
 
-Rejects `void` when it is combined with other return types in a `@return` annotation. A return type is either `void` or it is one of the actual value types, but not both.
+Rejects `void` when it is combined with other return types in a `@return` annotation or in callable PHPDoc return types. A return type is either `void` or it is one of the actual value types, but not both.
 
 **Bad:**
 
@@ -1059,6 +1059,11 @@ function foo() {}
  * @return string|void
  */
 function bar() {}
+
+/**
+ * @param callable(): void|int|string $callback
+ */
+function baz(callable $callback): void {}
 ```
 
 **Good:**
@@ -1073,6 +1078,11 @@ function foo(): void {}
  * @return string|null
  */
 function bar(): ?string {}
+
+/**
+ * @var callable(): void $callback
+ */
+$callback = static function (): void {};
 ```
 
 ## Yii2

@@ -9,6 +9,26 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 
 final class DisallowVoidMixedWithOtherTypesSniff implements Sniff
 {
+    use PhpDocTypeHelperTrait;
+
+    private const array TAGS_WITH_TYPES = [
+        '@param' => true,
+        '@param-out' => true,
+        '@phpstan-param' => true,
+        '@phpstan-param-out' => true,
+        '@phpstan-return' => true,
+        '@phpstan-var' => true,
+        '@property' => true,
+        '@property-read' => true,
+        '@property-write' => true,
+        '@psalm-param' => true,
+        '@psalm-param-out' => true,
+        '@psalm-return' => true,
+        '@psalm-var' => true,
+        '@return' => true,
+        '@var' => true,
+    ];
+
     /**
      * @return list<int|string>
      */
@@ -19,31 +39,28 @@ final class DisallowVoidMixedWithOtherTypesSniff implements Sniff
 
     public function process(File $phpcsFile, int $stackPtr): void
     {
-        $tokens = $phpcsFile->getTokens();
+        $tagName = $this->getTagName($phpcsFile, $stackPtr);
 
-        if (mb_strtolower((string) $tokens[$stackPtr]['content']) !== '@return') {
+        if (!isset(self::TAGS_WITH_TYPES[$tagName])) {
             return;
         }
 
-        if (!isset($tokens[$stackPtr]['comment_closer'])) {
+        $typeString = $this->getTagTypeExpression($phpcsFile, $stackPtr);
+
+        if ($typeString === null) {
             return;
         }
 
-        $commentCloser = $tokens[$stackPtr]['comment_closer'];
-        $nextToken = $phpcsFile->findNext(T_DOC_COMMENT_WHITESPACE, $stackPtr + 1, $commentCloser, true);
-
-        if ($nextToken === false || $tokens[$nextToken]['code'] !== T_DOC_COMMENT_STRING) {
-            return;
+        if ($tagName === '@return') {
+            $this->reportReturnVoidMixedWithOtherTypes($phpcsFile, $stackPtr, $typeString);
         }
 
-        $typeString = preg_split('/\s+/', (string) $tokens[$nextToken]['content'], 2)[0] ?? '';
-        $types = array_map(trim(...), explode('|', $typeString));
+        $this->reportCallableReturnVoidMixedWithOtherTypes($phpcsFile, $stackPtr, $typeString);
+    }
 
-        if (!in_array('void', $types, true)) {
-            return;
-        }
-
-        if (count($types) === 1) {
+    private function reportReturnVoidMixedWithOtherTypes(File $phpcsFile, int $stackPtr, string $typeString): void
+    {
+        if (!$this->containsVoidMixedWithOtherTypes($typeString)) {
             return;
         }
 
@@ -52,5 +69,146 @@ final class DisallowVoidMixedWithOtherTypesSniff implements Sniff
             $stackPtr,
             'VoidMixedWithOtherTypes',
         );
+    }
+
+    private function reportCallableReturnVoidMixedWithOtherTypes(File $phpcsFile, int $stackPtr, string $typeString): void
+    {
+        foreach ($this->extractCallableReturnTypes($typeString) as $returnType) {
+            if (!$this->containsVoidMixedWithOtherTypes($returnType)) {
+                continue;
+            }
+
+            $phpcsFile->addError(
+                '"void" cannot be combined with other return types in callable PHPDoc.',
+                $stackPtr,
+                'CallableVoidMixedWithOtherTypes',
+            );
+        }
+    }
+
+    private function containsVoidMixedWithOtherTypes(string $typeString): bool
+    {
+        $types = array_map($this->normalizeTypeName(...), $this->splitTopLevelUnionTypes($typeString));
+
+        return in_array('void', $types, true) && count($types) > 1;
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function extractCallableReturnTypes(string $typeString): array
+    {
+        $returnTypes = [];
+        $length = mb_strlen($typeString);
+
+        for ($index = 0; $index < $length; ++$index) {
+            if ($typeString[$index] !== '(' || !$this->isCallableOpeningParenthesis($typeString, $index)) {
+                continue;
+            }
+
+            $closeIndex = $this->findMatchingDelimiter($typeString, $index, '(', ')');
+
+            if ($closeIndex === null) {
+                continue;
+            }
+
+            $colonIndex = $this->findCallableReturnColon($typeString, $closeIndex + 1);
+
+            if ($colonIndex === null) {
+                $index = $closeIndex;
+
+                continue;
+            }
+
+            $returnType = $this->extractCallableReturnType($typeString, $colonIndex + 1);
+
+            if ($returnType !== null) {
+                $returnTypes[] = $returnType;
+                array_push($returnTypes, ...$this->extractCallableReturnTypes($returnType));
+            }
+
+            $index = $closeIndex;
+        }
+
+        return $returnTypes;
+    }
+
+    private function findCallableReturnColon(string $typeString, int $start): ?int
+    {
+        $length = mb_strlen($typeString);
+
+        for ($index = $start; $index < $length; ++$index) {
+            if (ctype_space($typeString[$index])) {
+                continue;
+            }
+
+            return $typeString[$index] === ':' ? $index : null;
+        }
+
+        return null;
+    }
+
+    private function extractCallableReturnType(string $typeString, int $start): ?string
+    {
+        $buffer = '';
+        $angleDepth = 0;
+        $braceDepth = 0;
+        $bracketDepth = 0;
+        $parenthesisDepth = 0;
+        $length = mb_strlen($typeString);
+
+        for ($index = $start; $index < $length; ++$index) {
+            $character = $typeString[$index];
+
+            if ($character === '<') {
+                ++$angleDepth;
+            } elseif ($character === '>') {
+                if ($angleDepth === 0) {
+                    break;
+                }
+
+                --$angleDepth;
+            } elseif ($character === '{') {
+                ++$braceDepth;
+            } elseif ($character === '}') {
+                if ($braceDepth === 0) {
+                    break;
+                }
+
+                --$braceDepth;
+            } elseif ($character === '[') {
+                ++$bracketDepth;
+            } elseif ($character === ']') {
+                if ($bracketDepth === 0) {
+                    break;
+                }
+
+                --$bracketDepth;
+            } elseif ($character === '(') {
+                ++$parenthesisDepth;
+            } elseif ($character === ')') {
+                if ($parenthesisDepth === 0) {
+                    break;
+                }
+
+                --$parenthesisDepth;
+            }
+
+            if (
+                $character === ','
+                && $angleDepth === 0
+                && $braceDepth === 0
+                && $bracketDepth === 0
+                && $parenthesisDepth === 0
+            ) {
+                break;
+            }
+
+            $buffer .= $character;
+        }
+
+        $returnType = mb_trim($buffer);
+
+        return $returnType !== '' ? $returnType : null;
     }
 }
