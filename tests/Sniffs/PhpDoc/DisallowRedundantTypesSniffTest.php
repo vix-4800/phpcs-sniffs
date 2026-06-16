@@ -55,6 +55,30 @@ function example(): void
         $this->assertContainsWarning($result, 'PHPDoc union type "Throwable|Exception" contains redundant narrower types.');
     }
 
+    public function testNestedRedundantTypesTriggerWarnings(): void
+    {
+        $result = $this->runPhpcs('<?php
+
+/**
+ * @var array<string|string> $duplicate
+ * @var array<mixed|string> $redundant
+ * @return array<bool|false>
+ */
+function example()
+{
+}', self::SNIFF);
+
+        $this->assertContainsWarning($result, 'Duplicate PHPDoc union type "string" in nested PHPDoc value types.');
+        $this->assertContainsWarning(
+            $result,
+            'Nested PHPDoc union type "mixed|string" contains redundant narrower types.',
+        );
+        $this->assertContainsWarning(
+            $result,
+            'Nested PHPDoc union type "bool|false" contains redundant narrower types.',
+        );
+    }
+
     public function testDistinctUsefulUnionsDoNotTriggerWarnings(): void
     {
         $result = $this->runPhpcs('<?php

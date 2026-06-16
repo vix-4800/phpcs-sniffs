@@ -49,6 +49,10 @@ function example($input, $flag)
  * @var array<null> $items
  * @var array<false> $flags
  * @var array{foo: null} $shape
+ * @return array<false>
+ * @phpstan-return array<null>
+ * @psalm-var array{foo: null} $psalmShape
+ * @implements IteratorAggregate<null, string>
  */
 function example(): void
 {
@@ -65,6 +69,8 @@ function example(): void
 /**
  * @template void
  * @template TNull of null
+ * @phpstan-template TVoid of void
+ * @psalm-template TNever of never
  */
 final class Example
 {
@@ -72,6 +78,8 @@ final class Example
 
         $this->assertContainsWarning($result, 'Template name "void" conflicts with a native PHPDoc type.');
         $this->assertContainsWarning($result, 'Suspicious template bound "null" in @template.');
+        $this->assertContainsWarning($result, 'Suspicious template bound "void" in @template.');
+        $this->assertContainsWarning($result, 'Suspicious template bound "never" in @template.');
     }
 
     public function testUsefulTypesDoNotTriggerWarnings(): void

@@ -98,6 +98,7 @@ function example($value, $callback, $name): void
  * @var array<int, void> $map
  * @var array{foo: void} $shape
  * @var array{0: string, 0: int} $duplicate
+ * @var array{foo: array{bar: int, bar: string}} $nestedDuplicate
  */
 function example(): void
 {
@@ -105,6 +106,60 @@ function example(): void
 
         $this->assertContainsError($result, 'Do not use "void" in nested PHPDoc value types.');
         $this->assertContainsError($result, 'Duplicate array shape key "0".');
+        $this->assertContainsError($result, 'Duplicate array shape key "bar".');
+    }
+
+    public function testInvalidReturnAndStaticAnalyzerTagsTriggerErrors(): void
+    {
+        $result = $this->runPhpcs('<?php
+
+/**
+ * @return array<void>
+ * @phpstan-return list<never>
+ * @param-out void $output
+ * @phpstan-param void $value
+ * @psalm-param never $other
+ */
+function example(&$output, $value, $other)
+{
+}', self::SNIFF);
+
+        $this->assertContainsError($result, 'Do not use "void" in nested PHPDoc value types.');
+        $this->assertContainsError($result, 'Do not use "never" in nested PHPDoc value types.');
+        $this->assertContainsError($result, 'Do not use "void" in @param-out value types.');
+        $this->assertContainsError($result, 'Do not use "void" in @phpstan-param value types.');
+        $this->assertContainsError($result, 'Do not use "never" in @psalm-param value types.');
+    }
+
+    public function testGenericInheritanceTagsTriggerNestedErrors(): void
+    {
+        $result = $this->runPhpcs('<?php
+
+/**
+ * @extends Collection<void>
+ * @implements IteratorAggregate<never, string>
+ * @use SomeTrait<void>
+ */
+final class Example extends Collection implements IteratorAggregate
+{
+}', self::SNIFF);
+
+        $this->assertContainsError($result, 'Do not use "void" in nested PHPDoc value types.');
+        $this->assertContainsError($result, 'Do not use "never" in nested PHPDoc value types.');
+    }
+
+    public function testThrowsClassStringTriggersError(): void
+    {
+        $result = $this->runPhpcs('<?php
+
+/**
+ * @throws class-string<RuntimeException>
+ */
+function example(): void
+{
+}', self::SNIFF);
+
+        $this->assertContainsError($result, '@throws must reference throwable class types.');
     }
 
     public function testValidClassLikeTypesDoNotTriggerErrors(): void
@@ -117,6 +172,8 @@ function example(): void
  * @throws RuntimeException
  * @mixin SomeClass
  * @return void
+ * @var callable(): void $voidCallback
+ * @var callable(): never $neverCallback
  */
 function example(array $items, $value): void
 {
