@@ -953,13 +953,16 @@ final class Repository extends BaseRepository
 
 Rejects objectively invalid PHPDoc type usage: `void` and `never` in value positions, scalar or literal
 `@throws` types, scalar `@mixin` types, impossible scalar intersections, invalid nested value types, and duplicate
-array-shape keys.
+array-shape keys. The rule also checks common PHPStan/Psalm tag variants, `@param-out`, and generic type arguments in
+`@extends`, `@implements`, and `@use`.
 
 **Bad:**
 
 ```php
 /**
  * @param void $value
+ * @phpstan-param never $other
+ * @extends Collection<void>
  * @throws string
  * @mixin int
  * @var array{0: string, 0: int} $data
@@ -983,16 +986,19 @@ array-shape keys.
 
 Warns about PHPDoc types that are technically possible but usually signal a broken annotation: sole `null`, `false`,
 numeric, or string-literal value types, suspicious nested literals, template names that conflict with native PHPDoc
-types, and template bounds such as `null`, `void`, or `never`.
+types, and template bounds such as `null`, `void`, or `never`. PHPStan/Psalm tag variants and generic inheritance tags
+are checked as well.
 
 **Bad:**
 
 ```php
 /**
  * @param null $value
+ * @psalm-var array{foo: null} $shape
  * @return 0
  * @var array<false> $flags
  * @template void
+ * @phpstan-template T of void
  */
 ```
 
@@ -1011,8 +1017,8 @@ types, and template bounds such as `null`, `void`, or `never`.
 
 **Level:** Warning
 
-Warns about redundant PHPDoc union members, including duplicate types and broad types that make narrower alternatives
-unreachable or unnecessary.
+Warns about redundant PHPDoc union members, including duplicate nested types and broad types that make narrower
+alternatives unreachable or unnecessary.
 
 **Bad:**
 
@@ -1020,6 +1026,7 @@ unreachable or unnecessary.
 /**
  * @var string|string $name
  * @var mixed|string $value
+ * @var array<string|string> $items
  * @var bool|true|false $flag
  */
 ```
