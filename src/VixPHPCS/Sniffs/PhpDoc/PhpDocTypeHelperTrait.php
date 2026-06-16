@@ -306,6 +306,10 @@ trait PhpDocTypeHelperTrait
                 $seenKeys[$key] = true;
             }
 
+            foreach ($this->extractArrayShapeValueTypes($shape) as $shapeValueType) {
+                array_push($duplicates, ...$this->findDuplicateArrayShapeKeys($shapeValueType));
+            }
+
             $index = $closeIndex;
         }
 
@@ -386,6 +390,18 @@ trait PhpDocTypeHelperTrait
     private function normalizeTypeName(string $type): string
     {
         return mb_strtolower(mb_ltrim(mb_trim($type), '\\'));
+    }
+
+    private function getBaseTypeName(string $type): string
+    {
+        $normalizedType = $this->normalizeTypeName($type);
+        $genericStart = mb_strpos($normalizedType, '<');
+
+        if ($genericStart === false) {
+            return $normalizedType;
+        }
+
+        return mb_substr($normalizedType, 0, $genericStart);
     }
 
     private function isSingleValueType(string $type): bool
