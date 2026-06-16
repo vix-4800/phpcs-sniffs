@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace VixPHPCS\Tests\Common\Sniffs\Arrays;
 
 use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Test;
 use VixPHPCS\Tests\BaseTest;
 
 /**
@@ -15,7 +16,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class DisallowNonIntStringArrayKeySniffTest extends BaseTest
 {
-    public function testIntegerAndStringKeysAreAllowed(): void
+    #[Test]
+    public function integerAndStringKeysAreAllowed(): void
     {
         $result = $this->runPhpcs('<?php
 return [
@@ -29,7 +31,8 @@ return [
         $this->assertNoViolations($result);
     }
 
-    public function testIntegerAndStringKeysAreAllowedInArraySyntax(): void
+    #[Test]
+    public function integerAndStringKeysAreAllowedInArraySyntax(): void
     {
         $result = $this->runPhpcs('<?php
 return array(
@@ -41,7 +44,8 @@ return array(
         $this->assertNoViolations($result);
     }
 
-    public function testFloatKeyTriggersError(): void
+    #[Test]
+    public function floatKeyTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 return [
@@ -52,7 +56,8 @@ return [
         $this->assertContainsError($result, 'Array keys must be int or string literals');
     }
 
-    public function testBooleanKeyTriggersError(): void
+    #[Test]
+    public function booleanKeyTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 return [
@@ -64,7 +69,8 @@ return [
         $this->assertContainsError($result, 'Array keys must be int or string literals');
     }
 
-    public function testNullKeyTriggersError(): void
+    #[Test]
+    public function nullKeyTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 return [
@@ -75,7 +81,8 @@ return [
         $this->assertContainsError($result, 'Array keys must be int or string literals');
     }
 
-    public function testExpressionKeyTriggersError(): void
+    #[Test]
+    public function expressionKeyTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 $key = "dynamic";
@@ -88,7 +95,8 @@ return [
         $this->assertContainsError($result, 'Array keys must be int or string literals');
     }
 
-    public function testNestedArrayValuesDoNotTriggerFalsePositives(): void
+    #[Test]
+    public function nestedArrayValuesDoNotTriggerFalsePositives(): void
     {
         $result = $this->runPhpcs('<?php
 return [

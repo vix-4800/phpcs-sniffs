@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Operators;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,7 +16,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class PreferBooleanCastOverDoubleNegationSniffTest extends BaseTest
 {
-    public function testDoubleNegationTriggersWarning(): void
+    #[Test]
+    public function doubleNegationTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $isActive = !!$user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation');
@@ -24,7 +26,8 @@ $isActive = !!$user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleNe
         $this->assertContainsWarning($result, 'double negation');
     }
 
-    public function testSpacedDoubleNegationTriggersWarning(): void
+    #[Test]
+    public function spacedDoubleNegationTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $isActive = ! !$user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation');
@@ -32,7 +35,8 @@ $isActive = ! !$user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleN
         $this->assertContainsWarning($result, '(bool)');
     }
 
-    public function testTripleNegationDoesNotTriggerWarning(): void
+    #[Test]
+    public function tripleNegationDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $isInactive = !!!$user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation');
@@ -40,7 +44,8 @@ $isInactive = !!!$user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubl
         $this->assertNoViolations($result);
     }
 
-    public function testSingleNegationDoesNotTriggerWarning(): void
+    #[Test]
+    public function singleNegationDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $isInactive = !$user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation');
@@ -48,7 +53,8 @@ $isInactive = !$user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleN
         $this->assertNoViolations($result);
     }
 
-    public function testBooleanCastDoesNotTriggerWarning(): void
+    #[Test]
+    public function booleanCastDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $isActive = (bool) $user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation');
@@ -56,7 +62,8 @@ $isActive = (bool) $user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDou
         $this->assertNoViolations($result);
     }
 
-    public function testMultipleDoubleNegationsTriggerMultipleWarnings(): void
+    #[Test]
+    public function multipleDoubleNegationsTriggerMultipleWarnings(): void
     {
         $result = $this->runPhpcs('<?php
 $isActive = !!$user->active;

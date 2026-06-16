@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Formatting;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,9 +16,10 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class ConsistentStatementIndentationSniffTest extends BaseTest
 {
-    private const SNIFF = 'VixPHPCS.Formatting.ConsistentStatementIndentation';
+    private const string SNIFF = 'VixPHPCS.Formatting.ConsistentStatementIndentation';
 
-    public function testDetectsInconsistentEchoIndentation(): void
+    #[Test]
+    public function detectsInconsistentEchoIndentation(): void
     {
         $code = '<?php
 function render() {
@@ -33,7 +35,8 @@ function render() {
         $this->assertContainsWarning($result, 'Statement indentation is inconsistent');
     }
 
-    public function testAllowsConsistentIndentation(): void
+    #[Test]
+    public function allowsConsistentIndentation(): void
     {
         $code = '<?php
 function render() {
@@ -49,7 +52,8 @@ function render() {
         $this->assertNoViolations($result);
     }
 
-    public function testDetectsInconsistentIfIndentation(): void
+    #[Test]
+    public function detectsInconsistentIfIndentation(): void
     {
         $code = '<?php
 function process() {
@@ -65,7 +69,8 @@ function process() {
         $this->assertContainsWarning($result, 'Statement indentation is inconsistent');
     }
 
-    public function testAllowsNestedBlocks(): void
+    #[Test]
+    public function allowsNestedBlocks(): void
     {
         $code = '<?php
 function process() {
@@ -83,7 +88,8 @@ function process() {
         $this->assertNoViolations($result);
     }
 
-    public function testIgnoresClosuresWithDifferentLevels(): void
+    #[Test]
+    public function ignoresClosuresWithDifferentLevels(): void
     {
         $code = '<?php
 $callback = function () {
@@ -96,7 +102,8 @@ echo "outside closure";
         $this->assertNoViolations($result);
     }
 
-    public function testDetectsInconsistentReturnIndentation(): void
+    #[Test]
+    public function detectsInconsistentReturnIndentation(): void
     {
         $code = '<?php
 function getValue() {
@@ -109,7 +116,8 @@ function getValue() {
         $this->assertContainsWarning($result, 'Statement indentation is inconsistent');
     }
 
-    public function testAllowsProperlyIndentedLoops(): void
+    #[Test]
+    public function allowsProperlyIndentedLoops(): void
     {
         $code = '<?php
 function iterate() {
@@ -129,7 +137,8 @@ function iterate() {
         $this->assertNoViolations($result);
     }
 
-    public function testAllowsVariablesInsideMultiLineArrays(): void
+    #[Test]
+    public function allowsVariablesInsideMultiLineArrays(): void
     {
         $code = '<?php
 $result = array_map(
@@ -142,7 +151,8 @@ $result = array_map(
         $this->assertNoViolations($result);
     }
 
-    public function testAllowsVariablesInsideShortArrays(): void
+    #[Test]
+    public function allowsVariablesInsideShortArrays(): void
     {
         $code = '<?php
 $data = [
@@ -155,7 +165,8 @@ $data = [
         $this->assertNoViolations($result);
     }
 
-    public function testAllowsReturnInsideClosure(): void
+    #[Test]
+    public function allowsReturnInsideClosure(): void
     {
         $code = '<?php
 $widget = DetailView::widget(
@@ -177,7 +188,8 @@ $widget = DetailView::widget(
         $this->assertNoViolations($result);
     }
 
-    public function testAllowsTernaryExpressionInsideArray(): void
+    #[Test]
+    public function allowsTernaryExpressionInsideArray(): void
     {
         $code = '<?php
 $config = [
@@ -194,7 +206,8 @@ $config = [
         $this->assertNoViolations($result);
     }
 
-    public function testAllowsMultiLineConditionWithVariables(): void
+    #[Test]
+    public function allowsMultiLineConditionWithVariables(): void
     {
         $code = '<?php
 function check($user, $config) {
@@ -213,7 +226,8 @@ function check($user, $config) {
         $this->assertNoViolations($result);
     }
 
-    public function testAllowsFunctionArgumentsOnMultipleLines(): void
+    #[Test]
+    public function allowsFunctionArgumentsOnMultipleLines(): void
     {
         $code = '<?php
 $result = someFunction(
@@ -228,7 +242,8 @@ $otherVar = 1;
         $this->assertNoViolations($result);
     }
 
-    public function testAllowsNestedMultiLineArrays(): void
+    #[Test]
+    public function allowsNestedMultiLineArrays(): void
     {
         $code = '<?php
 $config = [
@@ -245,7 +260,8 @@ $config = [
         $this->assertNoViolations($result);
     }
 
-    public function testAllowsArrowFunctionInArrayMap(): void
+    #[Test]
+    public function allowsArrowFunctionInArrayMap(): void
     {
         $code = '<?php
 function buildMenu() {
@@ -262,7 +278,8 @@ function buildMenu() {
         $this->assertNoViolations($result);
     }
 
-    public function testStillDetectsActualInconsistentIndentation(): void
+    #[Test]
+    public function stillDetectsActualInconsistentIndentation(): void
     {
         $code = '<?php
 function process() {
@@ -277,7 +294,8 @@ function process() {
         $this->assertContainsWarning($result, 'Statement indentation is inconsistent');
     }
 
-    public function testAllowsYiiWidgetPattern(): void
+    #[Test]
+    public function allowsYiiWidgetPattern(): void
     {
         $code = '<?php
 echo Html::a(

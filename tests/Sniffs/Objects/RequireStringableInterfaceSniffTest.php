@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Objects;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,9 +16,10 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class RequireStringableInterfaceSniffTest extends BaseTest
 {
-    private const SNIFF = 'VixPHPCS.Objects.RequireStringableInterface';
+    private const string SNIFF = 'VixPHPCS.Objects.RequireStringableInterface';
 
-    public function testClassWithToStringAndWithoutStringableTriggersWarning(): void
+    #[Test]
+    public function classWithToStringAndWithoutStringableTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -32,7 +34,8 @@ class Example
         $this->assertContainsWarning($result, 'Classes declaring __toString() must implement Stringable');
     }
 
-    public function testClassWithToStringAndStringableDoesNotTriggerWarning(): void
+    #[Test]
+    public function classWithToStringAndStringableDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -47,7 +50,8 @@ class Example implements Stringable
         $this->assertNoViolations($result);
     }
 
-    public function testClassWithToStringAndFullyQualifiedStringableDoesNotTriggerWarning(): void
+    #[Test]
+    public function classWithToStringAndFullyQualifiedStringableDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -62,7 +66,8 @@ class Example implements \Stringable
         $this->assertNoViolations($result);
     }
 
-    public function testClassWithoutToStringDoesNotTriggerWarning(): void
+    #[Test]
+    public function classWithoutToStringDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -77,7 +82,8 @@ class Example
         $this->assertNoViolations($result);
     }
 
-    public function testAnonymousClassWithToStringAndWithoutStringableTriggersWarning(): void
+    #[Test]
+    public function anonymousClassWithToStringAndWithoutStringableTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -91,7 +97,8 @@ $object = new class {
         $this->assertContainsWarning($result, 'Classes declaring __toString() must implement Stringable');
     }
 
-    public function testNestedAnonymousClassDoesNotAffectOuterClass(): void
+    #[Test]
+    public function nestedAnonymousClassDoesNotAffectOuterClass(): void
     {
         $result = $this->runPhpcs('<?php
 

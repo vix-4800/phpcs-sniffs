@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Functions;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -18,7 +19,8 @@ final class DisallowCastFunctionsSniffTest extends BaseTest
     /**
      * Test that strval() triggers a warning.
      */
-    public function testStrvalTriggersWarning(): void
+    #[Test]
+    public function strvalTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $var = "123";
@@ -31,7 +33,8 @@ $str = strval($var);', 'VixPHPCS.Functions.DisallowCastFunctions');
     /**
      * Test that intval() triggers a warning.
      */
-    public function testIntvalTriggersWarning(): void
+    #[Test]
+    public function intvalTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $var = "123";
@@ -44,7 +47,8 @@ $int = intval($var);', 'VixPHPCS.Functions.DisallowCastFunctions');
     /**
      * Test that floatval() triggers a warning.
      */
-    public function testFloatvalTriggersWarning(): void
+    #[Test]
+    public function floatvalTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $var = "123.45";
@@ -57,7 +61,8 @@ $float = floatval($var);', 'VixPHPCS.Functions.DisallowCastFunctions');
     /**
      * Test that boolval() triggers a warning.
      */
-    public function testBoolvalTriggersWarning(): void
+    #[Test]
+    public function boolvalTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $var = 1;
@@ -70,7 +75,8 @@ $bool = boolval($var);', 'VixPHPCS.Functions.DisallowCastFunctions');
     /**
      * Test that type casts don't trigger warnings.
      */
-    public function testTypeCastsDoNotTriggerWarning(): void
+    #[Test]
+    public function typeCastsDoNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $str = (string) $var;
@@ -84,7 +90,8 @@ $bool = (bool) $var;', 'VixPHPCS.Functions.DisallowCastFunctions');
     /**
      * Test that methods named strval, intval, etc. don't trigger warnings.
      */
-    public function testMethodNamedStrvalDoesNotTriggerWarning(): void
+    #[Test]
+    public function methodNamedStrvalDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 class MyClass {
@@ -101,7 +108,8 @@ $result = $obj->strval();', 'VixPHPCS.Functions.DisallowCastFunctions');
     /**
      * Test that static methods named intval don't trigger warnings.
      */
-    public function testStaticMethodNamedIntvalDoesNotTriggerWarning(): void
+    #[Test]
+    public function staticMethodNamedIntvalDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 class MyClass {
@@ -117,7 +125,8 @@ $result = MyClass::intval();', 'VixPHPCS.Functions.DisallowCastFunctions');
     /**
      * Test that function declarations don't trigger warnings.
      */
-    public function testFunctionDeclarationDoesNotTriggerWarning(): void
+    #[Test]
+    public function functionDeclarationDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 function strval($value) {
@@ -130,7 +139,8 @@ function strval($value) {
     /**
      * Test case sensitivity - STRVAL, InTvAl, etc.
      */
-    public function testCaseInsensitiveFunctionNames(): void
+    #[Test]
+    public function caseInsensitiveFunctionNames(): void
     {
         $result = $this->runPhpcs('<?php
 $str = STRVAL($var);
@@ -145,7 +155,8 @@ $float = FLOATVAL($var);', 'VixPHPCS.Functions.DisallowCastFunctions');
     /**
      * Test multiple function calls in one file.
      */
-    public function testMultipleFunctionCalls(): void
+    #[Test]
+    public function multipleFunctionCalls(): void
     {
         $result = $this->runPhpcs('<?php
 $str = strval($var1);
@@ -162,7 +173,8 @@ $bool = boolval($var4);', 'VixPHPCS.Functions.DisallowCastFunctions');
     /**
      * Test that functions with additional parameters still trigger warnings.
      */
-    public function testFunctionsWithParametersTriggersWarning(): void
+    #[Test]
+    public function functionsWithParametersTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $int = intval($var, 16);
@@ -175,7 +187,8 @@ $float = floatval($var);', 'VixPHPCS.Functions.DisallowCastFunctions');
     /**
      * Test nested function calls.
      */
-    public function testNestedFunctionCalls(): void
+    #[Test]
+    public function nestedFunctionCalls(): void
     {
         $result = $this->runPhpcs('<?php
 $result = strval(intval($var));', 'VixPHPCS.Functions.DisallowCastFunctions');
@@ -187,7 +200,8 @@ $result = strval(intval($var));', 'VixPHPCS.Functions.DisallowCastFunctions');
     /**
      * Test in array context.
      */
-    public function testInArrayContext(): void
+    #[Test]
+    public function inArrayContext(): void
     {
         $result = $this->runPhpcs('<?php
 $data = [
@@ -204,7 +218,8 @@ $data = [
     /**
      * Test in function arguments.
      */
-    public function testInFunctionArguments(): void
+    #[Test]
+    public function inFunctionArguments(): void
     {
         $result = $this->runPhpcs('<?php
 function test($a, $b) {}

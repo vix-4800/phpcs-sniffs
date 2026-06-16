@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Formatting;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,9 +16,10 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
 {
-    private const SNIFF = 'VixPHPCS.Formatting.DisallowMultipleThrowsPerLine';
+    private const string SNIFF = 'VixPHPCS.Formatting.DisallowMultipleThrowsPerLine';
 
-    public function testDetectsMultipleExceptionsOnSingleLine(): void
+    #[Test]
+    public function detectsMultipleExceptionsOnSingleLine(): void
     {
         $code = '<?php
         /**
@@ -30,7 +32,8 @@ final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
         $this->assertContainsWarning($result, 'Each @throws annotation must contain only one exception type');
     }
 
-    public function testAllowsSingleExceptionPerThrows(): void
+    #[Test]
+    public function allowsSingleExceptionPerThrows(): void
     {
         $code = '<?php
         /**
@@ -44,7 +47,8 @@ final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
         $this->assertNoViolations($result);
     }
 
-    public function testDetectsThreeExceptions(): void
+    #[Test]
+    public function detectsThreeExceptions(): void
     {
         $code = '<?php
         /**
@@ -57,7 +61,8 @@ final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
         $this->assertContainsWarning($result, 'InvalidArgumentException, RuntimeException, LogicException');
     }
 
-    public function testAllowsSingleFullyQualifiedException(): void
+    #[Test]
+    public function allowsSingleFullyQualifiedException(): void
     {
         $code = '<?php
         /**
@@ -70,7 +75,8 @@ final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
         $this->assertNoViolations($result);
     }
 
-    public function testDetectsMultipleFullyQualifiedExceptions(): void
+    #[Test]
+    public function detectsMultipleFullyQualifiedExceptions(): void
     {
         $code = '<?php
         /**
@@ -83,7 +89,8 @@ final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
         $this->assertContainsWarning($result, 'Each @throws annotation must contain only one exception type');
     }
 
-    public function testAllowsThrowsWithDescription(): void
+    #[Test]
+    public function allowsThrowsWithDescription(): void
     {
         $code = '<?php
         /**
@@ -96,7 +103,8 @@ final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
         $this->assertNoViolations($result);
     }
 
-    public function testIgnoresOtherDocTags(): void
+    #[Test]
+    public function ignoresOtherDocTags(): void
     {
         $code = '<?php
         /**
@@ -110,7 +118,8 @@ final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
         $this->assertNoViolations($result);
     }
 
-    public function testHandlesClassDocBlock(): void
+    #[Test]
+    public function handlesClassDocBlock(): void
     {
         $code = '<?php
         class TestClass

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Objects;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,9 +16,10 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class DisallowReturnInSetterSniffTest extends BaseTest
 {
-    private const SNIFF = 'VixPHPCS.Objects.DisallowReturnInSetter';
+    private const string SNIFF = 'VixPHPCS.Objects.DisallowReturnInSetter';
 
-    public function testSetterReturnTriggersError(): void
+    #[Test]
+    public function setterReturnTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -32,7 +34,8 @@ class Example
         $this->assertContainsError($result, 'Return statements are not allowed inside setter methods');
     }
 
-    public function testSetterReturnWithValueTriggersError(): void
+    #[Test]
+    public function setterReturnWithValueTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -47,7 +50,8 @@ class Example
         $this->assertContainsError($result, 'Return statements are not allowed inside setter methods');
     }
 
-    public function testSetterNameIsMatchedCaseInsensitively(): void
+    #[Test]
+    public function setterNameIsMatchedCaseInsensitively(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -62,7 +66,8 @@ class Example
         $this->assertContainsError($result, 'Return statements are not allowed inside setter methods');
     }
 
-    public function testRegularMethodReturnDoesNotTriggerError(): void
+    #[Test]
+    public function regularMethodReturnDoesNotTriggerError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -77,7 +82,8 @@ class Example
         $this->assertNoViolations($result);
     }
 
-    public function testMethodNamedSetDoesNotTriggerError(): void
+    #[Test]
+    public function methodNamedSetDoesNotTriggerError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -92,7 +98,8 @@ class Example
         $this->assertNoViolations($result);
     }
 
-    public function testClosureReturnInsideSetterDoesNotTriggerError(): void
+    #[Test]
+    public function closureReturnInsideSetterDoesNotTriggerError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -109,7 +116,8 @@ class Example
         $this->assertNoViolations($result);
     }
 
-    public function testFunctionNamedSetterDoesNotTriggerError(): void
+    #[Test]
+    public function functionNamedSetterDoesNotTriggerError(): void
     {
         $result = $this->runPhpcs('<?php
 

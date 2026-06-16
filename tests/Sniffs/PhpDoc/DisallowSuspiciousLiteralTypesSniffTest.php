@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\PhpDoc;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,9 +16,10 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class DisallowSuspiciousLiteralTypesSniffTest extends BaseTest
 {
-    private const SNIFF = 'VixPHPCS.PhpDoc.DisallowSuspiciousLiteralTypes';
+    private const string SNIFF = 'VixPHPCS.PhpDoc.DisallowSuspiciousLiteralTypes';
 
-    public function testSoleNullFalseAndLiteralValueTypesTriggerWarnings(): void
+    #[Test]
+    public function soleNullFalseAndLiteralValueTypesTriggerWarnings(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -41,7 +43,8 @@ function example($input, $flag)
         $this->assertContainsWarning($result, 'Suspicious single-value type "\'\'" in @var.');
     }
 
-    public function testSuspiciousNestedLiteralTypesTriggerWarnings(): void
+    #[Test]
+    public function suspiciousNestedLiteralTypesTriggerWarnings(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -62,7 +65,8 @@ function example(): void
         $this->assertContainsWarning($result, 'Suspicious single-value type "false" in nested PHPDoc value types.');
     }
 
-    public function testSuspiciousTemplateNamesAndBoundsTriggerWarnings(): void
+    #[Test]
+    public function suspiciousTemplateNamesAndBoundsTriggerWarnings(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -82,7 +86,8 @@ final class Example
         $this->assertContainsWarning($result, 'Suspicious template bound "never" in @template.');
     }
 
-    public function testUsefulTypesDoNotTriggerWarnings(): void
+    #[Test]
+    public function usefulTypesDoNotTriggerWarnings(): void
     {
         $result = $this->runPhpcs('<?php
 

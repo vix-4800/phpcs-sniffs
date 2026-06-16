@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Functions;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -18,7 +19,8 @@ final class PreferModernStringFunctionsSniffTest extends BaseTest
     /**
      * Test that strpos() !== false triggers a warning for str_contains().
      */
-    public function testStrposNotEqualsFalseSuggestsStrContains(): void
+    #[Test]
+    public function strposNotEqualsFalseSuggestsStrContains(): void
     {
         $result = $this->runPhpcs('<?php
 $haystack = "hello world";
@@ -34,7 +36,8 @@ if (strpos($haystack, $needle) !== false) {
     /**
      * Test that strpos() === 0 triggers a warning for str_starts_with().
      */
-    public function testStrposEqualsZeroSuggestsStrStartsWith(): void
+    #[Test]
+    public function strposEqualsZeroSuggestsStrStartsWith(): void
     {
         $result = $this->runPhpcs('<?php
 $haystack = "hello world";
@@ -50,7 +53,8 @@ if (strpos($haystack, $needle) === 0) {
     /**
      * Test that strpos() without comparison does not trigger warning.
      */
-    public function testStrposWithoutComparisonDoesNotTriggerWarning(): void
+    #[Test]
+    public function strposWithoutComparisonDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $haystack = "hello world";
@@ -63,7 +67,8 @@ $position = strpos($haystack, $needle);', 'VixPHPCS.Functions.PreferModernString
     /**
      * Test that method calls are ignored.
      */
-    public function testMethodCallsAreIgnored(): void
+    #[Test]
+    public function methodCallsAreIgnored(): void
     {
         $result = $this->runPhpcs('<?php
 class Foo {
@@ -83,7 +88,8 @@ if ($foo->strpos("hello", "h") !== false) {
     /**
      * Test that static method calls are ignored.
      */
-    public function testStaticMethodCallsAreIgnored(): void
+    #[Test]
+    public function staticMethodCallsAreIgnored(): void
     {
         $result = $this->runPhpcs('<?php
 class Foo {
@@ -102,7 +108,8 @@ if (Foo::strpos("hello", "h") !== false) {
     /**
      * Test that mb_strpos() !== false also triggers warning.
      */
-    public function testMbStrposNotEqualsFalseSuggestsStrContains(): void
+    #[Test]
+    public function mbStrposNotEqualsFalseSuggestsStrContains(): void
     {
         $result = $this->runPhpcs('<?php
 $haystack = "hello world";

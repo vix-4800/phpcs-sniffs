@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Functions;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,9 +16,10 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class DisallowNullableBoolReturnTypeSniffTest extends BaseTest
 {
-    private const SNIFF = 'VixPHPCS.Functions.DisallowNullableBoolReturnType';
+    private const string SNIFF = 'VixPHPCS.Functions.DisallowNullableBoolReturnType';
 
-    public function testNullableBoolNativeReturnTypeTriggersError(): void
+    #[Test]
+    public function nullableBoolNativeReturnTypeTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -29,7 +31,8 @@ function isValid(): ?bool
         $this->assertContainsError($result, 'Do not use nullable "bool" as a return type; return true/false instead of null.');
     }
 
-    public function testBoolAndNullUnionReturnTypeTriggersError(): void
+    #[Test]
+    public function boolAndNullUnionReturnTypeTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -44,7 +47,8 @@ final class Checker
         $this->assertContainsError($result, 'Do not use nullable "bool" as a return type; return true/false instead of null.');
     }
 
-    public function testNullableBoolDocblockTriggersError(): void
+    #[Test]
+    public function nullableBoolDocblockTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -59,7 +63,8 @@ function isValid()
         $this->assertContainsError($result, 'Do not use nullable "bool" in @return; return true/false instead of null.');
     }
 
-    public function testNullableBoolDocblockOnMethodTriggersError(): void
+    #[Test]
+    public function nullableBoolDocblockOnMethodTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -77,7 +82,8 @@ final class Checker
         $this->assertContainsError($result, 'Do not use nullable "bool" in @return; return true/false instead of null.');
     }
 
-    public function testNullableBoolDocblockWithSpacesTriggersError(): void
+    #[Test]
+    public function nullableBoolDocblockWithSpacesTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -92,7 +98,8 @@ function isVisible()
         $this->assertContainsError($result, 'Do not use nullable "bool" in @return; return true/false instead of null.');
     }
 
-    public function testPlainBoolReturnTypeIsAllowed(): void
+    #[Test]
+    public function plainBoolReturnTypeIsAllowed(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -104,7 +111,8 @@ function isValid(): bool
         $this->assertNoViolations($result);
     }
 
-    public function testPlainBoolDocblockIsAllowed(): void
+    #[Test]
+    public function plainBoolDocblockIsAllowed(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -119,7 +127,8 @@ function isValid()
         $this->assertNoViolations($result);
     }
 
-    public function testArrayOfNullableBoolDoesNotTriggerError(): void
+    #[Test]
+    public function arrayOfNullableBoolDoesNotTriggerError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -134,7 +143,8 @@ function states(): array
         $this->assertNoViolations($result);
     }
 
-    public function testClassDocblockIsIgnored(): void
+    #[Test]
+    public function classDocblockIsIgnored(): void
     {
         $result = $this->runPhpcs('<?php
 

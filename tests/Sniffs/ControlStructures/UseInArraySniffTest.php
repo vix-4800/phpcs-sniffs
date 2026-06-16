@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\ControlStructures;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -18,7 +19,8 @@ final class UseInArraySniffTest extends BaseTest
     /**
      * Test that multiple OR comparisons with === trigger a warning.
      */
-    public function testMultipleOrComparisonsWithIdenticalTriggersWarning(): void
+    #[Test]
+    public function multipleOrComparisonsWithIdenticalTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $site_id = 1;
@@ -32,7 +34,8 @@ if ($site_id === 1 || $site_id === 2 || $site_id === 3) {
     /**
      * Test that multiple AND comparisons with !== trigger a warning.
      */
-    public function testMultipleAndComparisonsWithNotIdenticalTriggersWarning(): void
+    #[Test]
+    public function multipleAndComparisonsWithNotIdenticalTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $site_id = 1;
@@ -46,7 +49,8 @@ if ($site_id !== 1 && $site_id !== 2 && $site_id !== 3) {
     /**
      * Test enum comparisons.
      */
-    public function testEnumComparisonsTriggersWarning(): void
+    #[Test]
+    public function enumComparisonsTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 if ($site_id === SiteId::Chaturbate->value
@@ -61,7 +65,8 @@ if ($site_id === SiteId::Chaturbate->value
     /**
      * Test that two comparisons don't trigger warning (minimum is 3).
      */
-    public function testTwoComparisonsDoNotTriggerWarning(): void
+    #[Test]
+    public function twoComparisonsDoNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 if ($site_id === 1 || $site_id === 2) {
@@ -74,7 +79,8 @@ if ($site_id === 1 || $site_id === 2) {
     /**
      * Test that single comparison doesn't trigger warning.
      */
-    public function testSingleComparisonDoesNotTriggerWarning(): void
+    #[Test]
+    public function singleComparisonDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 if ($site_id === 1) {
@@ -87,7 +93,8 @@ if ($site_id === 1) {
     /**
      * Test that in_array usage doesn't trigger warning.
      */
-    public function testInArrayDoesNotTriggerWarning(): void
+    #[Test]
+    public function inArrayDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 if (in_array($site_id, [1, 2, 3], true)) {
@@ -100,7 +107,8 @@ if (in_array($site_id, [1, 2, 3], true)) {
     /**
      * Test that comparisons of different variables don't trigger warning.
      */
-    public function testDifferentVariablesDoNotTriggerWarning(): void
+    #[Test]
+    public function differentVariablesDoNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 if ($var1 === 1 || $var2 === 2 || $var3 === 3) {
@@ -113,7 +121,8 @@ if ($var1 === 1 || $var2 === 2 || $var3 === 3) {
     /**
      * Test that mixed operators don't trigger warning.
      */
-    public function testMixedOperatorsDoNotTriggerWarning(): void
+    #[Test]
+    public function mixedOperatorsDoNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 if ($var === 1 || $var === 2 && $var === 3) {
@@ -126,7 +135,8 @@ if ($var === 1 || $var === 2 && $var === 3) {
     /**
      * Test multiple comparison groups in one file.
      */
-    public function testMultipleComparisonGroups(): void
+    #[Test]
+    public function multipleComparisonGroups(): void
     {
         $result = $this->runPhpcs('<?php
 if ($a === 1 || $a === 2 || $a === 3) {
@@ -144,7 +154,8 @@ if ($b !== 4 && $b !== 5 && $b !== 6) {
     /**
      * Test comparison with object properties.
      */
-    public function testObjectPropertyComparisons(): void
+    #[Test]
+    public function objectPropertyComparisons(): void
     {
         $result = $this->runPhpcs('<?php
 if ($obj->prop === 1 || $obj->prop === 2 || $obj->prop === 3) {
@@ -158,7 +169,8 @@ if ($obj->prop === 1 || $obj->prop === 2 || $obj->prop === 3) {
      * Test that sequential if statements with same variable don't trigger false positives.
      * This was a bug where the sniff would continue scanning beyond statement boundaries.
      */
-    public function testSequentialIfStatementsDoNotTriggerFalsePositives(): void
+    #[Test]
+    public function sequentialIfStatementsDoNotTriggerFalsePositives(): void
     {
         $result = $this->runPhpcs('<?php
 $next = 1;
@@ -179,7 +191,8 @@ if ($next === false || $next === 3) {
     /**
      * Test that sequential if statements with 3+ comparisons each do trigger warnings.
      */
-    public function testSequentialIfStatementsWithMultipleComparisonsEach(): void
+    #[Test]
+    public function sequentialIfStatementsWithMultipleComparisonsEach(): void
     {
         $result = $this->runPhpcs('<?php
 if ($var === 1 || $var === 2 || $var === 3) {

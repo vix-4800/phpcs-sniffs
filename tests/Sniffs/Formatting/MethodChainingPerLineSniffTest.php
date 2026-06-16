@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Formatting;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,7 +16,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class MethodChainingPerLineSniffTest extends BaseTest
 {
-    public function testMultipleCallsOnSameLineTriggerError(): void
+    #[Test]
+    public function multipleCallsOnSameLineTriggerError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -27,7 +29,8 @@ User::find()
         $this->assertContainsError($result, 'Only one chained method call is allowed per line');
     }
 
-    public function testProperMultilineChainPasses(): void
+    #[Test]
+    public function properMultilineChainPasses(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -41,7 +44,8 @@ User::find()
         $this->assertNoViolations($result);
     }
 
-    public function testFirstInlineCallBeforeMultilineChainPasses(): void
+    #[Test]
+    public function firstInlineCallBeforeMultilineChainPasses(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -53,7 +57,8 @@ $service->firstCall()
         $this->assertNoViolations($result);
     }
 
-    public function testInlineChainPasses(): void
+    #[Test]
+    public function inlineChainPasses(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -63,7 +68,8 @@ User::find()->where(["id" => $model->user_id])->all();
         $this->assertNoViolations($result);
     }
 
-    public function testNestedClosuresOnSameLineAreIgnored(): void
+    #[Test]
+    public function nestedClosuresOnSameLineAreIgnored(): void
     {
         $result = $this->runPhpcs('<?php
 

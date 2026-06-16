@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Objects;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,9 +16,10 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class DisallowReturnInConstructorDestructorSniffTest extends BaseTest
 {
-    private const SNIFF = 'VixPHPCS.Objects.DisallowReturnInConstructorDestructor';
+    private const string SNIFF = 'VixPHPCS.Objects.DisallowReturnInConstructorDestructor';
 
-    public function testConstructorReturnTriggersError(): void
+    #[Test]
+    public function constructorReturnTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -32,7 +34,8 @@ class Example
         $this->assertContainsError($result, 'Return statements are not allowed inside constructors or destructors');
     }
 
-    public function testConstructorReturnWithValueTriggersError(): void
+    #[Test]
+    public function constructorReturnWithValueTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -47,7 +50,8 @@ class Example
         $this->assertContainsError($result, 'Return statements are not allowed inside constructors or destructors');
     }
 
-    public function testDestructorReturnTriggersError(): void
+    #[Test]
+    public function destructorReturnTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -62,7 +66,8 @@ class Example
         $this->assertContainsError($result, 'Return statements are not allowed inside constructors or destructors');
     }
 
-    public function testMethodReturnDoesNotTriggerError(): void
+    #[Test]
+    public function methodReturnDoesNotTriggerError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -77,7 +82,8 @@ class Example
         $this->assertNoViolations($result);
     }
 
-    public function testClosureReturnInsideConstructorDoesNotTriggerError(): void
+    #[Test]
+    public function closureReturnInsideConstructorDoesNotTriggerError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -94,7 +100,8 @@ class Example
         $this->assertNoViolations($result);
     }
 
-    public function testConstructorWithoutReturnDoesNotTriggerError(): void
+    #[Test]
+    public function constructorWithoutReturnDoesNotTriggerError(): void
     {
         $result = $this->runPhpcs('<?php
 

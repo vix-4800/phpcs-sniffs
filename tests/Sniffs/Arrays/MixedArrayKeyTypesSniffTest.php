@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Sniffs\Arrays;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,9 +16,10 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class MixedArrayKeyTypesSniffTest extends BaseTest
 {
-    private const SNIFF = 'VixPHPCS.Arrays.MixedArrayKeyTypes';
+    private const string SNIFF = 'VixPHPCS.Arrays.MixedArrayKeyTypes';
 
-    public function testStringAndIntegerKeysTriggerWarning(): void
+    #[Test]
+    public function stringAndIntegerKeysTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $data = [
@@ -28,7 +30,8 @@ $data = [
         $this->assertContainsWarning($result, 'Do not mix integer and string keys');
     }
 
-    public function testImplicitIntegerAndStringKeysTriggerWarning(): void
+    #[Test]
+    public function implicitIntegerAndStringKeysTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $data = [
@@ -39,7 +42,8 @@ $data = [
         $this->assertContainsWarning($result, 'Do not mix integer and string keys');
     }
 
-    public function testStringKeysOnlyDoNotTriggerWarning(): void
+    #[Test]
+    public function stringKeysOnlyDoNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $data = [
@@ -50,7 +54,8 @@ $data = [
         $this->assertNoViolations($result);
     }
 
-    public function testIntegerKeysOnlyDoNotTriggerWarning(): void
+    #[Test]
+    public function integerKeysOnlyDoNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $data = [
@@ -62,7 +67,8 @@ $data = [
         $this->assertNoViolations($result);
     }
 
-    public function testArrowFunctionItemCountsAsImplicitIntegerKey(): void
+    #[Test]
+    public function arrowFunctionItemCountsAsImplicitIntegerKey(): void
     {
         $result = $this->runPhpcs('<?php
 $data = [
@@ -73,7 +79,8 @@ $data = [
         $this->assertContainsWarning($result, 'Do not mix integer and string keys');
     }
 
-    public function testNestedArraysDoNotAffectParentArrayKeyTypes(): void
+    #[Test]
+    public function nestedArraysDoNotAffectParentArrayKeyTypes(): void
     {
         $result = $this->runPhpcs('<?php
 $data = [
@@ -84,7 +91,8 @@ $data = [
         $this->assertNoViolations($result);
     }
 
-    public function testOldArraySyntaxTriggersWarning(): void
+    #[Test]
+    public function oldArraySyntaxTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $data = array(
@@ -95,7 +103,8 @@ $data = array(
         $this->assertContainsWarning($result, 'Do not mix integer and string keys');
     }
 
-    public function testDynamicKeysDoNotTriggerWarning(): void
+    #[Test]
+    public function dynamicKeysDoNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $data = [

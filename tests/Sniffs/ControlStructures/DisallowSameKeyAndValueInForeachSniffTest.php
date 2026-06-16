@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\ControlStructures;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,7 +16,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class DisallowSameKeyAndValueInForeachSniffTest extends BaseTest
 {
-    public function testSameKeyAndValueVariableTriggersWarning(): void
+    #[Test]
+    public function sameKeyAndValueVariableTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 foreach ($items as $item => $item) {
@@ -25,7 +27,8 @@ foreach ($items as $item => $item) {
         $this->assertContainsWarning($result, 'must be different variables');
     }
 
-    public function testSameKeyAndReferencedValueVariableTriggersWarning(): void
+    #[Test]
+    public function sameKeyAndReferencedValueVariableTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 foreach ($items as $item => &$item) {
@@ -35,7 +38,8 @@ foreach ($items as $item => &$item) {
         $this->assertContainsWarning($result, 'must be different variables');
     }
 
-    public function testDifferentKeyAndValueVariablesAreAllowed(): void
+    #[Test]
+    public function differentKeyAndValueVariablesAreAllowed(): void
     {
         $result = $this->runPhpcs('<?php
 foreach ($items as $key => $item) {
@@ -45,7 +49,8 @@ foreach ($items as $key => $item) {
         $this->assertNoViolations($result);
     }
 
-    public function testForeachWithoutKeyIsAllowed(): void
+    #[Test]
+    public function foreachWithoutKeyIsAllowed(): void
     {
         $result = $this->runPhpcs('<?php
 foreach ($items as $item) {
@@ -55,7 +60,8 @@ foreach ($items as $item) {
         $this->assertNoViolations($result);
     }
 
-    public function testComplexValueExpressionIsIgnored(): void
+    #[Test]
+    public function complexValueExpressionIsIgnored(): void
     {
         $result = $this->runPhpcs('<?php
 foreach ($items as $item => $item["value"]) {
@@ -65,7 +71,8 @@ foreach ($items as $item => $item["value"]) {
         $this->assertNoViolations($result);
     }
 
-    public function testDestructuredValueIsIgnored(): void
+    #[Test]
+    public function destructuredValueIsIgnored(): void
     {
         $result = $this->runPhpcs('<?php
 foreach ($items as $item => [$first, $second]) {

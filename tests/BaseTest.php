@@ -59,7 +59,7 @@ abstract class BaseTest extends TestCase
         $this->assertStringContainsString('WARNING', $output, 'Expected PHPCS to report a warning');
 
         if ($message !== null) {
-            $this->assertStringContainsString($message, $output, "Expected warning message to contain: {$message}");
+            $this->assertStringContainsString($message, $output, 'Expected warning message to contain: ' . $message);
         }
     }
 
@@ -74,7 +74,7 @@ abstract class BaseTest extends TestCase
         $this->assertStringContainsString('ERROR', $output, 'Expected PHPCS to report an error');
 
         if ($message !== null) {
-            $this->assertStringContainsString($message, $output, "Expected error message to contain: {$message}");
+            $this->assertStringContainsString($message, $output, 'Expected error message to contain: ' . $message);
         }
     }
 

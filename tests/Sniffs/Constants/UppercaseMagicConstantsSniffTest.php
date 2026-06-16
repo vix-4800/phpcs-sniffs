@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Constants;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -18,7 +19,8 @@ final class UppercaseMagicConstantsSniffTest extends BaseTest
     /**
      * Test that lowercase and mixed-case magic constants trigger warnings.
      */
-    public function testLowercaseMagicConstantsTriggerWarnings(): void
+    #[Test]
+    public function lowercaseMagicConstantsTriggerWarnings(): void
     {
         $result = $this->runPhpcs('<?php
 namespace App;
@@ -43,7 +45,8 @@ trait ExampleTrait
     /**
      * Test that class-related magic constants trigger warnings when not uppercase.
      */
-    public function testClassMagicConstantsTriggerWarnings(): void
+    #[Test]
+    public function classMagicConstantsTriggerWarnings(): void
     {
         $result = $this->runPhpcs('<?php
 class Example
@@ -60,7 +63,8 @@ class Example
     /**
      * Test that correctly cased magic constants do not trigger warnings.
      */
-    public function testUppercaseMagicConstantsDoNotTriggerWarnings(): void
+    #[Test]
+    public function uppercaseMagicConstantsDoNotTriggerWarnings(): void
     {
         $result = $this->runPhpcs('<?php
 namespace App;

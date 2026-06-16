@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Yii2;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -18,7 +19,8 @@ final class PreferExistsOverCountSniffTest extends BaseTest
     /**
      * Test that count() > 0 triggers a warning.
      */
-    public function testCountGreaterThanZeroTriggersWarning(): void
+    #[Test]
+    public function countGreaterThanZeroTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -32,7 +34,8 @@ if ($query->count() > 0) {
     /**
      * Test that count() >= 1 triggers a warning.
      */
-    public function testCountGreaterOrEqualOneTriggersWarning(): void
+    #[Test]
+    public function countGreaterOrEqualOneTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -46,7 +49,8 @@ if ($query->count() >= 1) {
     /**
      * Test that count() != 0 triggers a warning.
      */
-    public function testCountNotEqualZeroTriggersWarning(): void
+    #[Test]
+    public function countNotEqualZeroTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -60,7 +64,8 @@ if ($query->count() != 0) {
     /**
      * Test that count() !== 0 triggers a warning.
      */
-    public function testCountNotIdenticalZeroTriggersWarning(): void
+    #[Test]
+    public function countNotIdenticalZeroTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -74,7 +79,8 @@ if ($query->count() !== 0) {
     /**
      * Test that count() == 0 triggers a warning with negation.
      */
-    public function testCountEqualZeroTriggersWarning(): void
+    #[Test]
+    public function countEqualZeroTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -88,7 +94,8 @@ if ($query->count() == 0) {
     /**
      * Test that count() === 0 triggers a warning with negation.
      */
-    public function testCountIdenticalZeroTriggersWarning(): void
+    #[Test]
+    public function countIdenticalZeroTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -102,7 +109,8 @@ if ($query->count() === 0) {
     /**
      * Test that count() < 1 triggers a warning with negation.
      */
-    public function testCountLessThanOneTriggersWarning(): void
+    #[Test]
+    public function countLessThanOneTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -116,7 +124,8 @@ if ($query->count() < 1) {
     /**
      * Test that count() <= 0 triggers a warning with negation.
      */
-    public function testCountLessOrEqualZeroTriggersWarning(): void
+    #[Test]
+    public function countLessOrEqualZeroTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -130,7 +139,8 @@ if ($query->count() <= 0) {
     /**
      * Test with full query chain.
      */
-    public function testFullQueryChainTriggersWarning(): void
+    #[Test]
+    public function fullQueryChainTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -144,7 +154,8 @@ if (User::find()->where(["status" => 1])->count() > 0) {
     /**
      * Test in ternary operator.
      */
-    public function testInTernaryOperatorTriggersWarning(): void
+    #[Test]
+    public function inTernaryOperatorTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -156,7 +167,8 @@ $hasUsers = $query->count() > 0 ? "yes" : "no";', 'VixPHPCS.Yii2.PreferExistsOve
     /**
      * Test that count() with arguments does NOT trigger a warning.
      */
-    public function testCountWithArgumentsDoesNotTriggerWarning(): void
+    #[Test]
+    public function countWithArgumentsDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -168,7 +180,8 @@ $count = $query->count("*");', 'VixPHPCS.Yii2.PreferExistsOverCount');
     /**
      * Test that count() with different comparison does NOT trigger a warning.
      */
-    public function testCountWithDifferentComparisonDoesNotTriggerWarning(): void
+    #[Test]
+    public function countWithDifferentComparisonDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -186,7 +199,8 @@ if ($query->count() >= 10) {
     /**
      * Test that count() without comparison does NOT trigger a warning.
      */
-    public function testCountWithoutComparisonDoesNotTriggerWarning(): void
+    #[Test]
+    public function countWithoutComparisonDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -199,7 +213,8 @@ echo $count;', 'VixPHPCS.Yii2.PreferExistsOverCount');
     /**
      * Test that count() function (not method) does NOT trigger a warning.
      */
-    public function testCountFunctionDoesNotTriggerWarning(): void
+    #[Test]
+    public function countFunctionDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -213,7 +228,8 @@ if (count($array) > 0) {
     /**
      * Test that exists() does NOT trigger a warning.
      */
-    public function testExistsDoesNotTriggerWarning(): void
+    #[Test]
+    public function existsDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -231,7 +247,8 @@ if (!$query->exists()) {
     /**
      * Test static method call does NOT trigger a warning.
      */
-    public function testStaticMethodCallDoesNotTriggerWarning(): void
+    #[Test]
+    public function staticMethodCallDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -245,7 +262,8 @@ if (SomeClass::count() > 0) {
     /**
      * Test multiple violations in one file.
      */
-    public function testMultipleViolations(): void
+    #[Test]
+    public function multipleViolations(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -267,7 +285,8 @@ $result = $query3->count() >= 1 ? "found" : "not found";', 'VixPHPCS.Yii2.Prefer
     /**
      * Test negation patterns.
      */
-    public function testNegationPatterns(): void
+    #[Test]
+    public function negationPatterns(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -288,7 +307,8 @@ if ($query->count() > 0) {
     /**
      * Test that ->one() in if condition triggers a warning.
      */
-    public function testOneInIfConditionTriggersWarning(): void
+    #[Test]
+    public function oneInIfConditionTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -302,7 +322,8 @@ if (TimeTracker::find()->where(["datetime_end" => null, "user_id" => $user->id])
     /**
      * Test that ->one() in while condition triggers a warning.
      */
-    public function testOneInWhileConditionTriggersWarning(): void
+    #[Test]
+    public function oneInWhileConditionTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -316,7 +337,8 @@ while ($query->one()) {
     /**
      * Test that ->one() in ternary condition triggers a warning.
      */
-    public function testOneInTernaryTriggersWarning(): void
+    #[Test]
+    public function oneInTernaryTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -328,7 +350,8 @@ $result = $query->one() ? "found" : "not found";', 'VixPHPCS.Yii2.PreferExistsOv
     /**
      * Test that ->one() in logical AND triggers a warning.
      */
-    public function testOneInLogicalAndTriggersWarning(): void
+    #[Test]
+    public function oneInLogicalAndTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -342,7 +365,8 @@ if ($condition && $query->one()) {
     /**
      * Test that ->one() used for assignment does not trigger warning.
      */
-    public function testOneForAssignmentDoesNotTriggerWarning(): void
+    #[Test]
+    public function oneForAssignmentDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 

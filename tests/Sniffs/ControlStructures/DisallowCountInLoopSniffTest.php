@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\ControlStructures;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -18,12 +19,13 @@ final class DisallowCountInLoopSniffTest extends BaseTest
     /**
      * Expected minimum number of warnings for multiple for loops test.
      */
-    private const EXPECTED_MULTIPLE_WARNINGS = 2;
+    private const int EXPECTED_MULTIPLE_WARNINGS = 2;
 
     /**
      * Test that count() in for loop condition triggers a warning.
      */
-    public function testCountInForLoopConditionTriggersWarning(): void
+    #[Test]
+    public function countInForLoopConditionTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $array = [1, 2, 3, 4, 5];
@@ -37,7 +39,8 @@ for ($i = 0; $i < count($array); $i++) {
     /**
      * Test that count() with complex expressions in for loop triggers a warning.
      */
-    public function testCountWithComplexExpressionTriggersWarning(): void
+    #[Test]
+    public function countWithComplexExpressionTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 for ($i = 0; $i < count($this->items); $i++) {
@@ -50,7 +53,8 @@ for ($i = 0; $i < count($this->items); $i++) {
     /**
      * Test that count() with array access in for loop triggers a warning.
      */
-    public function testCountWithArrayAccessTriggersWarning(): void
+    #[Test]
+    public function countWithArrayAccessTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 for ($i = 0; $i < count($data["items"]); $i++) {
@@ -63,7 +67,8 @@ for ($i = 0; $i < count($data["items"]); $i++) {
     /**
      * Test that count stored in variable before loop doesn't trigger warning.
      */
-    public function testCountStoredInVariableDoesNotTriggerWarning(): void
+    #[Test]
+    public function countStoredInVariableDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $array = [1, 2, 3, 4, 5];
@@ -78,7 +83,8 @@ for ($i = 0; $i < $count; $i++) {
     /**
      * Test that foreach doesn't trigger warning.
      */
-    public function testForeachDoesNotTriggerWarning(): void
+    #[Test]
+    public function foreachDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $array = [1, 2, 3, 4, 5];
@@ -92,7 +98,8 @@ foreach ($array as $item) {
     /**
      * Test that count() used outside of loop doesn't trigger warning.
      */
-    public function testCountOutsideLoopDoesNotTriggerWarning(): void
+    #[Test]
+    public function countOutsideLoopDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $array = [1, 2, 3];
@@ -107,7 +114,8 @@ if ($count > 0) {
     /**
      * Test that count() in for loop initialization doesn't trigger warning.
      */
-    public function testCountInForLoopInitializationDoesNotTriggerWarning(): void
+    #[Test]
+    public function countInForLoopInitializationDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 for ($count = count($array), $i = 0; $i < $count; $i++) {
@@ -120,7 +128,8 @@ for ($count = count($array), $i = 0; $i < $count; $i++) {
     /**
      * Test that count() in for loop increment part doesn't trigger warning.
      */
-    public function testCountInForLoopIncrementDoesNotTriggerWarning(): void
+    #[Test]
+    public function countInForLoopIncrementDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $count = 0;
@@ -134,7 +143,8 @@ for ($i = 0; $i < 10; $i++, $count = count($array)) {
     /**
      * Test that method named count() doesn't trigger warning.
      */
-    public function testMethodNamedCountDoesNotTriggerWarning(): void
+    #[Test]
+    public function methodNamedCountDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 for ($i = 0; $i < $this->count(); $i++) {
@@ -147,7 +157,8 @@ for ($i = 0; $i < $this->count(); $i++) {
     /**
      * Test that static method named count() doesn't trigger warning.
      */
-    public function testStaticMethodNamedCountDoesNotTriggerWarning(): void
+    #[Test]
+    public function staticMethodNamedCountDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 for ($i = 0; $i < MyClass::count(); $i++) {
@@ -160,7 +171,8 @@ for ($i = 0; $i < MyClass::count(); $i++) {
     /**
      * Test while loop with count() doesn't trigger warning (we only check for loops).
      */
-    public function testWhileLoopWithCountDoesNotTriggerWarning(): void
+    #[Test]
+    public function whileLoopWithCountDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $i = 0;
@@ -175,7 +187,8 @@ while ($i < count($array)) {
     /**
      * Test multiple for loops with count() each trigger warnings.
      */
-    public function testMultipleForLoopsWithCountTriggerWarnings(): void
+    #[Test]
+    public function multipleForLoopsWithCountTriggerWarnings(): void
     {
         $result = $this->runPhpcs('<?php
 for ($i = 0; $i < count($array1); $i++) {
@@ -194,7 +207,8 @@ for ($j = 0; $j < count($array2); $j++) {
     /**
      * Test count() with greater than or equal operator.
      */
-    public function testCountWithGreaterThanOrEqualTriggersWarning(): void
+    #[Test]
+    public function countWithGreaterThanOrEqualTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 for ($i = 10; $i >= count($array); $i--) {
@@ -207,7 +221,8 @@ for ($i = 10; $i >= count($array); $i--) {
     /**
      * Test count() with not equal operator.
      */
-    public function testCountWithNotEqualTriggersWarning(): void
+    #[Test]
+    public function countWithNotEqualTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 for ($i = 0; $i != count($array); $i++) {

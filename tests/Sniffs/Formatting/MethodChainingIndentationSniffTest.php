@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Formatting;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,7 +16,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class MethodChainingIndentationSniffTest extends BaseTest
 {
-    public function testFirstChainedCallMustBeIndented(): void
+    #[Test]
+    public function firstChainedCallMustBeIndented(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -28,7 +30,8 @@ User::find()
         $this->assertContainsError($result, 'First chained call must be indented');
     }
 
-    public function testSubsequentCallsMustAlign(): void
+    #[Test]
+    public function subsequentCallsMustAlign(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -41,7 +44,8 @@ User::find()
         $this->assertContainsError($result, 'Chained call indentation must match');
     }
 
-    public function testNestedStructuresKeepIndentation(): void
+    #[Test]
+    public function nestedStructuresKeepIndentation(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -59,7 +63,8 @@ function example(): array
         $this->assertNoViolations($result);
     }
 
-    public function testInlineChainIsIgnored(): void
+    #[Test]
+    public function inlineChainIsIgnored(): void
     {
         $result = $this->runPhpcs('<?php
 

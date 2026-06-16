@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\PhpDoc;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,9 +16,10 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class DisallowUnusedTemplateSniffTest extends BaseTest
 {
-    private const SNIFF = 'VixPHPCS.PhpDoc.DisallowUnusedTemplate';
+    private const string SNIFF = 'VixPHPCS.PhpDoc.DisallowUnusedTemplate';
 
-    public function testUnusedClassTemplateTriggersWarning(): void
+    #[Test]
+    public function unusedClassTemplateTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -31,7 +33,8 @@ class Repository
         $this->assertContainsWarning($result, 'Template "TModel" is declared but never used.');
     }
 
-    public function testClassTemplateUsedInSameDocblockDoesNotTriggerWarning(): void
+    #[Test]
+    public function classTemplateUsedInSameDocblockDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -46,7 +49,8 @@ class Repository extends BaseRepository
         $this->assertNoViolations($result);
     }
 
-    public function testClassTemplateUsedInMethodDocblockDoesNotTriggerWarning(): void
+    #[Test]
+    public function classTemplateUsedInMethodDocblockDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -66,7 +70,8 @@ class Repository
         $this->assertNoViolations($result);
     }
 
-    public function testUnusedTemplateAmongMultipleTemplatesTriggersWarning(): void
+    #[Test]
+    public function unusedTemplateAmongMultipleTemplatesTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -83,7 +88,8 @@ class Collection implements IteratorAggregate
         $this->assertStringNotContainsString('Template "TKey"', $result);
     }
 
-    public function testFunctionTemplateUsedInSameDocblockDoesNotTriggerWarning(): void
+    #[Test]
+    public function functionTemplateUsedInSameDocblockDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -99,7 +105,8 @@ function make(string $className)
         $this->assertNoViolations($result);
     }
 
-    public function testTemplateNameSubstringDoesNotCountAsUsage(): void
+    #[Test]
+    public function templateNameSubstringDoesNotCountAsUsage(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -114,7 +121,8 @@ class Repository
         $this->assertContainsWarning($result, 'Template "TModel" is declared but never used.');
     }
 
-    public function testCovariantTemplateUsedInSameDocblockDoesNotTriggerWarning(): void
+    #[Test]
+    public function covariantTemplateUsedInSameDocblockDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 

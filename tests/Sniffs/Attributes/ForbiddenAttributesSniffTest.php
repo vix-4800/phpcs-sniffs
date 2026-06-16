@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Sniffs\Attributes;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -13,7 +14,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class ForbiddenAttributesSniffTest extends BaseTest
 {
-    public function testForbiddenAttributeTriggersWarning(): void
+    #[Test]
+    public function forbiddenAttributeTriggersWarning(): void
     {
         $code = <<<'PHP'
             <?php
@@ -34,7 +36,8 @@ final class ForbiddenAttributesSniffTest extends BaseTest
         $this->assertContainsWarning($result, 'Usage of attribute "ArrayShape" is forbidden.');
     }
 
-    public function testFullyQualifiedForbiddenAttributeTriggersWarning(): void
+    #[Test]
+    public function fullyQualifiedForbiddenAttributeTriggersWarning(): void
     {
         $code = <<<'PHP'
             <?php
@@ -53,7 +56,8 @@ final class ForbiddenAttributesSniffTest extends BaseTest
         $this->assertContainsWarning($result, 'Usage of attribute "\JetBrains\PhpStorm\ArrayShape" is forbidden.');
     }
 
-    public function testAllowedAttributeDoesNotTriggerWarning(): void
+    #[Test]
+    public function allowedAttributeDoesNotTriggerWarning(): void
     {
         $code = <<<'PHP'
             <?php
@@ -72,7 +76,8 @@ final class ForbiddenAttributesSniffTest extends BaseTest
         $this->assertNoViolations($result);
     }
 
-    public function testCustomForbiddenAttribute(): void
+    #[Test]
+    public function customForbiddenAttribute(): void
     {
         $sniffPath = __DIR__ . '/../../../src/VixPHPCS/Sniffs/Attributes/ForbiddenAttributesSniff.php';
         $ruleset = <<<XML

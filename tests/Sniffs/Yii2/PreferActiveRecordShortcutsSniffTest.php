@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace VixPHPCS\Tests\Common\Sniffs\Yii2;
 
 use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Test;
 use VixPHPCS\Tests\BaseTest;
 
 /**
@@ -18,7 +19,8 @@ final class PreferActiveRecordShortcutsSniffTest extends BaseTest
     /**
      * Test that find()->where()->one() triggers a warning.
      */
-    public function testFindWhereOneTrigersWarning(): void
+    #[Test]
+    public function findWhereOneTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -36,7 +38,8 @@ class User extends \yii\db\ActiveRecord
     /**
      * Test that find()->where()->all() triggers a warning.
      */
-    public function testFindWhereAllTriggersWarning(): void
+    #[Test]
+    public function findWhereAllTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -54,7 +57,8 @@ class User extends \yii\db\ActiveRecord
     /**
      * Test that Model::find()->where()->one() triggers a warning.
      */
-    public function testStaticCallWithWhereOneTriggersWarning(): void
+    #[Test]
+    public function staticCallWithWhereOneTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -66,7 +70,8 @@ $user = User::find()->where(["email" => $email])->one();', 'VixPHPCS.Yii2.Prefer
     /**
      * Test that $model->find()->where()->all() triggers a warning.
      */
-    public function testInstanceCallWithWhereAllTriggersWarning(): void
+    #[Test]
+    public function instanceCallWithWhereAllTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -79,7 +84,8 @@ $users = $model->find()->where(["active" => true])->all();', 'VixPHPCS.Yii2.Pref
      * Test that find()->where()->andWhere()->one() does NOT trigger a warning.
      * This is a complex query that cannot be replaced with findOne().
      */
-    public function testComplexChainWithOneDoesNotTriggerWarning(): void
+    #[Test]
+    public function complexChainWithOneDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -95,7 +101,8 @@ $user = User::find()
      * Test that find()->where()->orderBy()->all() does NOT trigger a warning.
      * This is a complex query that cannot be replaced with findAll().
      */
-    public function testChainWithOrderByAndAllDoesNotTriggerWarning(): void
+    #[Test]
+    public function chainWithOrderByAndAllDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -110,7 +117,8 @@ $users = User::find()
     /**
      * Test that findOne() does not trigger a warning.
      */
-    public function testFindOneDoesNotTriggerWarning(): void
+    #[Test]
+    public function findOneDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -122,7 +130,8 @@ $user = User::findOne($id);', 'VixPHPCS.Yii2.PreferActiveRecordShortcuts');
     /**
      * Test that findAll() does not trigger a warning.
      */
-    public function testFindAllDoesNotTriggerWarning(): void
+    #[Test]
+    public function findAllDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -134,7 +143,8 @@ $users = User::findAll(["status" => 1]);', 'VixPHPCS.Yii2.PreferActiveRecordShor
     /**
      * Test that find()->one() without where() does not trigger a warning.
      */
-    public function testFindOneWithoutWhereDoesNotTriggerWarning(): void
+    #[Test]
+    public function findOneWithoutWhereDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -146,7 +156,8 @@ $user = User::find()->one();', 'VixPHPCS.Yii2.PreferActiveRecordShortcuts');
     /**
      * Test that find()->all() without where() does not trigger a warning.
      */
-    public function testFindAllWithoutWhereDoesNotTriggerWarning(): void
+    #[Test]
+    public function findAllWithoutWhereDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -158,7 +169,8 @@ $users = User::find()->all();', 'VixPHPCS.Yii2.PreferActiveRecordShortcuts');
     /**
      * Test that find()->where() without one()/all() does not trigger a warning.
      */
-    public function testFindWhereWithoutTerminatorDoesNotTriggerWarning(): void
+    #[Test]
+    public function findWhereWithoutTerminatorDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -170,7 +182,8 @@ $query = User::find()->where(["status" => 1]);', 'VixPHPCS.Yii2.PreferActiveReco
     /**
      * Test that find()->where()->count() does not trigger a warning.
      */
-    public function testFindWhereCountDoesNotTriggerWarning(): void
+    #[Test]
+    public function findWhereCountDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -182,7 +195,8 @@ $count = User::find()->where(["status" => 1])->count();', 'VixPHPCS.Yii2.PreferA
     /**
      * Test that find()->where()->exists() does not trigger a warning.
      */
-    public function testFindWhereExistsDoesNotTriggerWarning(): void
+    #[Test]
+    public function findWhereExistsDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 

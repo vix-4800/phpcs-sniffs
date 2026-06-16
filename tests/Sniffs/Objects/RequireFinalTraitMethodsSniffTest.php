@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Objects;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,7 +16,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class RequireFinalTraitMethodsSniffTest extends BaseTest
 {
-    public function testPublicTraitMethodTriggersWarning(): void
+    #[Test]
+    public function publicTraitMethodTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -30,7 +32,8 @@ trait ExampleTrait
         $this->assertContainsWarning($result, 'must be declared final');
     }
 
-    public function testImplicitlyPublicTraitMethodTriggersWarning(): void
+    #[Test]
+    public function implicitlyPublicTraitMethodTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -45,7 +48,8 @@ trait ExampleTrait
         $this->assertContainsWarning($result, 'must be declared final');
     }
 
-    public function testFinalTraitMethodIsAllowed(): void
+    #[Test]
+    public function finalTraitMethodIsAllowed(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -60,7 +64,8 @@ trait ExampleTrait
         $this->assertNoViolations($result);
     }
 
-    public function testPrivateTraitMethodIsAllowed(): void
+    #[Test]
+    public function privateTraitMethodIsAllowed(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -75,7 +80,8 @@ trait ExampleTrait
         $this->assertNoViolations($result);
     }
 
-    public function testAbstractTraitMethodIsAllowed(): void
+    #[Test]
+    public function abstractTraitMethodIsAllowed(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -88,7 +94,8 @@ trait ExampleTrait
         $this->assertNoViolations($result);
     }
 
-    public function testClassMethodOutsideTraitIsIgnored(): void
+    #[Test]
+    public function classMethodOutsideTraitIsIgnored(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -103,7 +110,8 @@ class Example
         $this->assertNoViolations($result);
     }
 
-    public function testAnonymousClassMethodInsideTraitIsIgnored(): void
+    #[Test]
+    public function anonymousClassMethodInsideTraitIsIgnored(): void
     {
         $result = $this->runPhpcs('<?php
 

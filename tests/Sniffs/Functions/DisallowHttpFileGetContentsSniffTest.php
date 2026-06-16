@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Functions;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -18,7 +19,8 @@ final class DisallowHttpFileGetContentsSniffTest extends BaseTest
     /**
      * Test that HTTP URL triggers a warning.
      */
-    public function testHttpUrlTriggersWarning(): void
+    #[Test]
+    public function httpUrlTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $response = file_get_contents("http://example.com/api");', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
@@ -30,7 +32,8 @@ $response = file_get_contents("http://example.com/api");', 'VixPHPCS.Functions.D
     /**
      * Test that HTTPS URL triggers a warning.
      */
-    public function testHttpsUrlTriggersWarning(): void
+    #[Test]
+    public function httpsUrlTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $response = file_get_contents(\'https://example.com/api\');', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
@@ -41,7 +44,8 @@ $response = file_get_contents(\'https://example.com/api\');', 'VixPHPCS.Function
     /**
      * Test that URL literals are detected case-insensitively.
      */
-    public function testUrlSchemeIsCaseInsensitive(): void
+    #[Test]
+    public function urlSchemeIsCaseInsensitive(): void
     {
         $result = $this->runPhpcs('<?php
 $response = FILE_GET_CONTENTS("HTTPS://example.com/api");', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
@@ -52,7 +56,8 @@ $response = FILE_GET_CONTENTS("HTTPS://example.com/api");', 'VixPHPCS.Functions.
     /**
      * Test that interpolated HTTP URL triggers a warning.
      */
-    public function testInterpolatedHttpUrlTriggersWarning(): void
+    #[Test]
+    public function interpolatedHttpUrlTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $response = file_get_contents("https://$host/api");', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
@@ -63,7 +68,8 @@ $response = file_get_contents("https://$host/api");', 'VixPHPCS.Functions.Disall
     /**
      * Test that local paths do not trigger warnings.
      */
-    public function testLocalPathDoesNotTriggerWarning(): void
+    #[Test]
+    public function localPathDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $contents = file_get_contents(__DIR__ . "/file.txt");
@@ -75,7 +81,8 @@ $contents = file_get_contents("php://input");', 'VixPHPCS.Functions.DisallowHttp
     /**
      * Test that dynamic URLs do not trigger warnings.
      */
-    public function testDynamicUrlDoesNotTriggerWarning(): void
+    #[Test]
+    public function dynamicUrlDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $response = file_get_contents($url);', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
@@ -86,7 +93,8 @@ $response = file_get_contents($url);', 'VixPHPCS.Functions.DisallowHttpFileGetCo
     /**
      * Test that methods named file_get_contents do not trigger warnings.
      */
-    public function testMethodNamedFileGetContentsDoesNotTriggerWarning(): void
+    #[Test]
+    public function methodNamedFileGetContentsDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $response = $client->file_get_contents("https://example.com/api");
@@ -98,7 +106,8 @@ $response = Client::file_get_contents("https://example.com/api");', 'VixPHPCS.Fu
     /**
      * Test that function declarations do not trigger warnings.
      */
-    public function testFunctionDeclarationDoesNotTriggerWarning(): void
+    #[Test]
+    public function functionDeclarationDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 function file_get_contents(string $url): string {
@@ -111,7 +120,8 @@ function file_get_contents(string $url): string {
     /**
      * Test that later HTTP string arguments do not trigger warnings.
      */
-    public function testLaterHttpStringArgumentsDoNotTriggerWarning(): void
+    #[Test]
+    public function laterHttpStringArgumentsDoNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $response = file_get_contents($path, false, stream_context_create([

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Yii2;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -18,7 +19,8 @@ final class PreferIsGuestOverUserIdCheckSniffTest extends BaseTest
     /**
      * Test that empty(Yii::$app->user->id) triggers a warning.
      */
-    public function testEmptyUserIdTriggersWarning(): void
+    #[Test]
+    public function emptyUserIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -32,7 +34,8 @@ if (empty(Yii::$app->user->id)) {
     /**
      * Test that !empty(Yii::$app->user->id) triggers a warning.
      */
-    public function testNotEmptyUserIdTriggersWarning(): void
+    #[Test]
+    public function notEmptyUserIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -46,7 +49,8 @@ if (!empty(Yii::$app->user->id)) {
     /**
      * Test that Yii::$app->user->id === null triggers a warning.
      */
-    public function testUserIdIdenticalToNullTriggersWarning(): void
+    #[Test]
+    public function userIdIdenticalToNullTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -60,7 +64,8 @@ if (Yii::$app->user->id === null) {
     /**
      * Test that Yii::$app->user->id == null triggers a warning.
      */
-    public function testUserIdEqualToNullTriggersWarning(): void
+    #[Test]
+    public function userIdEqualToNullTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -74,7 +79,8 @@ if (Yii::$app->user->id == null) {
     /**
      * Test that Yii::$app->user->id !== null triggers a warning.
      */
-    public function testUserIdNotIdenticalToNullTriggersWarning(): void
+    #[Test]
+    public function userIdNotIdenticalToNullTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -88,7 +94,8 @@ if (Yii::$app->user->id !== null) {
     /**
      * Test that Yii::$app->user->id != null triggers a warning.
      */
-    public function testUserIdNotEqualToNullTriggersWarning(): void
+    #[Test]
+    public function userIdNotEqualToNullTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -102,7 +109,8 @@ if (Yii::$app->user->id != null) {
     /**
      * Test with whitespace variations.
      */
-    public function testWithWhitespaceVariations(): void
+    #[Test]
+    public function withWhitespaceVariations(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -116,7 +124,8 @@ if (Yii:: $app -> user -> id === null) {
     /**
      * Test that empty() on other variables doesn't trigger.
      */
-    public function testEmptyOnOtherVariablesDoesNotTrigger(): void
+    #[Test]
+    public function emptyOnOtherVariablesDoesNotTrigger(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -130,7 +139,8 @@ if (empty($userId)) {
     /**
      * Test that comparisons with other properties don't trigger.
      */
-    public function testOtherPropertyComparisonsDoNotTrigger(): void
+    #[Test]
+    public function otherPropertyComparisonsDoNotTrigger(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -148,7 +158,8 @@ if (Yii::$app->user->name === null) {
     /**
      * Test that using isGuest correctly doesn't trigger.
      */
-    public function testCorrectUsageDoesNotTrigger(): void
+    #[Test]
+    public function correctUsageDoesNotTrigger(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -166,7 +177,8 @@ if (!Yii::$app->user->isGuest) {
     /**
      * Test multiple violations in one file.
      */
-    public function testMultipleViolations(): void
+    #[Test]
+    public function multipleViolations(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -191,7 +203,8 @@ if (!empty(Yii::$app->user->id)) {
     /**
      * Test that user->id in arithmetic doesn't trigger.
      */
-    public function testUserIdInArithmeticDoesNotTrigger(): void
+    #[Test]
+    public function userIdInArithmeticDoesNotTrigger(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -203,7 +216,8 @@ $total = Yii::$app->user->id + 10;', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck
     /**
      * Test that user->id in assignments doesn't trigger.
      */
-    public function testUserIdAssignmentDoesNotTrigger(): void
+    #[Test]
+    public function userIdAssignmentDoesNotTrigger(): void
     {
         $result = $this->runPhpcs('<?php
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Functions;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -18,7 +19,8 @@ final class PreferJsonValidateSniffTest extends BaseTest
     /**
      * Test that json_last_error triggers warning.
      */
-    public function testJsonLastErrorTriggersWarning(): void
+    #[Test]
+    public function jsonLastErrorTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $data = json_decode($json);
@@ -32,7 +34,8 @@ if (json_last_error() !== JSON_ERROR_NONE) {
     /**
      * Test that json_decode followed by json_last_error triggers warning.
      */
-    public function testJsonDecodeWithLastErrorCheckTriggersWarning(): void
+    #[Test]
+    public function jsonDecodeWithLastErrorCheckTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 json_decode($json);
@@ -46,7 +49,8 @@ if (json_last_error() !== JSON_ERROR_NONE) {
     /**
      * Test that json_decode with assignment does not trigger (data is used).
      */
-    public function testJsonDecodeWithAssignmentAndUsageDoesNotTrigger(): void
+    #[Test]
+    public function jsonDecodeWithAssignmentAndUsageDoesNotTrigger(): void
     {
         $result = $this->runPhpcs('<?php
 $data = json_decode($json);
@@ -58,7 +62,8 @@ echo $data->name;', 'VixPHPCS.Functions.PreferJsonValidate');
     /**
      * Test that method calls are ignored.
      */
-    public function testMethodCallsAreIgnored(): void
+    #[Test]
+    public function methodCallsAreIgnored(): void
     {
         $result = $this->runPhpcs('<?php
 $obj->json_decode($json);
@@ -72,7 +77,8 @@ if ($obj->json_last_error() !== 0) {
     /**
      * Test that static method calls are ignored.
      */
-    public function testStaticMethodCallsAreIgnored(): void
+    #[Test]
+    public function staticMethodCallsAreIgnored(): void
     {
         $result = $this->runPhpcs('<?php
 SomeClass::json_decode($json);
@@ -84,7 +90,8 @@ SomeClass::json_last_error();', 'VixPHPCS.Functions.PreferJsonValidate');
     /**
      * Test multiple json_last_error calls trigger warnings.
      */
-    public function testMultipleJsonLastErrorCallsTriggerWarnings(): void
+    #[Test]
+    public function multipleJsonLastErrorCallsTriggerWarnings(): void
     {
         $result = $this->runPhpcs('<?php
 json_decode($json1);
@@ -106,7 +113,8 @@ if (json_last_error() !== JSON_ERROR_NONE) {
     /**
      * Test that json_decode with JSON_THROW_ON_ERROR triggers warning.
      */
-    public function testJsonDecodeWithThrowOnErrorTriggersWarning(): void
+    #[Test]
+    public function jsonDecodeWithThrowOnErrorTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 json_decode($json, true, 512, JSON_THROW_ON_ERROR);', 'VixPHPCS.Functions.PreferJsonValidate');
@@ -117,7 +125,8 @@ json_decode($json, true, 512, JSON_THROW_ON_ERROR);', 'VixPHPCS.Functions.Prefer
     /**
      * Test that json_decode with JSON_THROW_ON_ERROR in try-catch triggers warning.
      */
-    public function testJsonDecodeWithThrowOnErrorInTryCatchTriggersWarning(): void
+    #[Test]
+    public function jsonDecodeWithThrowOnErrorInTryCatchTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 try {
@@ -132,7 +141,8 @@ try {
     /**
      * Test that json_decode with JSON_THROW_ON_ERROR and assignment still triggers warning if value not used.
      */
-    public function testJsonDecodeWithThrowOnErrorAndUnusedAssignmentTriggersWarning(): void
+    #[Test]
+    public function jsonDecodeWithThrowOnErrorAndUnusedAssignmentTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 try {

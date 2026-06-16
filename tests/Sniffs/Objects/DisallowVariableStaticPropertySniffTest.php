@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Objects;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,7 +16,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class DisallowVariableStaticPropertySniffTest extends BaseTest
 {
-    public function testVariableStaticPropertyTriggersError(): void
+    #[Test]
+    public function variableStaticPropertyTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -25,7 +27,8 @@ $toast = $model::$toast_array[$model->toast];
         $this->assertContainsError($result, 'Static properties must be accessed via a class name');
     }
 
-    public function testParenthesizedVariableStaticPropertyTriggersError(): void
+    #[Test]
+    public function parenthesizedVariableStaticPropertyTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -35,7 +38,8 @@ $toast = ($model)::$toast_array[$model->toast];
         $this->assertContainsError($result, 'Static properties must be accessed via a class name');
     }
 
-    public function testClassNameAccessIsAllowed(): void
+    #[Test]
+    public function classNameAccessIsAllowed(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -45,7 +49,8 @@ $toast = User::$toast_array[$id];
         $this->assertNoViolations($result);
     }
 
-    public function testSelfAccessIsAllowed(): void
+    #[Test]
+    public function selfAccessIsAllowed(): void
     {
         $result = $this->runPhpcs('<?php
 

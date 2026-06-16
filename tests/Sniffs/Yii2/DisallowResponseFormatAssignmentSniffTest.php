@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Yii2;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -18,7 +19,8 @@ final class DisallowResponseFormatAssignmentSniffTest extends BaseTest
     /**
      * Test that direct assignment to Yii::$app->response->format with JSON format triggers a warning.
      */
-    public function testResponseFormatAssignmentTriggersWarning(): void
+    #[Test]
+    public function responseFormatAssignmentTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 use yii\web\Response;
@@ -38,7 +40,8 @@ class TestController
     /**
      * Test that direct assignment with XML constant triggers a warning.
      */
-    public function testResponseFormatWithDifferentConstantTriggersWarning(): void
+    #[Test]
+    public function responseFormatWithDifferentConstantTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 use yii\web\Response;
@@ -51,7 +54,8 @@ Yii::$app->response->format = Response::FORMAT_XML;', 'VixPHPCS.Yii2.DisallowRes
     /**
      * Test that direct assignment with string literal triggers a warning.
      */
-    public function testResponseFormatWithStringLiteralTriggersWarning(): void
+    #[Test]
+    public function responseFormatWithStringLiteralTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 Yii::$app->response->format = "json";', 'VixPHPCS.Yii2.DisallowResponseFormatAssignment');
@@ -62,7 +66,8 @@ Yii::$app->response->format = "json";', 'VixPHPCS.Yii2.DisallowResponseFormatAss
     /**
      * Test that using $this->asJson() does not trigger warning.
      */
-    public function testAsJsonMethodDoesNotTriggerWarning(): void
+    #[Test]
+    public function asJsonMethodDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 class TestController
@@ -79,7 +84,8 @@ class TestController
     /**
      * Test that reading Yii::$app->response->format does not trigger warning.
      */
-    public function testReadingResponseFormatDoesNotTriggerWarning(): void
+    #[Test]
+    public function readingResponseFormatDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $format = Yii::$app->response->format;
@@ -93,7 +99,8 @@ if (Yii::$app->response->format === "json") {
     /**
      * Test that other Yii::$app->response properties do not trigger warning.
      */
-    public function testOtherResponsePropertiesDoNotTriggerWarning(): void
+    #[Test]
+    public function otherResponsePropertiesDoNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 Yii::$app->response->statusCode = 404;
@@ -105,7 +112,8 @@ Yii::$app->response->headers->set("X-Custom", "value");', 'VixPHPCS.Yii2.Disallo
     /**
      * Test that assignment with whitespace and newlines triggers warning.
      */
-    public function testResponseFormatWithWhitespaceTriggersWarning(): void
+    #[Test]
+    public function responseFormatWithWhitespaceTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 use yii\web\Response;
@@ -118,7 +126,8 @@ Yii :: $app -> response -> format = Response::FORMAT_JSON;', 'VixPHPCS.Yii2.Disa
     /**
      * Test that variable or method named Yii does not trigger warning.
      */
-    public function testVariableNamedYiiDoesNotTriggerWarning(): void
+    #[Test]
+    public function variableNamedYiiDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $Yii = new stdClass();
@@ -136,7 +145,8 @@ class Test {
     /**
      * Test multiple violations in the same file.
      */
-    public function testMultipleViolations(): void
+    #[Test]
+    public function multipleViolations(): void
     {
         $result = $this->runPhpcs('<?php
 use yii\web\Response;
@@ -165,7 +175,8 @@ class TestController
     /**
      * Test that other formats (non-JSON/XML) do not trigger warning.
      */
-    public function testOtherFormatsDoNotTriggerWarning(): void
+    #[Test]
+    public function otherFormatsDoNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 use yii\web\Response;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\PhpDoc;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,9 +16,10 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class DisallowVoidMixedWithOtherTypesSniffTest extends BaseTest
 {
-    private const SNIFF = 'VixPHPCS.PhpDoc.DisallowVoidMixedWithOtherTypes';
+    private const string SNIFF = 'VixPHPCS.PhpDoc.DisallowVoidMixedWithOtherTypes';
 
-    public function testVoidMixedWithNullTriggersError(): void
+    #[Test]
+    public function voidMixedWithNullTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -31,7 +33,8 @@ function foo(): void
         $this->assertContainsError($result, '"void" cannot be combined with other return types in @return tag.');
     }
 
-    public function testVoidMixedWithArrayAndNullTriggersError(): void
+    #[Test]
+    public function voidMixedWithArrayAndNullTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -45,7 +48,8 @@ function foo()
         $this->assertContainsError($result, '"void" cannot be combined with other return types in @return tag.');
     }
 
-    public function testVoidMixedWithSingleTypeTriggersError(): void
+    #[Test]
+    public function voidMixedWithSingleTypeTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -59,7 +63,8 @@ function foo()
         $this->assertContainsError($result, '"void" cannot be combined with other return types in @return tag.');
     }
 
-    public function testVoidAloneDoesNotTriggerError(): void
+    #[Test]
+    public function voidAloneDoesNotTriggerError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -73,7 +78,8 @@ function foo(): void
         $this->assertNoViolations($result);
     }
 
-    public function testNoReturnTagDoesNotTriggerError(): void
+    #[Test]
+    public function noReturnTagDoesNotTriggerError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -88,7 +94,8 @@ function foo(string $foo): string
         $this->assertNoViolations($result);
     }
 
-    public function testReturnWithMultipleNonVoidTypesDoesNotTriggerError(): void
+    #[Test]
+    public function returnWithMultipleNonVoidTypesDoesNotTriggerError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -102,7 +109,8 @@ function foo(): string|int|null
         $this->assertNoViolations($result);
     }
 
-    public function testReturnWithNeverDoesNotTriggerError(): void
+    #[Test]
+    public function returnWithNeverDoesNotTriggerError(): void
     {
         $result = $this->runPhpcs('<?php
 

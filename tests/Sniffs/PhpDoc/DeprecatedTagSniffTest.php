@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\PhpDoc;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,9 +16,10 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class DeprecatedTagSniffTest extends BaseTest
 {
-    private const SNIFF = 'VixPHPCS.PhpDoc.DeprecatedTag';
+    private const string SNIFF = 'VixPHPCS.PhpDoc.DeprecatedTag';
 
-    public function testFunctionWithDeprecatedTagTriggersWarning(): void
+    #[Test]
+    public function functionWithDeprecatedTagTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -34,7 +36,8 @@ function oldFunction(): void
         );
     }
 
-    public function testMethodWithDeprecatedTagTriggersWarning(): void
+    #[Test]
+    public function methodWithDeprecatedTagTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -54,7 +57,8 @@ class Foo
         );
     }
 
-    public function testClassConstantWithDeprecatedTagTriggersWarning(): void
+    #[Test]
+    public function classConstantWithDeprecatedTagTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -72,7 +76,8 @@ class Foo
         );
     }
 
-    public function testDeprecatedTagWithExistingAttributeTriggersWarning(): void
+    #[Test]
+    public function deprecatedTagWithExistingAttributeTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -93,7 +98,8 @@ class Foo
         );
     }
 
-    public function testClassWithDeprecatedTagDoesNotTriggerWarning(): void
+    #[Test]
+    public function classWithDeprecatedTagDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -107,7 +113,8 @@ class OldClass
         $this->assertNoViolations($result);
     }
 
-    public function testInterfaceWithDeprecatedTagDoesNotTriggerWarning(): void
+    #[Test]
+    public function interfaceWithDeprecatedTagDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -121,7 +128,8 @@ interface OldInterface
         $this->assertNoViolations($result);
     }
 
-    public function testFileDocblockWithDeprecatedTagDoesNotTriggerWarning(): void
+    #[Test]
+    public function fileDocblockWithDeprecatedTagDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -134,7 +142,8 @@ $foo = 1;', self::SNIFF);
         $this->assertNoViolations($result);
     }
 
-    public function testEnumCaseWithDeprecatedTagTriggersWarning(): void
+    #[Test]
+    public function enumCaseWithDeprecatedTagTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -154,7 +163,8 @@ enum Status
         );
     }
 
-    public function testEnumDeclarationWithDeprecatedTagDoesNotTriggerWarning(): void
+    #[Test]
+    public function enumDeclarationWithDeprecatedTagDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -169,7 +179,8 @@ enum OldStatus
         $this->assertNoViolations($result);
     }
 
-    public function testOtherTagsDoNotTriggerWarning(): void
+    #[Test]
+    public function otherTagsDoNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 

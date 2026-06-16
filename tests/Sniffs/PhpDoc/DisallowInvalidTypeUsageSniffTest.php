@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\PhpDoc;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,9 +16,10 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class DisallowInvalidTypeUsageSniffTest extends BaseTest
 {
-    private const SNIFF = 'VixPHPCS.PhpDoc.DisallowInvalidTypeUsage';
+    private const string SNIFF = 'VixPHPCS.PhpDoc.DisallowInvalidTypeUsage';
 
-    public function testVoidAndNeverInValueTagsTriggerErrors(): void
+    #[Test]
+    public function voidAndNeverInValueTagsTriggerErrors(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -35,7 +37,8 @@ final class Example
         $this->assertContainsError($result, 'Do not use "void" in @property-read value types.');
     }
 
-    public function testInvalidThrowsAndMixinTypesTriggerErrors(): void
+    #[Test]
+    public function invalidThrowsAndMixinTypesTriggerErrors(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -55,7 +58,8 @@ final class Example
         $this->assertContainsError($result, '@mixin must reference class-like types.');
     }
 
-    public function testInvalidCallableParameterTypesTriggerErrors(): void
+    #[Test]
+    public function invalidCallableParameterTypesTriggerErrors(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -71,7 +75,8 @@ function example(): void
         $this->assertContainsError($result, 'Do not use "never" in nested PHPDoc value types.');
     }
 
-    public function testImpossibleScalarIntersectionsTriggerErrors(): void
+    #[Test]
+    public function impossibleScalarIntersectionsTriggerErrors(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -89,7 +94,8 @@ function example($value, $callback, $name): void
         $this->assertContainsError($result, 'Impossible intersection type "null&string" in @param.');
     }
 
-    public function testInvalidNestedTypesAndDuplicateShapeKeysTriggerErrors(): void
+    #[Test]
+    public function invalidNestedTypesAndDuplicateShapeKeysTriggerErrors(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -109,7 +115,8 @@ function example(): void
         $this->assertContainsError($result, 'Duplicate array shape key "bar".');
     }
 
-    public function testInvalidReturnAndStaticAnalyzerTagsTriggerErrors(): void
+    #[Test]
+    public function invalidReturnAndStaticAnalyzerTagsTriggerErrors(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -131,7 +138,8 @@ function example(&$output, $value, $other)
         $this->assertContainsError($result, 'Do not use "never" in @psalm-param value types.');
     }
 
-    public function testGenericInheritanceTagsTriggerNestedErrors(): void
+    #[Test]
+    public function genericInheritanceTagsTriggerNestedErrors(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -148,7 +156,8 @@ final class Example extends Collection implements IteratorAggregate
         $this->assertContainsError($result, 'Do not use "never" in nested PHPDoc value types.');
     }
 
-    public function testThrowsClassStringTriggersError(): void
+    #[Test]
+    public function throwsClassStringTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -162,7 +171,8 @@ function example(): void
         $this->assertContainsError($result, '@throws must reference throwable class types.');
     }
 
-    public function testValidClassLikeTypesDoNotTriggerErrors(): void
+    #[Test]
+    public function validClassLikeTypesDoNotTriggerErrors(): void
     {
         $result = $this->runPhpcs('<?php
 

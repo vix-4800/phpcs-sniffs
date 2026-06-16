@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Yii2;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -18,7 +19,8 @@ final class PreferIdentityOverFindOneSniffTest extends BaseTest
     /**
      * Test that User::findOne(Yii::$app->user->id) triggers a warning.
      */
-    public function testFindOneWithUserIdTriggersWarning(): void
+    #[Test]
+    public function findOneWithUserIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 class TestController
@@ -36,7 +38,8 @@ class TestController
     /**
      * Test that User::findOne(['id' => Yii::$app->user->id]) triggers a warning.
      */
-    public function testFindOneWithArrayUserIdTriggersWarning(): void
+    #[Test]
+    public function findOneWithArrayUserIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $user = User::findOne(["id" => Yii::$app->user->id]);', 'VixPHPCS.Yii2.PreferIdentityOverFindOne');
@@ -47,7 +50,8 @@ $user = User::findOne(["id" => Yii::$app->user->id]);', 'VixPHPCS.Yii2.PreferIde
     /**
      * Test that User::find()->where(['id' => Yii::$app->user->id])->one() triggers a warning.
      */
-    public function testFindWhereWithUserIdTriggersWarning(): void
+    #[Test]
+    public function findWhereWithUserIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $user = User::find()->where(["id" => Yii::$app->user->id])->one();', 'VixPHPCS.Yii2.PreferIdentityOverFindOne');
@@ -58,7 +62,8 @@ $user = User::find()->where(["id" => Yii::$app->user->id])->one();', 'VixPHPCS.Y
     /**
      * Test that different model names trigger warnings too.
      */
-    public function testDifferentModelNamesTriggersWarning(): void
+    #[Test]
+    public function differentModelNamesTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $admin = Admin::findOne(Yii::$app->user->id);
@@ -70,7 +75,8 @@ $customer = Customer::findOne(Yii::$app->user->id);', 'VixPHPCS.Yii2.PreferIdent
     /**
      * Test that findOne with different parameter does not trigger warning.
      */
-    public function testFindOneWithDifferentParameterDoesNotTriggerWarning(): void
+    #[Test]
+    public function findOneWithDifferentParameterDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $user = User::findOne($id);
@@ -83,7 +89,8 @@ $user = User::findOne(["email" => $email]);', 'VixPHPCS.Yii2.PreferIdentityOverF
     /**
      * Test that find()->where() with different condition does not trigger warning.
      */
-    public function testFindWhereWithDifferentConditionDoesNotTriggerWarning(): void
+    #[Test]
+    public function findWhereWithDifferentConditionDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $user = User::find()->where(["email" => $email])->one();
@@ -95,7 +102,8 @@ $user = User::find()->where(["status" => 1])->one();', 'VixPHPCS.Yii2.PreferIden
     /**
      * Test that find()->where()->all() does not trigger warning (not one()).
      */
-    public function testFindWhereAllDoesNotTriggerWarning(): void
+    #[Test]
+    public function findWhereAllDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $users = User::find()->where(["id" => Yii::$app->user->id])->all();', 'VixPHPCS.Yii2.PreferIdentityOverFindOne');
@@ -106,7 +114,8 @@ $users = User::find()->where(["id" => Yii::$app->user->id])->all();', 'VixPHPCS.
     /**
      * Test that other methods accessing Yii::$app->user->id don't trigger warning.
      */
-    public function testOtherMethodsDoNotTriggerWarning(): void
+    #[Test]
+    public function otherMethodsDoNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $posts = Post::find()->where(["user_id" => Yii::$app->user->id])->all();
@@ -118,7 +127,8 @@ $count = Comment::find()->where(["author_id" => Yii::$app->user->id])->count();'
     /**
      * Test complex chain with andWhere.
      */
-    public function testFindWhereAndWhereOneTriggersWarning(): void
+    #[Test]
+    public function findWhereAndWhereOneTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $user = User::find()
@@ -132,7 +142,8 @@ $user = User::find()
     /**
      * Test that using single quotes for array key works.
      */
-    public function testFindOneWithSingleQuotesTriggersWarning(): void
+    #[Test]
+    public function findOneWithSingleQuotesTriggersWarning(): void
     {
         $result = $this->runPhpcs("<?php
 \$user = User::findOne(['id' => Yii::\$app->user->id]);", 'VixPHPCS.Yii2.PreferIdentityOverFindOne');
@@ -143,7 +154,8 @@ $user = User::find()
     /**
      * Test that User::findOne(['id' => Yii::$app->user->identity->id]) triggers a warning.
      */
-    public function testFindOneWithIdentityIdTriggersWarning(): void
+    #[Test]
+    public function findOneWithIdentityIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $user = User::findOne(["id" => Yii::$app->user->identity->id]);', 'VixPHPCS.Yii2.PreferIdentityOverFindOne');
@@ -154,7 +166,8 @@ $user = User::findOne(["id" => Yii::$app->user->identity->id]);', 'VixPHPCS.Yii2
     /**
      * Test that User::find()->where(['id' => Yii::$app->user->identity->id])->one() triggers a warning.
      */
-    public function testFindWhereWithIdentityIdTriggersWarning(): void
+    #[Test]
+    public function findWhereWithIdentityIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $user = User::find()->where(["id" => Yii::$app->user->identity->id])->one();', 'VixPHPCS.Yii2.PreferIdentityOverFindOne');
@@ -165,7 +178,8 @@ $user = User::find()->where(["id" => Yii::$app->user->identity->id])->one();', '
     /**
      * Test direct User::findOne(Yii::$app->user->identity->id).
      */
-    public function testFindOneDirectIdentityIdTriggersWarning(): void
+    #[Test]
+    public function findOneDirectIdentityIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $user = User::findOne(Yii::$app->user->identity->id);', 'VixPHPCS.Yii2.PreferIdentityOverFindOne');
@@ -176,7 +190,8 @@ $user = User::findOne(Yii::$app->user->identity->id);', 'VixPHPCS.Yii2.PreferIde
     /**
      * Test that User::findOne(Yii::$app->user->getId()) triggers a warning.
      */
-    public function testFindOneWithGetIdTriggersWarning(): void
+    #[Test]
+    public function findOneWithGetIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $user = User::findOne(Yii::$app->user->getId());', 'VixPHPCS.Yii2.PreferIdentityOverFindOne');
@@ -187,7 +202,8 @@ $user = User::findOne(Yii::$app->user->getId());', 'VixPHPCS.Yii2.PreferIdentity
     /**
      * Test that User::findOne(['id' => Yii::$app->user->getId()]) triggers a warning.
      */
-    public function testFindOneWithArrayGetIdTriggersWarning(): void
+    #[Test]
+    public function findOneWithArrayGetIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $user = User::findOne(["id" => Yii::$app->user->getId()]);', 'VixPHPCS.Yii2.PreferIdentityOverFindOne');
@@ -198,7 +214,8 @@ $user = User::findOne(["id" => Yii::$app->user->getId()]);', 'VixPHPCS.Yii2.Pref
     /**
      * Test that User::find()->where(['id' => Yii::$app->user->getId()])->one() triggers a warning.
      */
-    public function testFindWhereWithGetIdTriggersWarning(): void
+    #[Test]
+    public function findWhereWithGetIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $user = User::find()->where(["id" => Yii::$app->user->getId()])->one();', 'VixPHPCS.Yii2.PreferIdentityOverFindOne');
@@ -209,7 +226,8 @@ $user = User::find()->where(["id" => Yii::$app->user->getId()])->one();', 'VixPH
     /**
      * Test that User::findOne(Yii::$app->user->identity->getId()) triggers a warning.
      */
-    public function testFindOneWithIdentityGetIdTriggersWarning(): void
+    #[Test]
+    public function findOneWithIdentityGetIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 $user = User::findOne(Yii::$app->user->identity->getId());', 'VixPHPCS.Yii2.PreferIdentityOverFindOne');

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Objects;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
@@ -15,7 +16,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversNothing]
 final class StaticInFinalClassSniffTest extends BaseTest
 {
-    public function testStaticReturnTypeInFinalClassTriggersWarning(): void
+    #[Test]
+    public function staticReturnTypeInFinalClassTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -31,7 +33,8 @@ final class UserFactory
         $this->assertContainsWarning($result, 'Use "self" instead of "static" as the return type inside final classes.');
     }
 
-    public function testStaticReturnTypeInFinalReadonlyClassTriggersWarning(): void
+    #[Test]
+    public function staticReturnTypeInFinalReadonlyClassTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -47,7 +50,8 @@ final readonly class UserFactory
         $this->assertContainsWarning($result, 'Use "self" instead of "static" as the return type inside final classes.');
     }
 
-    public function testSelfReturnTypeInFinalClassIsAllowed(): void
+    #[Test]
+    public function selfReturnTypeInFinalClassIsAllowed(): void
     {
         $result = $this->runPhpcs('<?php
 
@@ -63,7 +67,8 @@ final class UserFactory
         $this->assertNoViolations($result);
     }
 
-    public function testStaticReturnTypeInNonFinalClassIsAllowed(): void
+    #[Test]
+    public function staticReturnTypeInNonFinalClassIsAllowed(): void
     {
         $result = $this->runPhpcs('<?php
 
