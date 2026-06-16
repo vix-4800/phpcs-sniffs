@@ -43,6 +43,9 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation](#vixphpcsoperatorspreferbooleancastoverdoublenegation)
   - [PhpDoc](#phpdoc)
     - [VixPHPCS.PhpDoc.DeprecatedTag](#vixphpcsphpdocdeprecatedtag)
+    - [VixPHPCS.PhpDoc.DisallowInvalidTypeUsage](#vixphpcsphpdocdisallowinvalidtypeusage)
+    - [VixPHPCS.PhpDoc.DisallowSuspiciousLiteralTypes](#vixphpcsphpdocdisallowsuspiciousliteraltypes)
+    - [VixPHPCS.PhpDoc.DisallowRedundantTypes](#vixphpcsphpdocdisallowredundanttypes)
     - [VixPHPCS.PhpDoc.DisallowUnusedTemplate](#vixphpcsphpdocdisallowunusedtemplate)
     - [VixPHPCS.PhpDoc.DisallowVoidMixedWithOtherTypes](#vixphpcsphpdocdisallowvoidmixedwithothertypes)
   - [Yii2](#yii2)
@@ -942,6 +945,93 @@ final class Repository extends BaseRepository
     {
     }
 }
+```
+
+### VixPHPCS.PhpDoc.DisallowInvalidTypeUsage
+
+**Level:** Error
+
+Rejects objectively invalid PHPDoc type usage: `void` and `never` in value positions, scalar or literal
+`@throws` types, scalar `@mixin` types, impossible scalar intersections, invalid nested value types, and duplicate
+array-shape keys.
+
+**Bad:**
+
+```php
+/**
+ * @param void $value
+ * @throws string
+ * @mixin int
+ * @var array{0: string, 0: int} $data
+ */
+```
+
+**Good:**
+
+```php
+/**
+ * @param string $value
+ * @throws RuntimeException
+ * @mixin SomeClass
+ * @var array{0: string, 1: int} $data
+ */
+```
+
+### VixPHPCS.PhpDoc.DisallowSuspiciousLiteralTypes
+
+**Level:** Warning
+
+Warns about PHPDoc types that are technically possible but usually signal a broken annotation: sole `null`, `false`,
+numeric, or string-literal value types, suspicious nested literals, template names that conflict with native PHPDoc
+types, and template bounds such as `null`, `void`, or `never`.
+
+**Bad:**
+
+```php
+/**
+ * @param null $value
+ * @return 0
+ * @var array<false> $flags
+ * @template void
+ */
+```
+
+**Good:**
+
+```php
+/**
+ * @param string|null $value
+ * @return int
+ * @var array<bool> $flags
+ * @template T of object
+ */
+```
+
+### VixPHPCS.PhpDoc.DisallowRedundantTypes
+
+**Level:** Warning
+
+Warns about redundant PHPDoc union members, including duplicate types and broad types that make narrower alternatives
+unreachable or unnecessary.
+
+**Bad:**
+
+```php
+/**
+ * @var string|string $name
+ * @var mixed|string $value
+ * @var bool|true|false $flag
+ */
+```
+
+**Good:**
+
+```php
+/**
+ * @var string $name
+ * @var mixed $value
+ * @var bool $flag
+ */
 ```
 
 ### VixPHPCS.PhpDoc.DisallowVoidMixedWithOtherTypes
