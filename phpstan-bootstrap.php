@@ -6,6 +6,8 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/vendor/squizlabs/php_codesniffer/autoload.php';
 
+use PHP_CodeSniffer\Util\Tokens;
+
 if (!defined('T_NONE')) {
-    new \PHP_CodeSniffer\Util\Tokens();
+    new Tokens();
 }
