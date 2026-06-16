@@ -141,6 +141,18 @@
         <type>warning</type>
     </rule>
 
+    <rule ref="VixPHPCS.PhpDoc.DisallowInvalidTypeUsage">
+        <type>error</type>
+    </rule>
+
+    <rule ref="VixPHPCS.PhpDoc.DisallowSuspiciousLiteralTypes">
+        <type>warning</type>
+    </rule>
+
+    <rule ref="VixPHPCS.PhpDoc.DisallowRedundantTypes">
+        <type>warning</type>
+    </rule>
+
     <rule ref="VixPHPCS.PhpDoc.DisallowVoidMixedWithOtherTypes">
         <type>error</type>
     </rule>
