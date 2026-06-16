@@ -13,11 +13,32 @@ final class DisallowSuspiciousLiteralTypesSniff implements Sniff
 
     private const array VALUE_TAGS = [
         '@param' => true,
+        '@param-out' => true,
+        '@phpstan-param' => true,
+        '@phpstan-param-out' => true,
+        '@phpstan-return' => true,
+        '@phpstan-var' => true,
         '@property' => true,
         '@property-read' => true,
         '@property-write' => true,
+        '@psalm-param' => true,
+        '@psalm-param-out' => true,
+        '@psalm-return' => true,
+        '@psalm-var' => true,
         '@return' => true,
         '@var' => true,
+    ];
+
+    private const array TYPE_CONTAINER_TAGS = [
+        '@extends' => true,
+        '@implements' => true,
+        '@phpstan-extends' => true,
+        '@phpstan-implements' => true,
+        '@phpstan-use' => true,
+        '@psalm-extends' => true,
+        '@psalm-implements' => true,
+        '@psalm-use' => true,
+        '@use' => true,
     ];
 
     /**
@@ -32,13 +53,13 @@ final class DisallowSuspiciousLiteralTypesSniff implements Sniff
     {
         $tagName = $this->getTagName($phpcsFile, $stackPtr);
 
-        if (isset(self::VALUE_TAGS[$tagName])) {
+        if (isset(self::VALUE_TAGS[$tagName]) || isset(self::TYPE_CONTAINER_TAGS[$tagName])) {
             $this->processValueTag($phpcsFile, $stackPtr, $tagName);
 
             return;
         }
 
-        if (str_starts_with($tagName, '@template')) {
+        if (preg_match('/^@(phpstan-|psalm-)?template/', $tagName) === 1) {
             $this->processTemplateTag($phpcsFile, $stackPtr);
         }
     }
