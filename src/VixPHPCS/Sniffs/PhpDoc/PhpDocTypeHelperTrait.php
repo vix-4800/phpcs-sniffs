@@ -396,7 +396,7 @@ trait PhpDocTypeHelperTrait
             return true;
         }
 
-        if (preg_match('/^-?\d+(?:\.\d+)?$/', (string) $normalizedType) === 1) {
+        if (preg_match('/^-?\d+(?:\.\d+)?$/', $normalizedType) === 1) {
             return true;
         }
 
