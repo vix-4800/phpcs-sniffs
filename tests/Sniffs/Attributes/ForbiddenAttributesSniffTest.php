@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Sniffs\Attributes;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * @internal
- *
- * @coversNothing
  */
-class ForbiddenAttributesSniffTest extends BaseTest
+#[CoversNothing]
+final class ForbiddenAttributesSniffTest extends BaseTest
 {
     public function testForbiddenAttributeTriggersWarning(): void
     {

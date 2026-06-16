@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Formatting;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for MethodChainingPerLineSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class MethodChainingPerLineSniffTest extends BaseTest
+#[CoversNothing]
+final class MethodChainingPerLineSniffTest extends BaseTest
 {
     public function testMultipleCallsOnSameLineTriggerError(): void
     {

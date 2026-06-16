@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Functions;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowCastFunctionsSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DisallowCastFunctionsSniffTest extends BaseTest
+#[CoversNothing]
+final class DisallowCastFunctionsSniffTest extends BaseTest
 {
     /**
      * Test that strval() triggers a warning.

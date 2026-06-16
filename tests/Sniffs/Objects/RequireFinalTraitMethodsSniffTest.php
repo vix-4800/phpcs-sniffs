@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Objects;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for RequireFinalTraitMethodsSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class RequireFinalTraitMethodsSniffTest extends BaseTest
+#[CoversNothing]
+final class RequireFinalTraitMethodsSniffTest extends BaseTest
 {
     public function testPublicTraitMethodTriggersWarning(): void
     {

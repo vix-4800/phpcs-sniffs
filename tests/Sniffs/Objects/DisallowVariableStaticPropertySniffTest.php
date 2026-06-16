@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Objects;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowVariableStaticPropertySniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DisallowVariableStaticPropertySniffTest extends BaseTest
+#[CoversNothing]
+final class DisallowVariableStaticPropertySniffTest extends BaseTest
 {
     public function testVariableStaticPropertyTriggersError(): void
     {

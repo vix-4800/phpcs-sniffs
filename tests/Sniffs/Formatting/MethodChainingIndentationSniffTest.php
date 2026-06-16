@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Formatting;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for MethodChainingIndentationSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class MethodChainingIndentationSniffTest extends BaseTest
+#[CoversNothing]
+final class MethodChainingIndentationSniffTest extends BaseTest
 {
     public function testFirstChainedCallMustBeIndented(): void
     {

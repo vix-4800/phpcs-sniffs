@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Functions;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowHttpFileGetContentsSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DisallowHttpFileGetContentsSniffTest extends BaseTest
+#[CoversNothing]
+final class DisallowHttpFileGetContentsSniffTest extends BaseTest
 {
     /**
      * Test that HTTP URL triggers a warning.

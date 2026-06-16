@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\PhpDoc;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowRedundantTypesSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DisallowRedundantTypesSniffTest extends BaseTest
+#[CoversNothing]
+final class DisallowRedundantTypesSniffTest extends BaseTest
 {
     private const SNIFF = 'VixPHPCS.PhpDoc.DisallowRedundantTypes';
 

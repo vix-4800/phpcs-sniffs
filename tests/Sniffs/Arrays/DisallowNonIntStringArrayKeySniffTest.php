@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Arrays;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowNonIntStringArrayKeySniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DisallowNonIntStringArrayKeySniffTest extends BaseTest
+#[CoversNothing]
+final class DisallowNonIntStringArrayKeySniffTest extends BaseTest
 {
     public function testIntegerAndStringKeysAreAllowed(): void
     {
@@ -99,6 +99,6 @@ return [
 ', 'VixPHPCS.Arrays.DisallowNonIntStringArrayKey');
 
         $this->assertContainsError($result, 'Array keys must be int or string literals');
-        $this->assertSame(1, substr_count($result, 'Array keys must be int or string literals'));
+        $this->assertSame(1, mb_substr_count($result, 'Array keys must be int or string literals'));
     }
 }

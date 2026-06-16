@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Objects;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for StaticInFinalClassSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class StaticInFinalClassSniffTest extends BaseTest
+#[CoversNothing]
+final class StaticInFinalClassSniffTest extends BaseTest
 {
     public function testStaticReturnTypeInFinalClassTriggersWarning(): void
     {

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\PhpDoc;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowInvalidTypeUsageSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DisallowInvalidTypeUsageSniffTest extends BaseTest
+#[CoversNothing]
+final class DisallowInvalidTypeUsageSniffTest extends BaseTest
 {
     private const SNIFF = 'VixPHPCS.PhpDoc.DisallowInvalidTypeUsage';
 

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Operators;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for PreferBooleanCastOverDoubleNegationSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class PreferBooleanCastOverDoubleNegationSniffTest extends BaseTest
+#[CoversNothing]
+final class PreferBooleanCastOverDoubleNegationSniffTest extends BaseTest
 {
     public function testDoubleNegationTriggersWarning(): void
     {
@@ -63,6 +63,6 @@ $isActive = !!$user->active;
 $hasItems = !!count($items);', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation');
 
         $this->assertContainsWarning($result, 'double negation');
-        $this->assertGreaterThanOrEqual(2, substr_count($result, 'WARNING'));
+        $this->assertGreaterThanOrEqual(2, mb_substr_count($result, 'WARNING'));
     }
 }

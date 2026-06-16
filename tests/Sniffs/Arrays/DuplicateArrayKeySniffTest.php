@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Sniffs\Arrays;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DuplicateArrayKeySniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DuplicateArrayKeySniffTest extends BaseTest
+#[CoversNothing]
+final class DuplicateArrayKeySniffTest extends BaseTest
 {
     private const SNIFF = 'VixPHPCS.Arrays.DuplicateArrayKey';
 
@@ -76,7 +76,7 @@ $config = [
         $this->assertContainsError($result, 'Duplicate array key \'inner\'');
         $this->assertStringContainsString(' 5 | ERROR |', $result);
         $this->assertContainsError($result, 'line 4');
-        $this->assertSame(1, substr_count($result, 'Duplicate array key'));
+        $this->assertSame(1, mb_substr_count($result, 'Duplicate array key'));
     }
 
     public function testImplicitKeysDoNotTriggerError(): void

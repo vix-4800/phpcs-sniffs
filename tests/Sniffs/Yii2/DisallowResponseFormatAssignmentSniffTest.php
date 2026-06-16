@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Yii2;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowResponseFormatAssignmentSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DisallowResponseFormatAssignmentSniffTest extends BaseTest
+#[CoversNothing]
+final class DisallowResponseFormatAssignmentSniffTest extends BaseTest
 {
     /**
      * Test that direct assignment to Yii::$app->response->format with JSON format triggers a warning.
@@ -158,7 +158,7 @@ class TestController
 
         $this->assertContainsWarning($result, 'Yii::$app->response->format');
         // Should contain warnings for both assignments
-        $warningCount = substr_count($result, 'Yii::$app->response->format');
+        $warningCount = mb_substr_count($result, 'Yii::$app->response->format');
         $this->assertGreaterThanOrEqual(2, $warningCount);
     }
 

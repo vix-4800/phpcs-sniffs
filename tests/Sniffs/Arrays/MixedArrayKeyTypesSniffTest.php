@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Sniffs\Arrays;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for MixedArrayKeyTypesSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class MixedArrayKeyTypesSniffTest extends BaseTest
+#[CoversNothing]
+final class MixedArrayKeyTypesSniffTest extends BaseTest
 {
     private const SNIFF = 'VixPHPCS.Arrays.MixedArrayKeyTypes';
 

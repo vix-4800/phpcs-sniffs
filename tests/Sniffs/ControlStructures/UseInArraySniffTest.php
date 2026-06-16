@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\ControlStructures;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for UseInArraySniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class UseInArraySniffTest extends BaseTest
+#[CoversNothing]
+final class UseInArraySniffTest extends BaseTest
 {
     /**
      * Test that multiple OR comparisons with === trigger a warning.
@@ -191,7 +191,7 @@ if ($var === 4 || $var === 5 || $var === 6) {
 
         // Both if statements should trigger warnings
         $this->assertContainsWarning($result, 'in_array()');
-        $warningCount = substr_count($result, 'in_array()');
+        $warningCount = mb_substr_count($result, 'in_array()');
         $this->assertGreaterThanOrEqual(2, $warningCount, 'Expected at least 2 warnings for 2 separate if statements');
     }
 }

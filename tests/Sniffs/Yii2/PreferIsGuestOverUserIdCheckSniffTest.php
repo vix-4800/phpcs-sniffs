@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Yii2;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for PreferIsGuestOverUserIdCheckSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class PreferIsGuestOverUserIdCheckSniffTest extends BaseTest
+#[CoversNothing]
+final class PreferIsGuestOverUserIdCheckSniffTest extends BaseTest
 {
     /**
      * Test that empty(Yii::$app->user->id) triggers a warning.
@@ -184,7 +184,7 @@ if (!empty(Yii::$app->user->id)) {
 
         $this->assertContainsWarning($result);
         // Should have 3 warnings
-        $warningCount = substr_count($result, 'WARNING');
+        $warningCount = mb_substr_count($result, 'WARNING');
         $this->assertGreaterThanOrEqual(3, $warningCount);
     }
 

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\PhpDoc;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DeprecatedTagSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DeprecatedTagSniffTest extends BaseTest
+#[CoversNothing]
+final class DeprecatedTagSniffTest extends BaseTest
 {
     private const SNIFF = 'VixPHPCS.PhpDoc.DeprecatedTag';
 
@@ -150,7 +150,7 @@ enum Status
 
         $this->assertContainsWarning(
             $result,
-            'Use the #[\\Deprecated] attribute instead of the @deprecated docblock tag.',
+            'Use the #[\Deprecated] attribute instead of the @deprecated docblock tag.',
         );
     }
 

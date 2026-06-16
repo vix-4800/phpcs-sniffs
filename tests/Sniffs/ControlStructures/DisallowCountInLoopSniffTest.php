@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\ControlStructures;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowCountInLoopSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DisallowCountInLoopSniffTest extends BaseTest
+#[CoversNothing]
+final class DisallowCountInLoopSniffTest extends BaseTest
 {
     /**
      * Expected minimum number of warnings for multiple for loops test.
@@ -187,7 +187,7 @@ for ($j = 0; $j < count($array2); $j++) {
 }', 'VixPHPCS.ControlStructures.DisallowCountInLoop');
 
         $this->assertContainsWarning($result, 'count()');
-        $warningCount = substr_count($result, 'count()');
+        $warningCount = mb_substr_count($result, 'count()');
         $this->assertGreaterThanOrEqual(self::EXPECTED_MULTIPLE_WARNINGS, $warningCount, 'Expected at least 2 warnings for 2 separate for loops');
     }
 

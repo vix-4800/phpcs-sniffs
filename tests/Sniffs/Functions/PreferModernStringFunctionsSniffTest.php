@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Functions;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for PreferModernStringFunctionsSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class PreferModernStringFunctionsSniffTest extends BaseTest
+#[CoversNothing]
+final class PreferModernStringFunctionsSniffTest extends BaseTest
 {
     /**
      * Test that strpos() !== false triggers a warning for str_contains().

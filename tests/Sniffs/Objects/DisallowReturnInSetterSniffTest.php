@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Objects;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowReturnInSetterSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DisallowReturnInSetterSniffTest extends BaseTest
+#[CoversNothing]
+final class DisallowReturnInSetterSniffTest extends BaseTest
 {
     private const SNIFF = 'VixPHPCS.Objects.DisallowReturnInSetter';
 

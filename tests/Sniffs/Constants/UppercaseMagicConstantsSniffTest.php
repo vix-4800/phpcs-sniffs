@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Constants;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for UppercaseMagicConstantsSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class UppercaseMagicConstantsSniffTest extends BaseTest
+#[CoversNothing]
+final class UppercaseMagicConstantsSniffTest extends BaseTest
 {
     /**
      * Test that lowercase and mixed-case magic constants trigger warnings.

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Yii2;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for PreferActiveRecordShortcutsSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class PreferActiveRecordShortcutsSniffTest extends BaseTest
+#[CoversNothing]
+final class PreferActiveRecordShortcutsSniffTest extends BaseTest
 {
     /**
      * Test that find()->where()->one() triggers a warning.

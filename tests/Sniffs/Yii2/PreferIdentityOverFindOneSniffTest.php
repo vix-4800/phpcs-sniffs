@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Yii2;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for PreferIdentityOverFindOneSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class PreferIdentityOverFindOneSniffTest extends BaseTest
+#[CoversNothing]
+final class PreferIdentityOverFindOneSniffTest extends BaseTest
 {
     /**
      * Test that User::findOne(Yii::$app->user->id) triggers a warning.

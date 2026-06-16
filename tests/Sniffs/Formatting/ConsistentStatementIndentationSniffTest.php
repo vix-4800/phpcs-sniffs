@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Formatting;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for ConsistentStatementIndentationSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class ConsistentStatementIndentationSniffTest extends BaseTest
+#[CoversNothing]
+final class ConsistentStatementIndentationSniffTest extends BaseTest
 {
     private const SNIFF = 'VixPHPCS.Formatting.ConsistentStatementIndentation';
 

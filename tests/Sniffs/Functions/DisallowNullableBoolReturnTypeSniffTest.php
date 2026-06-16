@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Functions;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowNullableBoolReturnTypeSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DisallowNullableBoolReturnTypeSniffTest extends BaseTest
+#[CoversNothing]
+final class DisallowNullableBoolReturnTypeSniffTest extends BaseTest
 {
     private const SNIFF = 'VixPHPCS.Functions.DisallowNullableBoolReturnType';
 

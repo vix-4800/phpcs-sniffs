@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\PhpDoc;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowSuspiciousLiteralTypesSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DisallowSuspiciousLiteralTypesSniffTest extends BaseTest
+#[CoversNothing]
+final class DisallowSuspiciousLiteralTypesSniffTest extends BaseTest
 {
     private const SNIFF = 'VixPHPCS.PhpDoc.DisallowSuspiciousLiteralTypes';
 

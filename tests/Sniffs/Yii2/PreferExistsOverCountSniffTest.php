@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Yii2;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for PreferExistsOverCountSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class PreferExistsOverCountSniffTest extends BaseTest
+#[CoversNothing]
+final class PreferExistsOverCountSniffTest extends BaseTest
 {
     /**
      * Test that count() > 0 triggers a warning.

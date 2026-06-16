@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\PhpDoc;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowVoidMixedWithOtherTypesSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DisallowVoidMixedWithOtherTypesSniffTest extends BaseTest
+#[CoversNothing]
+final class DisallowVoidMixedWithOtherTypesSniffTest extends BaseTest
 {
     private const SNIFF = 'VixPHPCS.PhpDoc.DisallowVoidMixedWithOtherTypes';
 

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Functions;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for PreferJsonValidateSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class PreferJsonValidateSniffTest extends BaseTest
+#[CoversNothing]
+final class PreferJsonValidateSniffTest extends BaseTest
 {
     /**
      * Test that json_last_error triggers warning.
@@ -99,7 +99,7 @@ if (json_last_error() !== JSON_ERROR_NONE) {
 
         $this->assertContainsWarning($result, 'json_validate()');
         // Should have multiple warnings
-        $warningCount = substr_count($result, 'json_validate()');
+        $warningCount = mb_substr_count($result, 'json_validate()');
         $this->assertGreaterThanOrEqual(2, $warningCount);
     }
 

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Formatting;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowMultipleThrowsPerLineSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
+#[CoversNothing]
+final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
 {
     private const SNIFF = 'VixPHPCS.Formatting.DisallowMultipleThrowsPerLine';
 

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\ControlStructures;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowThrowInTernarySniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DisallowThrowInTernarySniffTest extends BaseTest
+#[CoversNothing]
+final class DisallowThrowInTernarySniffTest extends BaseTest
 {
     /**
      * Test that throw in ternary operator triggers an error.

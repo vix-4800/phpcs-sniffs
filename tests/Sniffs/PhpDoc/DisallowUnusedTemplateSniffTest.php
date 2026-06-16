@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\PhpDoc;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowUnusedTemplateSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DisallowUnusedTemplateSniffTest extends BaseTest
+#[CoversNothing]
+final class DisallowUnusedTemplateSniffTest extends BaseTest
 {
     private const SNIFF = 'VixPHPCS.PhpDoc.DisallowUnusedTemplate';
 

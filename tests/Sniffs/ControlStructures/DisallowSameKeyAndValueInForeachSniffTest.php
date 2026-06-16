@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\ControlStructures;
 
+use PHPUnit\Framework\Attributes\CoversNothing;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * Tests for DisallowSameKeyAndValueInForeachSniff.
  *
  * @internal
- *
- * @coversNothing
  */
-class DisallowSameKeyAndValueInForeachSniffTest extends BaseTest
+#[CoversNothing]
+final class DisallowSameKeyAndValueInForeachSniffTest extends BaseTest
 {
     public function testSameKeyAndValueVariableTriggersWarning(): void
     {
