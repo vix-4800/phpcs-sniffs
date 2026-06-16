@@ -13,9 +13,18 @@ final class DisallowRedundantTypesSniff implements Sniff
 
     private const array TAGS_WITH_TYPES = [
         '@param' => true,
+        '@param-out' => true,
+        '@phpstan-param' => true,
+        '@phpstan-param-out' => true,
+        '@phpstan-return' => true,
+        '@phpstan-var' => true,
         '@property' => true,
         '@property-read' => true,
         '@property-write' => true,
+        '@psalm-param' => true,
+        '@psalm-param-out' => true,
+        '@psalm-return' => true,
+        '@psalm-var' => true,
         '@return' => true,
         '@var' => true,
     ];
@@ -44,12 +53,21 @@ final class DisallowRedundantTypesSniff implements Sniff
 
         $types = $this->splitTopLevelUnionTypes($typeString);
 
-        if (count($types) < 2) {
-            return;
+        if (count($types) >= 2) {
+            $this->reportDuplicateTypes($phpcsFile, $stackPtr, $tagName, $types);
+            $this->reportRedundantNarrowerTypes($phpcsFile, $stackPtr, $typeString, $types);
         }
 
-        $this->reportDuplicateTypes($phpcsFile, $stackPtr, $tagName, $types);
-        $this->reportRedundantNarrowerTypes($phpcsFile, $stackPtr, $typeString, $types);
+        foreach ($this->collectNestedValueTypes($typeString) as $nestedType) {
+            $nestedTypes = $this->splitTopLevelUnionTypes($nestedType);
+
+            if (count($nestedTypes) < 2) {
+                continue;
+            }
+
+            $this->reportDuplicateNestedTypes($phpcsFile, $stackPtr, $nestedTypes);
+            $this->reportRedundantNestedNarrowerTypes($phpcsFile, $stackPtr, $nestedType, $nestedTypes);
+        }
     }
 
     /**
@@ -101,6 +119,62 @@ final class DisallowRedundantTypesSniff implements Sniff
             'PHPDoc union type "%s" contains redundant narrower types.',
             $stackPtr,
             'RedundantNarrowerType',
+            [$typeString],
+        );
+    }
+
+    /**
+     * @param File         $phpcsFile
+     * @param int          $stackPtr
+     * @param list<string> $types
+     */
+    private function reportDuplicateNestedTypes(File $phpcsFile, int $stackPtr, array $types): void
+    {
+        $seenTypes = [];
+
+        foreach ($types as $type) {
+            $normalizedType = $this->normalizeTypeName($type);
+
+            if (!isset($seenTypes[$normalizedType])) {
+                $seenTypes[$normalizedType] = true;
+
+                continue;
+            }
+
+            $phpcsFile->addWarning(
+                'Duplicate PHPDoc union type "%s" in nested PHPDoc value types.',
+                $stackPtr,
+                'DuplicateNestedUnionType',
+                [$type],
+            );
+        }
+    }
+
+    /**
+     * @param File         $phpcsFile
+     * @param int          $stackPtr
+     * @param string       $typeString
+     * @param list<string> $types
+     */
+    private function reportRedundantNestedNarrowerTypes(
+        File $phpcsFile,
+        int $stackPtr,
+        string $typeString,
+        array $types,
+    ): void {
+        $normalizedTypes = array_fill_keys(
+            array_map($this->normalizeTypeName(...), $types),
+            value: true,
+        );
+
+        if (!$this->containsRedundantNarrowerType($normalizedTypes)) {
+            return;
+        }
+
+        $phpcsFile->addWarning(
+            'Nested PHPDoc union type "%s" contains redundant narrower types.',
+            $stackPtr,
+            'RedundantNestedNarrowerType',
             [$typeString],
         );
     }
