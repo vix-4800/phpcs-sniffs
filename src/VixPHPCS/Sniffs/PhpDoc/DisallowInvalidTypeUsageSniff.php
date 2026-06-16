@@ -13,10 +13,32 @@ final class DisallowInvalidTypeUsageSniff implements Sniff
 
     private const array VALUE_TAGS = [
         '@param' => true,
+        '@param-out' => true,
+        '@phpstan-param' => true,
+        '@phpstan-param-out' => true,
+        '@phpstan-var' => true,
         '@property' => true,
         '@property-read' => true,
         '@property-write' => true,
+        '@psalm-param' => true,
+        '@psalm-param-out' => true,
+        '@psalm-var' => true,
         '@var' => true,
+    ];
+
+    private const array TYPE_CONTAINER_TAGS = [
+        '@extends' => true,
+        '@implements' => true,
+        '@phpstan-extends' => true,
+        '@phpstan-implements' => true,
+        '@phpstan-return' => true,
+        '@phpstan-use' => true,
+        '@psalm-extends' => true,
+        '@psalm-implements' => true,
+        '@psalm-return' => true,
+        '@psalm-use' => true,
+        '@return' => true,
+        '@use' => true,
     ];
 
     private const array INVALID_VALUE_TYPES = [
@@ -28,6 +50,7 @@ final class DisallowInvalidTypeUsageSniff implements Sniff
         'array' => true,
         'bool' => true,
         'callable' => true,
+        'class-string' => true,
         'false' => true,
         'float' => true,
         'int' => true,
@@ -56,21 +79,38 @@ final class DisallowInvalidTypeUsageSniff implements Sniff
     {
         $tagName = $this->getTagName($phpcsFile, $stackPtr);
 
+        if (isset(self::VALUE_TAGS[$tagName]) || isset(self::TYPE_CONTAINER_TAGS[$tagName])) {
+            $this->processTypeTag($phpcsFile, $stackPtr, $tagName);
+
+            return;
+        }
+
+        if (in_array($tagName, ['@phpstan-throws', '@psalm-throws', '@throws'], strict: true)) {
+            $this->processThrowsTag($phpcsFile, $stackPtr);
+
+            return;
+        }
+
+        if (in_array($tagName, ['@mixin', '@phpstan-mixin', '@psalm-mixin'], strict: true)) {
+            $this->processMixinTag($phpcsFile, $stackPtr);
+        }
+    }
+
+    private function processTypeTag(File $phpcsFile, int $stackPtr, string $tagName): void
+    {
         if (isset(self::VALUE_TAGS[$tagName])) {
             $this->processValueTag($phpcsFile, $stackPtr, $tagName);
 
             return;
         }
 
-        if ($tagName === '@throws') {
-            $this->processThrowsTag($phpcsFile, $stackPtr);
+        $typeString = $this->getTagTypeExpression($phpcsFile, $stackPtr);
 
+        if ($typeString === null) {
             return;
         }
 
-        if ($tagName === '@mixin') {
-            $this->processMixinTag($phpcsFile, $stackPtr);
-        }
+        $this->reportInvalidNestedTypes($phpcsFile, $stackPtr, $typeString);
     }
 
     private function processValueTag(File $phpcsFile, int $stackPtr, string $tagName): void
@@ -100,6 +140,20 @@ final class DisallowInvalidTypeUsageSniff implements Sniff
             $this->reportImpossibleIntersection($phpcsFile, $stackPtr, $tagName, $unionType);
         }
 
+        $this->reportInvalidNestedTypes($phpcsFile, $stackPtr, $typeString);
+
+        foreach ($this->findDuplicateArrayShapeKeys($typeString) as $key) {
+            $phpcsFile->addError(
+                'Duplicate array shape key "%s".',
+                $stackPtr,
+                'DuplicateArrayShapeKey',
+                [$key],
+            );
+        }
+    }
+
+    private function reportInvalidNestedTypes(File $phpcsFile, int $stackPtr, string $typeString): void
+    {
         foreach ($this->collectNestedValueTypes($typeString) as $nestedType) {
             foreach ($this->splitTopLevelUnionTypes($nestedType) as $unionType) {
                 foreach ($this->splitTopLevelIntersectionTypes($unionType) as $type) {
@@ -118,15 +172,6 @@ final class DisallowInvalidTypeUsageSniff implements Sniff
                 }
             }
         }
-
-        foreach ($this->findDuplicateArrayShapeKeys($typeString) as $key) {
-            $phpcsFile->addError(
-                'Duplicate array shape key "%s".',
-                $stackPtr,
-                'DuplicateArrayShapeKey',
-                [$key],
-            );
-        }
     }
 
     private function processThrowsTag(File $phpcsFile, int $stackPtr): void
@@ -138,7 +183,7 @@ final class DisallowInvalidTypeUsageSniff implements Sniff
         }
 
         foreach ($this->splitTopLevelUnionTypes($typeString) as $type) {
-            if (!isset(self::INVALID_THROWS_TYPES[$this->normalizeTypeName($type)])) {
+            if (!isset(self::INVALID_THROWS_TYPES[$this->getBaseTypeName($type)])) {
                 continue;
             }
 
