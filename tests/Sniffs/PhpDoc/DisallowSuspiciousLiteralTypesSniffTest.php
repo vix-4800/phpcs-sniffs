@@ -94,9 +94,11 @@ final class Example
 /**
  * @template T of object
  * @param string|null $input
+ * @param array<string, string|null> $item
  * @param bool $flag
  * @return int
  * @var array<int, string> $items
+ * @var array{foo: string|null} $shape
  */
 final class Example
 {

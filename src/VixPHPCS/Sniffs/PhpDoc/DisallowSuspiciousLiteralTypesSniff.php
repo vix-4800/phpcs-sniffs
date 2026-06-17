@@ -82,20 +82,16 @@ final class DisallowSuspiciousLiteralTypesSniff implements Sniff
         }
 
         foreach ($this->collectNestedValueTypes($typeString) as $nestedType) {
-            foreach ($this->splitTopLevelUnionTypes($nestedType) as $unionType) {
-                foreach ($this->splitTopLevelIntersectionTypes($unionType) as $type) {
-                    if (!$this->isSingleValueType($type)) {
-                        continue;
-                    }
-
-                    $phpcsFile->addWarning(
-                        'Suspicious single-value type "%s" in nested PHPDoc value types.',
-                        $stackPtr,
-                        'SuspiciousNestedSingleValueType',
-                        [$type],
-                    );
-                }
+            if (!$this->isSingleValueType($nestedType)) {
+                continue;
             }
+
+            $phpcsFile->addWarning(
+                'Suspicious single-value type "%s" in nested PHPDoc value types.',
+                $stackPtr,
+                'SuspiciousNestedSingleValueType',
+                [$nestedType],
+            );
         }
     }
 
