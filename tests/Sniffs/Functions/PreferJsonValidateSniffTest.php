@@ -29,7 +29,7 @@ final class PreferJsonValidateSniffTest extends BaseTest
 $data = json_decode($json);
 if (json_last_error() !== JSON_ERROR_NONE) {
     throw new Exception("Invalid JSON");
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'json_validate()');
     }
@@ -44,7 +44,7 @@ if (json_last_error() !== JSON_ERROR_NONE) {
 json_decode($json);
 if (json_last_error() !== JSON_ERROR_NONE) {
     throw new Exception("Invalid JSON");
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'json_validate()');
     }
@@ -57,7 +57,7 @@ if (json_last_error() !== JSON_ERROR_NONE) {
     {
         $result = $this->runPhpcs('<?php
 $data = json_decode($json);
-echo $data->name;', self::SNIFF);
+echo $data->name;');
 
         $this->assertNoViolations($result);
     }
@@ -72,7 +72,7 @@ echo $data->name;', self::SNIFF);
 $obj->json_decode($json);
 if ($obj->json_last_error() !== 0) {
     throw new Exception();
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -85,7 +85,7 @@ if ($obj->json_last_error() !== 0) {
     {
         $result = $this->runPhpcs('<?php
 SomeClass::json_decode($json);
-SomeClass::json_last_error();', self::SNIFF);
+SomeClass::json_last_error();');
 
         $this->assertNoViolations($result);
     }
@@ -105,7 +105,7 @@ if (json_last_error() !== JSON_ERROR_NONE) {
 json_decode($json2);
 if (json_last_error() !== JSON_ERROR_NONE) {
     throw new Exception();
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'json_validate()');
         // Should have multiple warnings
@@ -120,7 +120,7 @@ if (json_last_error() !== JSON_ERROR_NONE) {
     public function jsonDecodeWithThrowOnErrorTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-json_decode($json, true, 512, JSON_THROW_ON_ERROR);', self::SNIFF);
+json_decode($json, true, 512, JSON_THROW_ON_ERROR);');
 
         $this->assertContainsWarning($result, 'json_validate()');
     }
@@ -136,7 +136,7 @@ try {
     json_decode(\'{test}\', true, 512, JSON_THROW_ON_ERROR);
 } catch (JsonException $e) {
     throw new Exception("Invalid JSON");
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'json_validate()');
     }
@@ -152,7 +152,7 @@ try {
     $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
 } catch (JsonException $e) {
     // Just validating
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'json_validate()');
     }

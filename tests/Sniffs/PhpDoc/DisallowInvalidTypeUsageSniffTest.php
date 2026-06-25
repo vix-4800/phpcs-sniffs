@@ -31,7 +31,7 @@ final class DisallowInvalidTypeUsageSniffTest extends BaseTest
  */
 final class Example
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, 'Do not use "void" in @param value types.');
         $this->assertContainsError($result, 'Do not use "never" in @var value types.');
@@ -53,7 +53,7 @@ final class Example
  */
 final class Example
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, '@throws must reference throwable class types.');
         $this->assertContainsError($result, '@mixin must reference class-like types.');
@@ -70,7 +70,7 @@ final class Example
  */
 function example(): void
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, 'Do not use "void" in nested PHPDoc value types.');
         $this->assertContainsError($result, 'Do not use "never" in nested PHPDoc value types.');
@@ -88,7 +88,7 @@ function example(): void
  */
 function example($value, $callback, $name): void
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, 'Impossible intersection type "string&int" in @param.');
         $this->assertContainsError($result, 'Impossible intersection type "array&callable" in @param.');
@@ -109,7 +109,7 @@ function example($value, $callback, $name): void
  */
 function example(): void
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, 'Do not use "void" in nested PHPDoc value types.');
         $this->assertContainsError($result, 'Duplicate array shape key "0".');
@@ -130,7 +130,7 @@ function example(): void
  */
 function example(&$output, $value, $other)
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, 'Do not use "void" in nested PHPDoc value types.');
         $this->assertContainsError($result, 'Do not use "never" in nested PHPDoc value types.');
@@ -151,7 +151,7 @@ function example(&$output, $value, $other)
  */
 final class Example extends Collection implements IteratorAggregate
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, 'Do not use "void" in nested PHPDoc value types.');
         $this->assertContainsError($result, 'Do not use "never" in nested PHPDoc value types.');
@@ -167,7 +167,7 @@ final class Example extends Collection implements IteratorAggregate
  */
 function example(): void
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, '@throws must reference throwable class types.');
     }
@@ -188,7 +188,7 @@ function example(): void
  */
 function example(array $items, $value): void
 {
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }

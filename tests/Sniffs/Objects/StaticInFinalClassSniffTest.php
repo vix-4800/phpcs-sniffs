@@ -31,7 +31,7 @@ final class UserFactory
         return $this;
     }
 }
-', self::SNIFF);
+');
 
         $this->assertContainsWarning($result, 'Use "self" instead of "static" as the return type inside final classes.');
     }
@@ -48,7 +48,7 @@ final readonly class UserFactory
         return new self();
     }
 }
-', self::SNIFF);
+');
 
         $this->assertContainsWarning($result, 'Use "self" instead of "static" as the return type inside final classes.');
     }
@@ -65,7 +65,7 @@ final class UserFactory
         return new self();
     }
 }
-', self::SNIFF);
+');
 
         $this->assertNoViolations($result);
     }
@@ -82,7 +82,7 @@ class UserFactory
         return $this;
     }
 }
-', self::SNIFF);
+');
 
         $this->assertNoViolations($result);
     }

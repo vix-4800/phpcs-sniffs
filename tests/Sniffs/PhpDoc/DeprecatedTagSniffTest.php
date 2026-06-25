@@ -29,7 +29,7 @@ final class DeprecatedTagSniffTest extends BaseTest
  */
 function oldFunction(): void
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning(
             $result,
@@ -50,7 +50,7 @@ class Foo
     public function oldMethod(): void
     {
     }
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning(
             $result,
@@ -69,7 +69,7 @@ class Foo
      * @deprecated Use NEW_CONST instead.
      */
     public const OLD_CONST = 1;
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning(
             $result,
@@ -91,7 +91,7 @@ class Foo
     public function oldMethod(): void
     {
     }
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning(
             $result,
@@ -109,7 +109,7 @@ class Foo
  */
 class OldClass
 {
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -124,7 +124,7 @@ class OldClass
  */
 interface OldInterface
 {
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -138,7 +138,7 @@ interface OldInterface
  * @deprecated
  */
 
-$foo = 1;', self::SNIFF);
+$foo = 1;');
 
         $this->assertNoViolations($result);
     }
@@ -156,7 +156,7 @@ enum Status
     case Old;
 
     case Active;
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning(
             $result,
@@ -175,7 +175,7 @@ enum Status
 enum OldStatus
 {
     case Active;
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -191,7 +191,7 @@ enum OldStatus
  */
 function someFunction(string $foo): void
 {
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }

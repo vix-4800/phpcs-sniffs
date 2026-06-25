@@ -27,7 +27,7 @@ final class DisallowNullableBoolReturnTypeSniffTest extends BaseTest
 function isValid(): ?bool
 {
     return null;
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, 'Do not use nullable "bool" as a return type; return true/false instead of null.');
     }
@@ -43,7 +43,7 @@ final class Checker
     {
         return null;
     }
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, 'Do not use nullable "bool" as a return type; return true/false instead of null.');
     }
@@ -59,7 +59,7 @@ final class Checker
 function isValid()
 {
     return null;
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, 'Do not use nullable "bool" in @return; return true/false instead of null.');
     }
@@ -78,7 +78,7 @@ final class Checker
     {
         return null;
     }
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, 'Do not use nullable "bool" in @return; return true/false instead of null.');
     }
@@ -94,7 +94,7 @@ final class Checker
 function isVisible()
 {
     return null;
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, 'Do not use nullable "bool" in @return; return true/false instead of null.');
     }
@@ -107,7 +107,7 @@ function isVisible()
 function isValid(): bool
 {
     return true;
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -123,7 +123,7 @@ function isValid(): bool
 function isValid()
 {
     return true;
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -139,7 +139,7 @@ function isValid()
 function states(): array
 {
     return [true, null];
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -154,7 +154,7 @@ function states(): array
  */
 final class Checker
 {
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }

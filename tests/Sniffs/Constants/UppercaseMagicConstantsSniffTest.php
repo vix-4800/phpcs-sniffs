@@ -34,7 +34,7 @@ trait ExampleTrait
     {
         return __file__ . __Dir__ . __line__ . __function__ . __method__ . __trait__ . __namespace__;
     }
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, '__FILE__');
         $this->assertContainsWarning($result, '__DIR__');
@@ -58,7 +58,7 @@ class Example
     {
         return __class__;
     }
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, '__CLASS__');
     }
@@ -86,7 +86,7 @@ class Example
     {
         return __CLASS__;
     }
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }

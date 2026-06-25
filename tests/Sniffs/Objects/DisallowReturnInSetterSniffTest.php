@@ -30,7 +30,7 @@ class Example
     {
         return;
     }
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, 'Return statements are not allowed inside setter methods');
     }
@@ -46,7 +46,7 @@ class Example
     {
         return $this;
     }
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, 'Return statements are not allowed inside setter methods');
     }
@@ -62,7 +62,7 @@ class Example
     {
         return;
     }
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, 'Return statements are not allowed inside setter methods');
     }
@@ -78,7 +78,7 @@ class Example
     {
         return "value";
     }
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -94,7 +94,7 @@ class Example
     {
         return true;
     }
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -112,7 +112,7 @@ class Example
             return 1;
         };
     }
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -125,7 +125,7 @@ class Example
 function setName(string $name): string
 {
     return $name;
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }

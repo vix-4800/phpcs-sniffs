@@ -35,7 +35,7 @@ final class ForbiddenAttributesSniffTest extends BaseTest
             }
             PHP;
 
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
         $this->assertContainsWarning($result, 'Usage of attribute "ArrayShape" is forbidden.');
     }
 
@@ -55,7 +55,7 @@ final class ForbiddenAttributesSniffTest extends BaseTest
             }
             PHP;
 
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
         $this->assertContainsWarning($result, 'Usage of attribute "\JetBrains\PhpStorm\ArrayShape" is forbidden.');
     }
 
@@ -75,7 +75,7 @@ final class ForbiddenAttributesSniffTest extends BaseTest
             }
             PHP;
 
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
         $this->assertNoViolations($result);
     }
 

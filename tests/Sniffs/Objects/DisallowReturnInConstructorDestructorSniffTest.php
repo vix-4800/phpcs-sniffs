@@ -30,7 +30,7 @@ class Example
     {
         return;
     }
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, 'Return statements are not allowed inside constructors or destructors');
     }
@@ -46,7 +46,7 @@ class Example
     {
         return 1;
     }
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, 'Return statements are not allowed inside constructors or destructors');
     }
@@ -62,7 +62,7 @@ class Example
     {
         return;
     }
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, 'Return statements are not allowed inside constructors or destructors');
     }
@@ -78,7 +78,7 @@ class Example
     {
         return 1;
     }
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -96,7 +96,7 @@ class Example
             return 1;
         };
     }
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -116,7 +116,7 @@ class Example
     private function boot(): void
     {
     }
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }

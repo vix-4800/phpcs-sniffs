@@ -26,7 +26,7 @@ final class DisallowThrowInTernarySniffTest extends BaseTest
     public function throwInTernaryTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
-$result = $condition ? throw new Exception("error") : "default";', self::SNIFF);
+$result = $condition ? throw new Exception("error") : "default";');
 
         $this->assertContainsError($result, 'ternary');
     }
@@ -38,7 +38,7 @@ $result = $condition ? throw new Exception("error") : "default";', self::SNIFF);
     public function throwInSecondPartOfTernaryTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
-$result = $condition ? "value" : throw new Exception("error");', self::SNIFF);
+$result = $condition ? "value" : throw new Exception("error");');
 
         $this->assertContainsError($result, 'ternary');
     }
@@ -50,7 +50,7 @@ $result = $condition ? "value" : throw new Exception("error");', self::SNIFF);
     public function throwInNullCoalescingTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
-$result = $model ?? throw new Exception("error");', self::SNIFF);
+$result = $model ?? throw new Exception("error");');
 
         $this->assertContainsError($result, 'null coalescing');
     }
@@ -64,7 +64,7 @@ $result = $model ?? throw new Exception("error");', self::SNIFF);
         $result = $this->runPhpcs('<?php
 if ($condition) {
     throw new Exception("error");
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -76,7 +76,7 @@ if ($condition) {
     public function standaloneThrowDoesNotTriggerError(): void
     {
         $result = $this->runPhpcs('<?php
-throw new Exception("error");', self::SNIFF);
+throw new Exception("error");');
 
         $this->assertNoViolations($result);
     }
@@ -90,7 +90,7 @@ throw new Exception("error");', self::SNIFF);
         $result = $this->runPhpcs('<?php
 function test() {
     throw new Exception("error");
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -102,7 +102,7 @@ function test() {
     public function nullCoalescingWithoutThrowDoesNotTriggerError(): void
     {
         $result = $this->runPhpcs('<?php
-$result = $model ?? $default;', self::SNIFF);
+$result = $model ?? $default;');
 
         $this->assertNoViolations($result);
     }
@@ -114,7 +114,7 @@ $result = $model ?? $default;', self::SNIFF);
     public function nestedTernaryWithThrow(): void
     {
         $result = $this->runPhpcs('<?php
-$result = $cond1 ? ($cond2 ? throw new Exception() : "b") : "c";', self::SNIFF);
+$result = $cond1 ? ($cond2 ? throw new Exception() : "b") : "c";');
 
         $this->assertContainsError($result, 'ternary');
     }

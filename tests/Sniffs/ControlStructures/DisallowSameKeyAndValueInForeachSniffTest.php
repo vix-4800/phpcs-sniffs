@@ -25,7 +25,7 @@ final class DisallowSameKeyAndValueInForeachSniffTest extends BaseTest
         $result = $this->runPhpcs('<?php
 foreach ($items as $item => $item) {
     echo $item;
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'must be different variables');
     }
@@ -36,7 +36,7 @@ foreach ($items as $item => $item) {
         $result = $this->runPhpcs('<?php
 foreach ($items as $item => &$item) {
     $item = trim($item);
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'must be different variables');
     }
@@ -47,7 +47,7 @@ foreach ($items as $item => &$item) {
         $result = $this->runPhpcs('<?php
 foreach ($items as $key => $item) {
     echo $key . $item;
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -58,7 +58,7 @@ foreach ($items as $key => $item) {
         $result = $this->runPhpcs('<?php
 foreach ($items as $item) {
     echo $item;
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -69,7 +69,7 @@ foreach ($items as $item) {
         $result = $this->runPhpcs('<?php
 foreach ($items as $item => $item["value"]) {
     echo $item["value"];
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -80,7 +80,7 @@ foreach ($items as $item => $item["value"]) {
         $result = $this->runPhpcs('<?php
 foreach ($items as $item => [$first, $second]) {
     echo $first . $second;
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }

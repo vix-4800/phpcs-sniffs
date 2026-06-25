@@ -26,7 +26,7 @@ final class DuplicateArrayKeySniffTest extends BaseTest
 $config = [
     "host" => "primary",
     "host" => "secondary",
-];', self::SNIFF);
+];');
 
         $this->assertContainsError($result, 'Duplicate array key');
         $this->assertContainsError($result, "'host'");
@@ -39,7 +39,7 @@ $config = [
 $config = array(
     "host" => "primary",
     "host" => "secondary",
-);', self::SNIFF);
+);');
 
         $this->assertContainsError($result, 'Duplicate array key');
     }
@@ -51,7 +51,7 @@ $config = array(
 $config = [
     "1" => "first",
     1 => "second",
-];', self::SNIFF);
+];');
 
         $this->assertContainsError($result, 'Duplicate array key 1');
     }
@@ -63,7 +63,7 @@ $config = [
 $config = [
     true => "first",
     1 => "second",
-];', self::SNIFF);
+];');
 
         $this->assertContainsError($result, 'Duplicate array key 1');
     }
@@ -78,7 +78,7 @@ $config = [
         "inner" => 2,
     ],
     "inner" => 3,
-];', self::SNIFF);
+];');
 
         $this->assertContainsError($result, "Duplicate array key 'inner'");
         $this->assertStringContainsString(' 5 | ERROR |', $result);
@@ -94,7 +94,7 @@ $config = [
     "first",
     "second",
     "third",
-];', self::SNIFF);
+];');
 
         $this->assertNoViolations($result);
     }
@@ -106,7 +106,7 @@ $config = [
 $config = [
     $key => "first",
     $key => "second",
-];', self::SNIFF);
+];');
 
         $this->assertNoViolations($result);
     }
@@ -119,7 +119,7 @@ $config = [
     "host" => "primary",
     "port" => 443,
     "scheme" => "https",
-];', self::SNIFF);
+];');
 
         $this->assertNoViolations($result);
     }

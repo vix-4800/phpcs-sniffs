@@ -31,7 +31,7 @@ function render() {
     Modal::end();
 }
 ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertContainsWarning($result, 'Statement indentation is inconsistent');
     }
@@ -48,7 +48,7 @@ function render() {
     Modal::end();
 }
 ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertNoViolations($result);
     }
@@ -65,7 +65,7 @@ function process() {
     return $a;
 }
 ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertContainsWarning($result, 'Statement indentation is inconsistent');
     }
@@ -84,7 +84,7 @@ function process() {
     echo "back to base";
 }
 ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertNoViolations($result);
     }
@@ -98,7 +98,7 @@ $callback = function () {
 };
 echo "outside closure";
 ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertNoViolations($result);
     }
@@ -112,7 +112,7 @@ function getValue() {
         return $value;
 }
 ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertContainsWarning($result, 'Statement indentation is inconsistent');
     }
@@ -133,7 +133,7 @@ function iterate() {
     }
 }
 ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertNoViolations($result);
     }
@@ -147,7 +147,7 @@ $result = array_map(
     $items,
 );
 ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertNoViolations($result);
     }
@@ -161,7 +161,7 @@ $data = [
     "another" => $other,
 ];
 ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertNoViolations($result);
     }
@@ -184,7 +184,7 @@ $widget = DetailView::widget(
     ]
 );
 ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertNoViolations($result);
     }
@@ -202,7 +202,7 @@ $config = [
     "format" => "raw",
 ];
 ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertNoViolations($result);
     }
@@ -222,7 +222,7 @@ function check($user, $config) {
     return false;
 }
 ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertNoViolations($result);
     }
@@ -238,7 +238,7 @@ $result = someFunction(
 );
 $otherVar = 1;
 ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertNoViolations($result);
     }
@@ -256,7 +256,7 @@ $config = [
     ],
 ];
 ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertNoViolations($result);
     }
@@ -274,7 +274,7 @@ function buildMenu() {
     );
 }
 ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertNoViolations($result);
     }
@@ -290,7 +290,7 @@ function process() {
     $d = 4;
 }
 ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertContainsWarning($result, 'Statement indentation is inconsistent');
     }
@@ -311,7 +311,7 @@ echo Html::a(
     ]
 );
 ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertNoViolations($result);
     }

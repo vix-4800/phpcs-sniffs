@@ -26,7 +26,7 @@ final class MixedArrayKeyTypesSniffTest extends BaseTest
 $data = [
     "id" => 1,
     2 => "name",
-];', self::SNIFF);
+];');
 
         $this->assertContainsWarning($result, 'Do not mix integer and string keys');
     }
@@ -38,7 +38,7 @@ $data = [
 $data = [
     "id" => 1,
     "name",
-];', self::SNIFF);
+];');
 
         $this->assertContainsWarning($result, 'Do not mix integer and string keys');
     }
@@ -50,7 +50,7 @@ $data = [
 $data = [
     "id" => 1,
     "name" => "Anton",
-];', self::SNIFF);
+];');
 
         $this->assertNoViolations($result);
     }
@@ -63,7 +63,7 @@ $data = [
     0 => "first",
     1 => "second",
     "3",
-];', self::SNIFF);
+];');
 
         $this->assertNoViolations($result);
     }
@@ -75,7 +75,7 @@ $data = [
 $data = [
     "id" => 1,
     fn (): int => 2,
-];', self::SNIFF);
+];');
 
         $this->assertContainsWarning($result, 'Do not mix integer and string keys');
     }
@@ -87,7 +87,7 @@ $data = [
 $data = [
     ["id" => 1],
     ["name" => 2],
-];', self::SNIFF);
+];');
 
         $this->assertNoViolations($result);
     }
@@ -99,7 +99,7 @@ $data = [
 $data = array(
     "id" => 1,
     0 => 2,
-);', self::SNIFF);
+);');
 
         $this->assertContainsWarning($result, 'Do not mix integer and string keys');
     }
@@ -111,7 +111,7 @@ $data = array(
 $data = [
     $dynamicKey => 1,
     "name" => 2,
-];', self::SNIFF);
+];');
 
         $this->assertNoViolations($result);
     }

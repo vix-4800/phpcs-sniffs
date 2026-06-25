@@ -25,7 +25,7 @@ final class DisallowVariableStaticPropertySniffTest extends BaseTest
         $result = $this->runPhpcs('<?php
 
 $toast = $model::$toast_array[$model->toast];
-', self::SNIFF);
+');
 
         $this->assertContainsError($result, 'Static properties must be accessed via a class name');
     }
@@ -36,7 +36,7 @@ $toast = $model::$toast_array[$model->toast];
         $result = $this->runPhpcs('<?php
 
 $toast = ($model)::$toast_array[$model->toast];
-', self::SNIFF);
+');
 
         $this->assertContainsError($result, 'Static properties must be accessed via a class name');
     }
@@ -47,7 +47,7 @@ $toast = ($model)::$toast_array[$model->toast];
         $result = $this->runPhpcs('<?php
 
 $toast = User::$toast_array[$id];
-', self::SNIFF);
+');
 
         $this->assertNoViolations($result);
     }
@@ -64,7 +64,7 @@ class Example
         return self::$foo;
     }
 }
-', self::SNIFF);
+');
 
         $this->assertNoViolations($result);
     }

@@ -34,7 +34,7 @@ final class DisallowSuspiciousLiteralTypesSniffTest extends BaseTest
  */
 function example($input, $flag)
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Suspicious single-value type "null" in @param.');
         $this->assertContainsWarning($result, 'Suspicious single-value type "false" in @param.');
@@ -60,7 +60,7 @@ function example($input, $flag)
  */
 function example(): void
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Suspicious single-value type "null" in nested PHPDoc value types.');
         $this->assertContainsWarning($result, 'Suspicious single-value type "false" in nested PHPDoc value types.');
@@ -79,7 +79,7 @@ function example(): void
  */
 final class Example
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Template name "void" conflicts with a native PHPDoc type.');
         $this->assertContainsWarning($result, 'Suspicious template bound "null" in @template.');
@@ -103,7 +103,7 @@ final class Example
  */
 final class Example
 {
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }

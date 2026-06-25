@@ -33,7 +33,7 @@ class User extends \yii\db\ActiveRecord
     {
         return self::find()->where(["id" => $id])->one();
     }
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use findOne() shortcut method');
     }
@@ -52,7 +52,7 @@ class User extends \yii\db\ActiveRecord
     {
         return self::find()->where(["status" => $status])->all();
     }
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use findAll() shortcut method');
     }
@@ -65,7 +65,7 @@ class User extends \yii\db\ActiveRecord
     {
         $result = $this->runPhpcs('<?php
 
-$user = User::find()->where(["email" => $email])->one();', self::SNIFF);
+$user = User::find()->where(["email" => $email])->one();');
 
         $this->assertContainsWarning($result, 'Use findOne() shortcut method');
     }
@@ -78,7 +78,7 @@ $user = User::find()->where(["email" => $email])->one();', self::SNIFF);
     {
         $result = $this->runPhpcs('<?php
 
-$users = $model->find()->where(["active" => true])->all();', self::SNIFF);
+$users = $model->find()->where(["active" => true])->all();');
 
         $this->assertContainsWarning($result, 'Use findAll() shortcut method');
     }
@@ -95,7 +95,7 @@ $users = $model->find()->where(["active" => true])->all();', self::SNIFF);
 $user = User::find()
     ->where(["status" => 1])
     ->andWhere(["role" => "admin"])
-    ->one();', self::SNIFF);
+    ->one();');
 
         $this->assertNoViolations($result);
     }
@@ -112,7 +112,7 @@ $user = User::find()
 $users = User::find()
     ->where(["status" => 1])
     ->orderBy("created_at DESC")
-    ->all();', self::SNIFF);
+    ->all();');
 
         $this->assertNoViolations($result);
     }
@@ -125,7 +125,7 @@ $users = User::find()
     {
         $result = $this->runPhpcs('<?php
 
-$user = User::findOne($id);', self::SNIFF);
+$user = User::findOne($id);');
 
         $this->assertNoViolations($result);
     }
@@ -138,7 +138,7 @@ $user = User::findOne($id);', self::SNIFF);
     {
         $result = $this->runPhpcs('<?php
 
-$users = User::findAll(["status" => 1]);', self::SNIFF);
+$users = User::findAll(["status" => 1]);');
 
         $this->assertNoViolations($result);
     }
@@ -151,7 +151,7 @@ $users = User::findAll(["status" => 1]);', self::SNIFF);
     {
         $result = $this->runPhpcs('<?php
 
-$user = User::find()->one();', self::SNIFF);
+$user = User::find()->one();');
 
         $this->assertNoViolations($result);
     }
@@ -164,7 +164,7 @@ $user = User::find()->one();', self::SNIFF);
     {
         $result = $this->runPhpcs('<?php
 
-$users = User::find()->all();', self::SNIFF);
+$users = User::find()->all();');
 
         $this->assertNoViolations($result);
     }
@@ -177,7 +177,7 @@ $users = User::find()->all();', self::SNIFF);
     {
         $result = $this->runPhpcs('<?php
 
-$query = User::find()->where(["status" => 1]);', self::SNIFF);
+$query = User::find()->where(["status" => 1]);');
 
         $this->assertNoViolations($result);
     }
@@ -190,7 +190,7 @@ $query = User::find()->where(["status" => 1]);', self::SNIFF);
     {
         $result = $this->runPhpcs('<?php
 
-$count = User::find()->where(["status" => 1])->count();', self::SNIFF);
+$count = User::find()->where(["status" => 1])->count();');
 
         $this->assertNoViolations($result);
     }
@@ -203,7 +203,7 @@ $count = User::find()->where(["status" => 1])->count();', self::SNIFF);
     {
         $result = $this->runPhpcs('<?php
 
-$exists = User::find()->where(["email" => $email])->exists();', self::SNIFF);
+$exists = User::find()->where(["email" => $email])->exists();');
 
         $this->assertNoViolations($result);
     }

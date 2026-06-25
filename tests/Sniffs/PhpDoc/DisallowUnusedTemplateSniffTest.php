@@ -29,7 +29,7 @@ final class DisallowUnusedTemplateSniffTest extends BaseTest
  */
 class Repository
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Template "TModel" is declared but never used.');
     }
@@ -45,7 +45,7 @@ class Repository
  */
 class Repository extends BaseRepository
 {
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -66,7 +66,7 @@ class Repository
     public function find()
     {
     }
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -83,7 +83,7 @@ class Repository
  */
 class Collection implements IteratorAggregate
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Template "TValue" is declared but never used.');
         $this->assertStringNotContainsString('Template "TKey"', $result);
@@ -101,7 +101,7 @@ class Collection implements IteratorAggregate
  */
 function make(string $className)
 {
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -117,7 +117,7 @@ function make(string $className)
  */
 class Repository
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Template "TModel" is declared but never used.');
     }
@@ -133,7 +133,7 @@ class Repository
  */
 class Repository extends BaseRepository
 {
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }

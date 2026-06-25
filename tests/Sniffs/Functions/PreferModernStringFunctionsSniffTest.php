@@ -30,7 +30,7 @@ $haystack = "hello world";
 $needle = "world";
 if (strpos($haystack, $needle) !== false) {
     echo "Found";
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'strpos()');
         $this->assertContainsWarning($result, 'str_contains()');
@@ -47,7 +47,7 @@ $haystack = "hello world";
 $needle = "hello";
 if (strpos($haystack, $needle) === 0) {
     echo "Starts with";
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'strpos()');
         $this->assertContainsWarning($result, 'str_starts_with()');
@@ -62,7 +62,7 @@ if (strpos($haystack, $needle) === 0) {
         $result = $this->runPhpcs('<?php
 $haystack = "hello world";
 $needle = "world";
-$position = strpos($haystack, $needle);', self::SNIFF);
+$position = strpos($haystack, $needle);');
 
         $this->assertNoViolations($result);
     }
@@ -83,7 +83,7 @@ class Foo {
 $foo = new Foo();
 if ($foo->strpos("hello", "h") !== false) {
     echo "test";
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -103,7 +103,7 @@ class Foo {
 
 if (Foo::strpos("hello", "h") !== false) {
     echo "test";
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -119,7 +119,7 @@ $haystack = "hello world";
 $needle = "world";
 if (mb_strpos($haystack, $needle) !== false) {
     echo "Found";
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'mb_strpos()');
         $this->assertContainsWarning($result, 'str_contains()');

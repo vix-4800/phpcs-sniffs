@@ -28,7 +28,7 @@ User::find()
 ->where(["id" => $model->user_id])
     ->select(["id"])
     ->all();
-', self::SNIFF);
+');
 
         $this->assertContainsError($result, 'First chained call must be indented');
     }
@@ -42,7 +42,7 @@ User::find()
     ->where(["id" => $model->user_id])
       ->select(["id"])
     ->all();
-', self::SNIFF);
+');
 
         $this->assertContainsError($result, 'Chained call indentation must match');
     }
@@ -61,7 +61,7 @@ function example(): array
         ->limit(10)
         ->all();
 }
-', self::SNIFF);
+');
 
         $this->assertNoViolations($result);
     }
@@ -72,7 +72,7 @@ function example(): array
         $result = $this->runPhpcs('<?php
 
 User::find()->where(["id" => $model->user_id])->all();
-', self::SNIFF);
+');
 
         $this->assertNoViolations($result);
     }

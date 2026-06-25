@@ -20,24 +20,22 @@ abstract class BaseTest extends TestCase
     /**
      * Run PHPCS on given content with specified sniff.
      *
-     * @param string      $content PHP code to check
-     * @param string|null $sniff   Specific sniff to run (e.g., 'VixPHPCS.Functions.DisallowIsNull')
-     *                             If null, all VixPHPCS sniffs will be run
+     * @param string $content PHP code to check
      *
      * @return string PHPCS output
      */
-    protected function runPhpcs(string $content, ?string $sniff = null): string
+    protected function runPhpcs(string $content): string
     {
         $tempFile = tempnam(sys_get_temp_dir(), 'phpcs_test_');
         file_put_contents($tempFile, $content);
 
         $phpcsPath = __DIR__ . '/../vendor/bin/phpcs';
 
-        if ($sniff !== null) {
+        if (static::SNIFF !== '') {
             $command = sprintf(
                 '%s --standard=VixPHPCS --report-width=1000 --sniffs=%s %s 2>&1',
                 escapeshellarg($phpcsPath),
-                escapeshellarg($sniff),
+                escapeshellarg(static::SNIFF),
                 escapeshellarg($tempFile),
             );
         } else {

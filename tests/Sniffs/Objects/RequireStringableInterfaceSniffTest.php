@@ -30,7 +30,7 @@ class Example
     {
         return \'example\';
     }
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Classes declaring __toString() must implement Stringable');
     }
@@ -46,7 +46,7 @@ class Example implements Stringable
     {
         return \'example\';
     }
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -62,7 +62,7 @@ class Example implements \Stringable
     {
         return \'example\';
     }
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -78,7 +78,7 @@ class Example
     {
         return \'example\';
     }
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -93,7 +93,7 @@ $object = new class {
     {
         return \'example\';
     }
-};', self::SNIFF);
+};');
 
         $this->assertContainsWarning($result, 'Classes declaring __toString() must implement Stringable');
     }
@@ -114,7 +114,7 @@ class Example implements Stringable
             }
         };
     }
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Classes declaring __toString() must implement Stringable');
     }

@@ -23,7 +23,7 @@ final class PreferBooleanCastOverDoubleNegationSniffTest extends BaseTest
     public function doubleNegationTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$isActive = !!$user->active;', self::SNIFF);
+$isActive = !!$user->active;');
 
         $this->assertContainsWarning($result, '(bool)');
         $this->assertContainsWarning($result, 'double negation');
@@ -33,7 +33,7 @@ $isActive = !!$user->active;', self::SNIFF);
     public function spacedDoubleNegationTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$isActive = ! !$user->active;', self::SNIFF);
+$isActive = ! !$user->active;');
 
         $this->assertContainsWarning($result, '(bool)');
     }
@@ -42,7 +42,7 @@ $isActive = ! !$user->active;', self::SNIFF);
     public function tripleNegationDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$isInactive = !!!$user->active;', self::SNIFF);
+$isInactive = !!!$user->active;');
 
         $this->assertNoViolations($result);
     }
@@ -51,7 +51,7 @@ $isInactive = !!!$user->active;', self::SNIFF);
     public function singleNegationDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$isInactive = !$user->active;', self::SNIFF);
+$isInactive = !$user->active;');
 
         $this->assertNoViolations($result);
     }
@@ -60,7 +60,7 @@ $isInactive = !$user->active;', self::SNIFF);
     public function booleanCastDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$isActive = (bool) $user->active;', self::SNIFF);
+$isActive = (bool) $user->active;');
 
         $this->assertNoViolations($result);
     }
@@ -70,7 +70,7 @@ $isActive = (bool) $user->active;', self::SNIFF);
     {
         $result = $this->runPhpcs('<?php
 $isActive = !!$user->active;
-$hasItems = !!count($items);', self::SNIFF);
+$hasItems = !!count($items);');
 
         $this->assertContainsWarning($result, 'double negation');
         $this->assertGreaterThanOrEqual(2, mb_substr_count($result, 'WARNING'));

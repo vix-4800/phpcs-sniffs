@@ -29,7 +29,7 @@ final class PreferExistsOverCountSniffTest extends BaseTest
 
 if ($query->count() > 0) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use ...->exists() instead of count() > 0');
     }
@@ -44,7 +44,7 @@ if ($query->count() > 0) {
 
 if ($query->count() >= 1) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use ...->exists() instead of count() >= 1');
     }
@@ -59,7 +59,7 @@ if ($query->count() >= 1) {
 
 if ($query->count() != 0) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use ...->exists() instead of count() != 0');
     }
@@ -74,7 +74,7 @@ if ($query->count() != 0) {
 
 if ($query->count() !== 0) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use ...->exists() instead of count() !== 0');
     }
@@ -89,7 +89,7 @@ if ($query->count() !== 0) {
 
 if ($query->count() == 0) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use !...->exists() instead of count() == 0');
     }
@@ -104,7 +104,7 @@ if ($query->count() == 0) {
 
 if ($query->count() === 0) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use !...->exists() instead of count() === 0');
     }
@@ -119,7 +119,7 @@ if ($query->count() === 0) {
 
 if ($query->count() < 1) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use !...->exists() instead of count() < 1');
     }
@@ -134,7 +134,7 @@ if ($query->count() < 1) {
 
 if ($query->count() <= 0) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use !...->exists() instead of count() <= 0');
     }
@@ -149,7 +149,7 @@ if ($query->count() <= 0) {
 
 if (User::find()->where(["status" => 1])->count() > 0) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use ...->exists() instead of count() > 0');
     }
@@ -162,7 +162,7 @@ if (User::find()->where(["status" => 1])->count() > 0) {
     {
         $result = $this->runPhpcs('<?php
 
-$hasUsers = $query->count() > 0 ? "yes" : "no";', self::SNIFF);
+$hasUsers = $query->count() > 0 ? "yes" : "no";');
 
         $this->assertContainsWarning($result, 'Use ...->exists() instead of count() > 0');
     }
@@ -175,7 +175,7 @@ $hasUsers = $query->count() > 0 ? "yes" : "no";', self::SNIFF);
     {
         $result = $this->runPhpcs('<?php
 
-$count = $query->count("*");', self::SNIFF);
+$count = $query->count("*");');
 
         $this->assertNoViolations($result);
     }
@@ -194,7 +194,7 @@ if ($query->count() > 5) {
 
 if ($query->count() >= 10) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -208,7 +208,7 @@ if ($query->count() >= 10) {
         $result = $this->runPhpcs('<?php
 
 $count = $query->count();
-echo $count;', self::SNIFF);
+echo $count;');
 
         $this->assertNoViolations($result);
     }
@@ -223,7 +223,7 @@ echo $count;', self::SNIFF);
 
 if (count($array) > 0) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -242,7 +242,7 @@ if ($query->exists()) {
 
 if (!$query->exists()) {
     // do something else
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -257,7 +257,7 @@ if (!$query->exists()) {
 
 if (SomeClass::count() > 0) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -278,7 +278,7 @@ if ($query2->count() === 0) {
     // do something else
 }
 
-$result = $query3->count() >= 1 ? "found" : "not found";', self::SNIFF);
+$result = $query3->count() >= 1 ? "found" : "not found";');
 
         $this->assertContainsWarning($result, 'count() > 0');
         $this->assertContainsWarning($result, 'count() === 0');
@@ -301,7 +301,7 @@ if ($query->count() == 0) {
 // Should suggest exists()
 if ($query->count() > 0) {
     echo "has records";
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, '!...->exists()');
         $this->assertContainsWarning($result, '...->exists()');
@@ -317,7 +317,7 @@ if ($query->count() > 0) {
 
 if (TimeTracker::find()->where(["datetime_end" => null, "user_id" => $user->id])->one()) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use ->exists() instead of ->one()');
     }
@@ -332,7 +332,7 @@ if (TimeTracker::find()->where(["datetime_end" => null, "user_id" => $user->id])
 
 while ($query->one()) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use ->exists() instead of ->one()');
     }
@@ -345,7 +345,7 @@ while ($query->one()) {
     {
         $result = $this->runPhpcs('<?php
 
-$result = $query->one() ? "found" : "not found";', self::SNIFF);
+$result = $query->one() ? "found" : "not found";');
 
         $this->assertContainsWarning($result, 'Use ->exists() instead of ->one()');
     }
@@ -360,7 +360,7 @@ $result = $query->one() ? "found" : "not found";', self::SNIFF);
 
 if ($condition && $query->one()) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use ->exists() instead of ->one()');
     }
@@ -374,7 +374,7 @@ if ($condition && $query->one()) {
         $result = $this->runPhpcs('<?php
 
 $user = User::find()->where(["id" => 1])->one();
-return $query->one();', self::SNIFF);
+return $query->one();');
 
         $this->assertNoViolations($result);
     }

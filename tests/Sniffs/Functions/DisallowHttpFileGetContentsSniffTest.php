@@ -26,7 +26,7 @@ final class DisallowHttpFileGetContentsSniffTest extends BaseTest
     public function httpUrlTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$response = file_get_contents("http://example.com/api");', self::SNIFF);
+$response = file_get_contents("http://example.com/api");');
 
         $this->assertContainsWarning($result, 'HTTP requests');
         $this->assertContainsWarning($result, 'HTTP client');
@@ -39,7 +39,7 @@ $response = file_get_contents("http://example.com/api");', self::SNIFF);
     public function httpsUrlTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$response = file_get_contents(\'https://example.com/api\');', self::SNIFF);
+$response = file_get_contents(\'https://example.com/api\');');
 
         $this->assertContainsWarning($result, 'file_get_contents()');
     }
@@ -51,7 +51,7 @@ $response = file_get_contents(\'https://example.com/api\');', self::SNIFF);
     public function urlSchemeIsCaseInsensitive(): void
     {
         $result = $this->runPhpcs('<?php
-$response = FILE_GET_CONTENTS("HTTPS://example.com/api");', self::SNIFF);
+$response = FILE_GET_CONTENTS("HTTPS://example.com/api");');
 
         $this->assertContainsWarning($result, 'HTTP requests');
     }
@@ -63,7 +63,7 @@ $response = FILE_GET_CONTENTS("HTTPS://example.com/api");', self::SNIFF);
     public function interpolatedHttpUrlTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$response = file_get_contents("https://$host/api");', self::SNIFF);
+$response = file_get_contents("https://$host/api");');
 
         $this->assertContainsWarning($result, 'HTTP requests');
     }
@@ -76,7 +76,7 @@ $response = file_get_contents("https://$host/api");', self::SNIFF);
     {
         $result = $this->runPhpcs('<?php
 $contents = file_get_contents(__DIR__ . "/file.txt");
-$contents = file_get_contents("php://input");', self::SNIFF);
+$contents = file_get_contents("php://input");');
 
         $this->assertNoViolations($result);
     }
@@ -88,7 +88,7 @@ $contents = file_get_contents("php://input");', self::SNIFF);
     public function dynamicUrlDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$response = file_get_contents($url);', self::SNIFF);
+$response = file_get_contents($url);');
 
         $this->assertNoViolations($result);
     }
@@ -101,7 +101,7 @@ $response = file_get_contents($url);', self::SNIFF);
     {
         $result = $this->runPhpcs('<?php
 $response = $client->file_get_contents("https://example.com/api");
-$response = Client::file_get_contents("https://example.com/api");', self::SNIFF);
+$response = Client::file_get_contents("https://example.com/api");');
 
         $this->assertNoViolations($result);
     }
@@ -115,7 +115,7 @@ $response = Client::file_get_contents("https://example.com/api");', self::SNIFF)
         $result = $this->runPhpcs('<?php
 function file_get_contents(string $url): string {
     return $url;
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -131,7 +131,7 @@ $response = file_get_contents($path, false, stream_context_create([
     "http" => [
         "header" => "Referer: https://example.com",
     ],
-]));', self::SNIFF);
+]));');
 
         $this->assertNoViolations($result);
     }

@@ -30,7 +30,7 @@ trait ExampleTrait
     {
     }
 }
-', self::SNIFF);
+');
 
         $this->assertContainsWarning($result, 'must be declared final');
     }
@@ -46,7 +46,7 @@ trait ExampleTrait
     {
     }
 }
-', self::SNIFF);
+');
 
         $this->assertContainsWarning($result, 'must be declared final');
     }
@@ -62,7 +62,7 @@ trait ExampleTrait
     {
     }
 }
-', self::SNIFF);
+');
 
         $this->assertNoViolations($result);
     }
@@ -78,7 +78,7 @@ trait ExampleTrait
     {
     }
 }
-', self::SNIFF);
+');
 
         $this->assertNoViolations($result);
     }
@@ -92,7 +92,7 @@ trait ExampleTrait
 {
     abstract protected function configure(): void;
 }
-', self::SNIFF);
+');
 
         $this->assertNoViolations($result);
     }
@@ -108,7 +108,7 @@ class Example
     {
     }
 }
-', self::SNIFF);
+');
 
         $this->assertNoViolations($result);
     }
@@ -130,7 +130,7 @@ trait ExampleTrait
         };
     }
 }
-', self::SNIFF);
+');
 
         $this->assertNoViolations($result);
     }

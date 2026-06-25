@@ -33,7 +33,7 @@ class TestController
         $user = User::findOne(Yii::$app->user->id);
         return $this->render("profile", ["user" => $user]);
     }
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Yii::$app->user->identity');
     }
@@ -45,7 +45,7 @@ class TestController
     public function findOneWithArrayUserIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$user = User::findOne(["id" => Yii::$app->user->id]);', self::SNIFF);
+$user = User::findOne(["id" => Yii::$app->user->id]);');
 
         $this->assertContainsWarning($result, 'Yii::$app->user->identity');
     }
@@ -57,7 +57,7 @@ $user = User::findOne(["id" => Yii::$app->user->id]);', self::SNIFF);
     public function findWhereWithUserIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$user = User::find()->where(["id" => Yii::$app->user->id])->one();', self::SNIFF);
+$user = User::find()->where(["id" => Yii::$app->user->id])->one();');
 
         $this->assertContainsWarning($result, 'Yii::$app->user->identity');
     }
@@ -70,7 +70,7 @@ $user = User::find()->where(["id" => Yii::$app->user->id])->one();', self::SNIFF
     {
         $result = $this->runPhpcs('<?php
 $admin = Admin::findOne(Yii::$app->user->id);
-$customer = Customer::findOne(Yii::$app->user->id);', self::SNIFF);
+$customer = Customer::findOne(Yii::$app->user->id);');
 
         $this->assertContainsWarning($result, 'Yii::$app->user->identity');
     }
@@ -84,7 +84,7 @@ $customer = Customer::findOne(Yii::$app->user->id);', self::SNIFF);
         $result = $this->runPhpcs('<?php
 $user = User::findOne($id);
 $user = User::findOne(123);
-$user = User::findOne(["email" => $email]);', self::SNIFF);
+$user = User::findOne(["email" => $email]);');
 
         $this->assertNoViolations($result);
     }
@@ -97,7 +97,7 @@ $user = User::findOne(["email" => $email]);', self::SNIFF);
     {
         $result = $this->runPhpcs('<?php
 $user = User::find()->where(["email" => $email])->one();
-$user = User::find()->where(["status" => 1])->one();', self::SNIFF);
+$user = User::find()->where(["status" => 1])->one();');
 
         $this->assertNoViolations($result);
     }
@@ -109,7 +109,7 @@ $user = User::find()->where(["status" => 1])->one();', self::SNIFF);
     public function findWhereAllDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$users = User::find()->where(["id" => Yii::$app->user->id])->all();', self::SNIFF);
+$users = User::find()->where(["id" => Yii::$app->user->id])->all();');
 
         $this->assertNoViolations($result);
     }
@@ -122,7 +122,7 @@ $users = User::find()->where(["id" => Yii::$app->user->id])->all();', self::SNIF
     {
         $result = $this->runPhpcs('<?php
 $posts = Post::find()->where(["user_id" => Yii::$app->user->id])->all();
-$count = Comment::find()->where(["author_id" => Yii::$app->user->id])->count();', self::SNIFF);
+$count = Comment::find()->where(["author_id" => Yii::$app->user->id])->count();');
 
         $this->assertNoViolations($result);
     }
@@ -137,7 +137,7 @@ $count = Comment::find()->where(["author_id" => Yii::$app->user->id])->count();'
 $user = User::find()
     ->where(["id" => Yii::$app->user->id])
     ->andWhere(["status" => 1])
-    ->one();', self::SNIFF);
+    ->one();');
 
         $this->assertContainsWarning($result, 'Yii::$app->user->identity');
     }
@@ -149,7 +149,7 @@ $user = User::find()
     public function findOneWithSingleQuotesTriggersWarning(): void
     {
         $result = $this->runPhpcs("<?php
-\$user = User::findOne(['id' => Yii::\$app->user->id]);", self::SNIFF);
+\$user = User::findOne(['id' => Yii::\$app->user->id]);");
 
         $this->assertContainsWarning($result, 'Yii::$app->user->identity');
     }
@@ -161,7 +161,7 @@ $user = User::find()
     public function findOneWithIdentityIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$user = User::findOne(["id" => Yii::$app->user->identity->id]);', self::SNIFF);
+$user = User::findOne(["id" => Yii::$app->user->identity->id]);');
 
         $this->assertContainsWarning($result, 'Yii::$app->user->identity');
     }
@@ -173,7 +173,7 @@ $user = User::findOne(["id" => Yii::$app->user->identity->id]);', self::SNIFF);
     public function findWhereWithIdentityIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$user = User::find()->where(["id" => Yii::$app->user->identity->id])->one();', self::SNIFF);
+$user = User::find()->where(["id" => Yii::$app->user->identity->id])->one();');
 
         $this->assertContainsWarning($result, 'Yii::$app->user->identity');
     }
@@ -185,7 +185,7 @@ $user = User::find()->where(["id" => Yii::$app->user->identity->id])->one();', s
     public function findOneDirectIdentityIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$user = User::findOne(Yii::$app->user->identity->id);', self::SNIFF);
+$user = User::findOne(Yii::$app->user->identity->id);');
 
         $this->assertContainsWarning($result, 'Yii::$app->user->identity');
     }
@@ -197,7 +197,7 @@ $user = User::findOne(Yii::$app->user->identity->id);', self::SNIFF);
     public function findOneWithGetIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$user = User::findOne(Yii::$app->user->getId());', self::SNIFF);
+$user = User::findOne(Yii::$app->user->getId());');
 
         $this->assertContainsWarning($result, 'Yii::$app->user->identity');
     }
@@ -209,7 +209,7 @@ $user = User::findOne(Yii::$app->user->getId());', self::SNIFF);
     public function findOneWithArrayGetIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$user = User::findOne(["id" => Yii::$app->user->getId()]);', self::SNIFF);
+$user = User::findOne(["id" => Yii::$app->user->getId()]);');
 
         $this->assertContainsWarning($result, 'Yii::$app->user->identity');
     }
@@ -221,7 +221,7 @@ $user = User::findOne(["id" => Yii::$app->user->getId()]);', self::SNIFF);
     public function findWhereWithGetIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$user = User::find()->where(["id" => Yii::$app->user->getId()])->one();', self::SNIFF);
+$user = User::find()->where(["id" => Yii::$app->user->getId()])->one();');
 
         $this->assertContainsWarning($result, 'Yii::$app->user->identity');
     }
@@ -233,7 +233,7 @@ $user = User::find()->where(["id" => Yii::$app->user->getId()])->one();', self::
     public function findOneWithIdentityGetIdTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$user = User::findOne(Yii::$app->user->identity->getId());', self::SNIFF);
+$user = User::findOne(Yii::$app->user->identity->getId());');
 
         $this->assertContainsWarning($result, 'Yii::$app->user->identity');
     }

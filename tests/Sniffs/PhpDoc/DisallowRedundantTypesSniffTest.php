@@ -30,7 +30,7 @@ final class DisallowRedundantTypesSniffTest extends BaseTest
  */
 function example()
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Duplicate PHPDoc union type "string" in @var.');
         $this->assertContainsWarning($result, 'Duplicate PHPDoc union type "null" in @return.');
@@ -50,7 +50,7 @@ function example()
  */
 function example(): void
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'PHPDoc union type "mixed|string" contains redundant narrower types.');
         $this->assertContainsWarning($result, 'PHPDoc union type "bool|true|false" contains redundant narrower types.');
@@ -71,7 +71,7 @@ function example(): void
  */
 function example()
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Duplicate PHPDoc union type "string" in nested PHPDoc value types.');
         $this->assertContainsWarning(
@@ -95,7 +95,7 @@ function example()
  */
 function example($value)
 {
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }

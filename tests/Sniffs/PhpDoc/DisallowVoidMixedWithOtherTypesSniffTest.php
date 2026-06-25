@@ -29,7 +29,7 @@ final class DisallowVoidMixedWithOtherTypesSniffTest extends BaseTest
  */
 function foo(): void
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, '"void" cannot be combined with other return types in @return tag.');
     }
@@ -44,7 +44,7 @@ function foo(): void
  */
 function foo()
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, '"void" cannot be combined with other return types in @return tag.');
     }
@@ -59,7 +59,7 @@ function foo()
  */
 function foo()
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, '"void" cannot be combined with other return types in @return tag.');
     }
@@ -74,7 +74,7 @@ function foo()
  */
 function foo(): void
 {
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -90,7 +90,7 @@ function foo(): void
 function foo(string $foo): string
 {
     return $foo;
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -105,7 +105,7 @@ function foo(string $foo): string
  */
 function foo(): string|int|null
 {
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -121,7 +121,7 @@ function foo(): string|int|null
 function foo(): never
 {
     throw new \Exception();
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -135,7 +135,7 @@ function foo(): never
  * @var callable(): void|null $callback
  */
 $callback = static function (): void {
-};', self::SNIFF);
+};');
 
         $this->assertContainsError($result, '"void" cannot be combined with other return types in callable PHPDoc.');
     }
@@ -150,7 +150,7 @@ $callback = static function (): void {
  */
 function foo(callable $callback): void
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, '"void" cannot be combined with other return types in callable PHPDoc.');
     }
@@ -167,7 +167,7 @@ function foo(): callable
 {
     return static function (): void {
     };
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, '"void" cannot be combined with other return types in callable PHPDoc.');
     }
@@ -182,7 +182,7 @@ function foo(): callable
  */
 final class Foo
 {
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, '"void" cannot be combined with other return types in callable PHPDoc.');
     }
@@ -198,7 +198,7 @@ final class Foo
 function foo(): array
 {
     return [];
-}', self::SNIFF);
+}');
 
         $this->assertContainsError($result, '"void" cannot be combined with other return types in callable PHPDoc.');
     }
@@ -217,7 +217,7 @@ function foo(): array
 function foo(callable $handler): void
 {
     $callback = $handler;
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }

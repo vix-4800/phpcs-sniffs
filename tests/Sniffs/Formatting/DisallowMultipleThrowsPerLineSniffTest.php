@@ -28,7 +28,7 @@ final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
          */
         function test(): void {}
         ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertContainsWarning($result, 'Each @throws annotation must contain only one exception type');
     }
@@ -43,7 +43,7 @@ final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
          */
         function test(): void {}
         ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertNoViolations($result);
     }
@@ -57,7 +57,7 @@ final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
          */
         function test(): void {}
         ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertContainsWarning($result, 'InvalidArgumentException, RuntimeException, LogicException');
     }
@@ -71,7 +71,7 @@ final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
          */
         function test(): void {}
         ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertNoViolations($result);
     }
@@ -85,7 +85,7 @@ final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
          */
         function test(): void {}
         ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertContainsWarning($result, 'Each @throws annotation must contain only one exception type');
     }
@@ -99,7 +99,7 @@ final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
          */
         function test(): void {}
         ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertNoViolations($result);
     }
@@ -114,7 +114,7 @@ final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
          */
         function test($value) {}
         ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertNoViolations($result);
     }
@@ -131,7 +131,7 @@ final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
             public function method(): void {}
         }
         ';
-        $result = $this->runPhpcs($code, self::SNIFF);
+        $result = $this->runPhpcs($code);
 
         $this->assertContainsWarning($result, 'Each @throws annotation must contain only one exception type');
     }

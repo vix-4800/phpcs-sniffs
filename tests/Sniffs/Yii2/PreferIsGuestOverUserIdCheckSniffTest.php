@@ -29,7 +29,7 @@ final class PreferIsGuestOverUserIdCheckSniffTest extends BaseTest
 
 if (empty(Yii::$app->user->id)) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use Yii::$app->user->isGuest instead of empty(Yii::$app->user->id)');
     }
@@ -44,7 +44,7 @@ if (empty(Yii::$app->user->id)) {
 
 if (!empty(Yii::$app->user->id)) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use !Yii::$app->user->isGuest instead of !empty(Yii::$app->user->id)');
     }
@@ -59,7 +59,7 @@ if (!empty(Yii::$app->user->id)) {
 
 if (Yii::$app->user->id === null) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use Yii::$app->user->isGuest instead of Yii::$app->user->id === null');
     }
@@ -74,7 +74,7 @@ if (Yii::$app->user->id === null) {
 
 if (Yii::$app->user->id == null) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use Yii::$app->user->isGuest instead of Yii::$app->user->id == null');
     }
@@ -89,7 +89,7 @@ if (Yii::$app->user->id == null) {
 
 if (Yii::$app->user->id !== null) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use !Yii::$app->user->isGuest instead of Yii::$app->user->id !== null');
     }
@@ -104,7 +104,7 @@ if (Yii::$app->user->id !== null) {
 
 if (Yii::$app->user->id != null) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result, 'Use !Yii::$app->user->isGuest instead of Yii::$app->user->id != null');
     }
@@ -119,7 +119,7 @@ if (Yii::$app->user->id != null) {
 
 if (Yii:: $app -> user -> id === null) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result);
     }
@@ -134,7 +134,7 @@ if (Yii:: $app -> user -> id === null) {
 
 if (empty($userId)) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -153,7 +153,7 @@ if ($user->id === null) {
 
 if (Yii::$app->user->name === null) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -172,7 +172,7 @@ if (Yii::$app->user->isGuest) {
 
 if (!Yii::$app->user->isGuest) {
     // do something
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -195,7 +195,7 @@ if (Yii::$app->user->id === null) {
 
 if (!empty(Yii::$app->user->id)) {
     // authenticated user
-}', self::SNIFF);
+}');
 
         $this->assertContainsWarning($result);
         // Should have 3 warnings
@@ -211,7 +211,7 @@ if (!empty(Yii::$app->user->id)) {
     {
         $result = $this->runPhpcs('<?php
 
-$total = Yii::$app->user->id + 10;', self::SNIFF);
+$total = Yii::$app->user->id + 10;');
 
         $this->assertNoViolations($result);
     }
@@ -224,7 +224,7 @@ $total = Yii::$app->user->id + 10;', self::SNIFF);
     {
         $result = $this->runPhpcs('<?php
 
-$userId = Yii::$app->user->id;', self::SNIFF);
+$userId = Yii::$app->user->id;');
 
         $this->assertNoViolations($result);
     }

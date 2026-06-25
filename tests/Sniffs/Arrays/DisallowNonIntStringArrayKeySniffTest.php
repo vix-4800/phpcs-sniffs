@@ -29,7 +29,7 @@ return [
     "three" => 3,
     \'four\' => 4,
 ];
-', self::SNIFF);
+');
 
         $this->assertNoViolations($result);
     }
@@ -42,7 +42,7 @@ return array(
     1 => "one",
     "two" => 2,
 );
-', self::SNIFF);
+');
 
         $this->assertNoViolations($result);
     }
@@ -54,7 +54,7 @@ return array(
 return [
     1.5 => "value",
 ];
-', self::SNIFF);
+');
 
         $this->assertContainsError($result, 'Array keys must be int or string literals');
     }
@@ -67,7 +67,7 @@ return [
     true => "value",
     false => "other",
 ];
-', self::SNIFF);
+');
 
         $this->assertContainsError($result, 'Array keys must be int or string literals');
     }
@@ -79,7 +79,7 @@ return [
 return [
     null => "value",
 ];
-', self::SNIFF);
+');
 
         $this->assertContainsError($result, 'Array keys must be int or string literals');
     }
@@ -93,7 +93,7 @@ $key = "dynamic";
 return [
     $key => "value",
 ];
-', self::SNIFF);
+');
 
         $this->assertContainsError($result, 'Array keys must be int or string literals');
     }
@@ -107,7 +107,7 @@ return [
         true => "bad",
     ],
 ];
-', self::SNIFF);
+');
 
         $this->assertContainsError($result, 'Array keys must be int or string literals');
         $this->assertSame(1, mb_substr_count($result, 'Array keys must be int or string literals'));

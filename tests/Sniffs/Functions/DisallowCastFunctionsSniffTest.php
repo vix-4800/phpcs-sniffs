@@ -27,7 +27,7 @@ final class DisallowCastFunctionsSniffTest extends BaseTest
     {
         $result = $this->runPhpcs('<?php
 $var = "123";
-$str = strval($var);', self::SNIFF);
+$str = strval($var);');
 
         $this->assertContainsWarning($result, 'strval()');
         $this->assertContainsWarning($result, '(string)');
@@ -41,7 +41,7 @@ $str = strval($var);', self::SNIFF);
     {
         $result = $this->runPhpcs('<?php
 $var = "123";
-$int = intval($var);', self::SNIFF);
+$int = intval($var);');
 
         $this->assertContainsWarning($result, 'intval()');
         $this->assertContainsWarning($result, '(int)');
@@ -55,7 +55,7 @@ $int = intval($var);', self::SNIFF);
     {
         $result = $this->runPhpcs('<?php
 $var = "123.45";
-$float = floatval($var);', self::SNIFF);
+$float = floatval($var);');
 
         $this->assertContainsWarning($result, 'floatval()');
         $this->assertContainsWarning($result, '(float)');
@@ -69,7 +69,7 @@ $float = floatval($var);', self::SNIFF);
     {
         $result = $this->runPhpcs('<?php
 $var = 1;
-$bool = boolval($var);', self::SNIFF);
+$bool = boolval($var);');
 
         $this->assertContainsWarning($result, 'boolval()');
         $this->assertContainsWarning($result, '(bool)');
@@ -85,7 +85,7 @@ $bool = boolval($var);', self::SNIFF);
 $str = (string) $var;
 $int = (int) $var;
 $float = (float) $var;
-$bool = (bool) $var;', self::SNIFF);
+$bool = (bool) $var;');
 
         $this->assertNoViolations($result);
     }
@@ -103,7 +103,7 @@ class MyClass {
     }
 }
 $obj = new MyClass();
-$result = $obj->strval();', self::SNIFF);
+$result = $obj->strval();');
 
         $this->assertNoViolations($result);
     }
@@ -120,7 +120,7 @@ class MyClass {
         return 42;
     }
 }
-$result = MyClass::intval();', self::SNIFF);
+$result = MyClass::intval();');
 
         $this->assertNoViolations($result);
     }
@@ -134,7 +134,7 @@ $result = MyClass::intval();', self::SNIFF);
         $result = $this->runPhpcs('<?php
 function strval($value) {
     return (string) $value;
-}', self::SNIFF);
+}');
 
         $this->assertNoViolations($result);
     }
@@ -148,7 +148,7 @@ function strval($value) {
         $result = $this->runPhpcs('<?php
 $str = STRVAL($var);
 $int = InTvAl($var);
-$float = FLOATVAL($var);', self::SNIFF);
+$float = FLOATVAL($var);');
 
         $this->assertContainsWarning($result, 'strval()');
         $this->assertContainsWarning($result, 'intval()');
@@ -165,7 +165,7 @@ $float = FLOATVAL($var);', self::SNIFF);
 $str = strval($var1);
 $int = intval($var2);
 $float = floatval($var3);
-$bool = boolval($var4);', self::SNIFF);
+$bool = boolval($var4);');
 
         $this->assertContainsWarning($result, 'strval()');
         $this->assertContainsWarning($result, 'intval()');
@@ -181,7 +181,7 @@ $bool = boolval($var4);', self::SNIFF);
     {
         $result = $this->runPhpcs('<?php
 $int = intval($var, 16);
-$float = floatval($var);', self::SNIFF);
+$float = floatval($var);');
 
         $this->assertContainsWarning($result, 'intval()');
         $this->assertContainsWarning($result, 'floatval()');
@@ -194,7 +194,7 @@ $float = floatval($var);', self::SNIFF);
     public function nestedFunctionCalls(): void
     {
         $result = $this->runPhpcs('<?php
-$result = strval(intval($var));', self::SNIFF);
+$result = strval(intval($var));');
 
         $this->assertContainsWarning($result, 'strval()');
         $this->assertContainsWarning($result, 'intval()');
@@ -211,7 +211,7 @@ $data = [
     "string" => strval($var),
     "int" => intval($var),
     "float" => floatval($var),
-];', self::SNIFF);
+];');
 
         $this->assertContainsWarning($result, 'strval()');
         $this->assertContainsWarning($result, 'intval()');
@@ -226,7 +226,7 @@ $data = [
     {
         $result = $this->runPhpcs('<?php
 function test($a, $b) {}
-test(strval($x), intval($y));', self::SNIFF);
+test(strval($x), intval($y));');
 
         $this->assertContainsWarning($result, 'strval()');
         $this->assertContainsWarning($result, 'intval()');
