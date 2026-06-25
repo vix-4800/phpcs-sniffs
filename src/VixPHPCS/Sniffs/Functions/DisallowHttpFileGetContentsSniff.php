@@ -97,7 +97,7 @@ final class DisallowHttpFileGetContentsSniff implements Sniff
         if ($prevToken !== false) {
             $prevTokenCode = $tokens[$prevToken]['code'];
 
-            if (in_array($prevTokenCode, self::IGNORED_PREVIOUS_TOKENS, true)) {
+            if (in_array($prevTokenCode, self::IGNORED_PREVIOUS_TOKENS, strict: true)) {
                 return false;
             }
         }
@@ -120,13 +120,13 @@ final class DisallowHttpFileGetContentsSniff implements Sniff
         $depth = 0;
 
         for ($i = $openParen + 1; $i < $closeParen; ++$i) {
-            if (in_array($tokens[$i]['code'], self::NESTING_OPEN_TOKENS, true)) {
+            if (in_array($tokens[$i]['code'], self::NESTING_OPEN_TOKENS, strict: true)) {
                 ++$depth;
 
                 continue;
             }
 
-            if (in_array($tokens[$i]['code'], self::NESTING_CLOSE_TOKENS, true)) {
+            if (in_array($tokens[$i]['code'], self::NESTING_CLOSE_TOKENS, strict: true)) {
                 --$depth;
 
                 continue;
@@ -160,7 +160,7 @@ final class DisallowHttpFileGetContentsSniff implements Sniff
         $string = mb_ltrim($content, 'bB');
         $quote = $string[0] ?? '';
 
-        if (!in_array($quote, ['\'', '"'], true)) {
+        if (!in_array($quote, ["'", '"'], strict: true)) {
             return false;
         }
 

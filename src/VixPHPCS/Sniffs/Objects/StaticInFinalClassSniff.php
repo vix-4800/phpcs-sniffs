@@ -12,6 +12,8 @@ final class StaticInFinalClassSniff implements Sniff
 {
     /**
      * {@inheritDoc}
+     *
+     * @return array<int, int>
      */
     public function register(): array
     {
@@ -51,7 +53,7 @@ final class StaticInFinalClassSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
         $conditions = $tokens[$stackPtr]['conditions'];
 
-        foreach (array_reverse($conditions, true) as $conditionPtr => $conditionCode) {
+        foreach (array_reverse($conditions, preserve_keys: true) as $conditionPtr => $conditionCode) {
             if ($conditionCode === T_CLASS) {
                 return (int) $conditionPtr;
             }

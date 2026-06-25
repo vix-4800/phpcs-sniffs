@@ -6,6 +6,7 @@ namespace VixPHPCS\Sniffs\Formatting;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use SensitiveParameter;
 
 /**
  * Enforces that multi-line method chains keep one call per line and that inline calls aren't mixed in.
@@ -23,6 +24,8 @@ final class MethodChainingPerLineSniff implements Sniff
 
     /**
      * {@inheritDoc}
+     *
+     * @return array<int, int>
      */
     public function register(): array
     {
@@ -54,7 +57,7 @@ final class MethodChainingPerLineSniff implements Sniff
         $line = $tokens[$stackPtr]['line'];
 
         for ($ptr = $stackPtr + 1, $count = count($tokens); $ptr < $count && $tokens[$ptr]['line'] === $line; ++$ptr) {
-            if (!in_array($tokens[$ptr]['code'], [T_OBJECT_OPERATOR, T_NULLSAFE_OBJECT_OPERATOR], true)) {
+            if (!in_array($tokens[$ptr]['code'], [T_OBJECT_OPERATOR, T_NULLSAFE_OBJECT_OPERATOR], strict: true)) {
                 continue;
             }
 
@@ -159,7 +162,8 @@ final class MethodChainingPerLineSniff implements Sniff
      *
      * @param CsToken $token
      */
-    private function buildContextKey(array $token): string
+    private function buildContextKey(#[SensitiveParameter]
+        array $token): string
     {
         $conditions = $token['conditions'];
         $nested = $token['nested_parenthesis'] ?? [];

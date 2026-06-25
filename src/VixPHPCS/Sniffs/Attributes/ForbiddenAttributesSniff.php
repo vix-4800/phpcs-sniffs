@@ -6,7 +6,11 @@ namespace VixPHPCS\Sniffs\Attributes;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use VixPHPCS\Tests\Sniffs\Attributes\ForbiddenAttributesSniffTest;
 
+/**
+ * @see ForbiddenAttributesSniffTest
+ */
 final class ForbiddenAttributesSniff implements Sniff
 {
     /**

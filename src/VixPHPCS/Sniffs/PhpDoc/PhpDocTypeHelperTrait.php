@@ -395,13 +395,13 @@ trait PhpDocTypeHelperTrait
     private function getBaseTypeName(string $type): string
     {
         $normalizedType = $this->normalizeTypeName($type);
-        $genericStart = mb_strpos($normalizedType, '<');
+        $genericStart = mb_strpos((string) $normalizedType, '<');
 
         if ($genericStart === false) {
             return $normalizedType;
         }
 
-        return mb_substr($normalizedType, 0, $genericStart);
+        return mb_substr((string) $normalizedType, 0, $genericStart);
     }
 
     private function isSingleValueType(string $type): bool
@@ -412,7 +412,7 @@ trait PhpDocTypeHelperTrait
             return true;
         }
 
-        if (preg_match('/^-?\d+(?:\.\d+)?$/', $normalizedType) === 1) {
+        if (preg_match('/^-?\d+(?:\.\d+)?$/', (string) $normalizedType) === 1) {
             return true;
         }
 

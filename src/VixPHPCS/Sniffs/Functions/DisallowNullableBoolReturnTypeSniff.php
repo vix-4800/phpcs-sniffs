@@ -82,6 +82,9 @@ final class DisallowNullableBoolReturnTypeSniff implements Sniff
     }
 
     /**
+     * @param File $phpcsFile
+     * @param int  $functionPtr
+     *
      * @return array{type: string, pointer: int}|null
      */
     private function getNativeReturnType(File $phpcsFile, int $functionPtr): ?array
@@ -207,7 +210,7 @@ final class DisallowNullableBoolReturnTypeSniff implements Sniff
 
     private function containsNullableBool(string $typeString): bool
     {
-        $normalizedType = mb_strtolower(trim($typeString));
+        $normalizedType = mb_strtolower(mb_trim($typeString));
 
         if ($normalizedType === '') {
             return false;
@@ -218,23 +221,23 @@ final class DisallowNullableBoolReturnTypeSniff implements Sniff
         }
 
         $types = array_map(
-            static fn (string $type): string => mb_strtolower(trim($type)),
+            static fn(string $type): string => mb_strtolower(mb_trim($type)),
             $this->splitTopLevelUnionTypes($normalizedType),
         );
 
-        return in_array('bool', $types, true) && in_array('null', $types, true);
+        return in_array('bool', $types, strict: true) && in_array('null', $types, strict: true);
     }
 
     private function extractLeadingTypeExpression(string $content): ?string
     {
-        $trimmedContent = trim($content);
+        $trimmedContent = mb_trim($content);
 
         if ($trimmedContent === '') {
             return null;
         }
 
         $type = '';
-        $length = strlen($trimmedContent);
+        $length = mb_strlen($trimmedContent);
 
         for ($index = 0; $index < $length; ++$index) {
             $character = $trimmedContent[$index];
@@ -259,14 +262,14 @@ final class DisallowNullableBoolReturnTypeSniff implements Sniff
             $type .= $character;
         }
 
-        $trimmedType = trim($type);
+        $trimmedType = mb_trim($type);
 
         return $trimmedType !== '' ? $trimmedType : null;
     }
 
     private function findNextNonWhitespaceCharacter(string $content, int $start): ?string
     {
-        $length = strlen($content);
+        $length = mb_strlen($content);
 
         for ($index = $start; $index < $length; ++$index) {
             if (!ctype_space($content[$index])) {
@@ -290,10 +293,12 @@ final class DisallowNullableBoolReturnTypeSniff implements Sniff
 
     private function isTypeSeparator(string $character): bool
     {
-        return in_array($character, ['|', '&', '<', '>', '(', ')', '{', '}', '[', ']', ',', ':', '?'], true);
+        return in_array($character, ['|', '&', '<', '>', '(', ')', '{', '}', '[', ']', ',', ':', '?'], strict: true);
     }
 
     /**
+     * @param string $typeString
+     *
      * @return list<string>
      */
     private function splitTopLevelUnionTypes(string $typeString): array
@@ -305,7 +310,7 @@ final class DisallowNullableBoolReturnTypeSniff implements Sniff
         $bracketDepth = 0;
         $parenthesisDepth = 0;
 
-        $length = strlen($typeString);
+        $length = mb_strlen($typeString);
 
         for ($index = 0; $index < $length; ++$index) {
             $character = $typeString[$index];
@@ -313,27 +318,35 @@ final class DisallowNullableBoolReturnTypeSniff implements Sniff
             switch ($character) {
                 case '<':
                     ++$angleDepth;
+
                     break;
                 case '>':
                     $angleDepth = max(0, $angleDepth - 1);
+
                     break;
                 case '{':
                     ++$braceDepth;
+
                     break;
                 case '}':
                     $braceDepth = max(0, $braceDepth - 1);
+
                     break;
                 case '[':
                     ++$bracketDepth;
+
                     break;
                 case ']':
                     $bracketDepth = max(0, $bracketDepth - 1);
+
                     break;
                 case '(':
                     ++$parenthesisDepth;
+
                     break;
                 case ')':
                     $parenthesisDepth = max(0, $parenthesisDepth - 1);
+
                     break;
             }
 
@@ -344,7 +357,7 @@ final class DisallowNullableBoolReturnTypeSniff implements Sniff
                 && $bracketDepth === 0
                 && $parenthesisDepth === 0
             ) {
-                $trimmedBuffer = trim($buffer);
+                $trimmedBuffer = mb_trim($buffer);
 
                 if ($trimmedBuffer !== '') {
                     $types[] = $trimmedBuffer;
@@ -358,7 +371,7 @@ final class DisallowNullableBoolReturnTypeSniff implements Sniff
             $buffer .= $character;
         }
 
-        $trimmedBuffer = trim($buffer);
+        $trimmedBuffer = mb_trim($buffer);
 
         if ($trimmedBuffer !== '') {
             $types[] = $trimmedBuffer;

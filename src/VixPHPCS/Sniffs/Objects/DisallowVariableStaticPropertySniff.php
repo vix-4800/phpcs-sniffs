@@ -15,6 +15,8 @@ final class DisallowVariableStaticPropertySniff implements Sniff
 {
     /**
      * {@inheritDoc}
+     *
+     * @return array<int, int>
      */
     public function register(): array
     {
@@ -60,7 +62,7 @@ final class DisallowVariableStaticPropertySniff implements Sniff
         $tokens = $phpcsFile->getTokens();
         $nextCode = $tokens[$nextPtr]['code'];
 
-        return in_array($nextCode, [T_VARIABLE, T_DOLLAR], true);
+        return in_array($nextCode, [T_VARIABLE, T_DOLLAR], strict: true);
     }
 
     /**

@@ -159,7 +159,7 @@ final class PreferExistsOverCountSniff implements Sniff
         for ($i = $stackPtr; $i >= 0; --$i) {
             $token = $tokens[$i];
 
-            if (in_array($token['code'], [T_IF, T_ELSEIF, T_WHILE, T_DO], true)) {
+            if (in_array($token['code'], [T_IF, T_ELSEIF, T_WHILE, T_DO], strict: true)) {
                 $openParen = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $i, $stackPtr);
 
                 if ($openParen !== false && isset($tokens[$openParen]['parenthesis_closer'])) {
@@ -171,11 +171,11 @@ final class PreferExistsOverCountSniff implements Sniff
                 }
             }
 
-            if (in_array($token['code'], [T_BOOLEAN_AND, T_BOOLEAN_OR, T_LOGICAL_AND, T_LOGICAL_OR], true)) {
+            if (in_array($token['code'], [T_BOOLEAN_AND, T_BOOLEAN_OR, T_LOGICAL_AND, T_LOGICAL_OR], strict: true)) {
                 return true;
             }
 
-            if (in_array($token['code'], [T_SEMICOLON, T_OPEN_CURLY_BRACKET, T_CLOSE_CURLY_BRACKET], true)) {
+            if (in_array($token['code'], [T_SEMICOLON, T_OPEN_CURLY_BRACKET, T_CLOSE_CURLY_BRACKET], strict: true)) {
                 break;
             }
         }
@@ -207,7 +207,7 @@ final class PreferExistsOverCountSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         for ($i = $openParen + 1; $i < $closeParen; ++$i) {
-            if (in_array($tokens[$i]['code'], [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT], true)) {
+            if (in_array($tokens[$i]['code'], [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT], strict: true)) {
                 continue;
             }
 

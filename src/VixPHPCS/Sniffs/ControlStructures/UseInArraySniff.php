@@ -45,7 +45,7 @@ final class UseInArraySniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $leftVar = $this->getComparisonVariable($phpcsFile, $stackPtr, true);
+        $leftVar = $this->getComparisonVariable($phpcsFile, $stackPtr, left: true);
 
         if ($leftVar === null) {
             return;
@@ -74,7 +74,7 @@ final class UseInArraySniff implements Sniff
                 break;
             }
 
-            $nextVar = $this->getComparisonVariable($phpcsFile, $nextComparison, true);
+            $nextVar = $this->getComparisonVariable($phpcsFile, $nextComparison, left: true);
 
             if ($nextVar === null || $nextVar !== $leftVar) {
                 break;
@@ -131,7 +131,7 @@ final class UseInArraySniff implements Sniff
             while ($ptr !== false && isset($tokens[$ptr])) {
                 $code = $tokens[$ptr]['code'];
 
-                if (!in_array($code, [T_VARIABLE, T_STRING, T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR], true)) {
+                if (!in_array($code, [T_VARIABLE, T_STRING, T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR], strict: true)) {
                     break;
                 }
 
@@ -144,7 +144,7 @@ final class UseInArraySniff implements Sniff
             while ($ptr !== false && isset($tokens[$ptr])) {
                 $code = $tokens[$ptr]['code'];
 
-                if (!in_array($code, [T_VARIABLE, T_STRING, T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR], true)) {
+                if (!in_array($code, [T_VARIABLE, T_STRING, T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR], strict: true)) {
                     break;
                 }
 

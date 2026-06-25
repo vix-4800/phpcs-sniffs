@@ -9,6 +9,9 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 
 final class PreferIsGuestOverUserIdCheckSniff implements Sniff
 {
+    /**
+     * @return array<int, int>
+     */
     public function register(): array
     {
         return [
@@ -100,7 +103,7 @@ final class PreferIsGuestOverUserIdCheckSniff implements Sniff
             return;
         }
 
-        $neg = in_array($tokens[$stackPtr]['code'], [T_IS_NOT_IDENTICAL, T_IS_NOT_EQUAL], true);
+        $neg = in_array($tokens[$stackPtr]['code'], [T_IS_NOT_IDENTICAL, T_IS_NOT_EQUAL], strict: true);
         $op = $tokens[$stackPtr]['content'];
 
         $message = $neg

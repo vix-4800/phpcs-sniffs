@@ -62,7 +62,7 @@ final class RequireFinalTraitMethodsSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
         $conditions = $tokens[$stackPtr]['conditions'];
 
-        foreach (array_reverse($conditions, true) as $conditionCode) {
+        foreach (array_reverse($conditions, preserve_keys: true) as $conditionCode) {
             if (!isset(Tokens::OO_SCOPE_TOKENS[$conditionCode])) {
                 continue;
             }
@@ -84,7 +84,7 @@ final class RequireFinalTraitMethodsSniff implements Sniff
                 continue;
             }
 
-            if (in_array($tokenCode, [T_OPEN_CURLY_BRACKET, T_CLOSE_CURLY_BRACKET, T_SEMICOLON, T_OPEN_TAG], true)) {
+            if (in_array($tokenCode, [T_OPEN_CURLY_BRACKET, T_CLOSE_CURLY_BRACKET, T_SEMICOLON, T_OPEN_TAG], strict: true)) {
                 return false;
             }
 

@@ -14,16 +14,18 @@ use PHP_CodeSniffer\Sniffs\Sniff;
  *
  * Bad:
  *
- * @throws Exception|JsonException
+ * @throws Exception
+ * @throws JsonException
+ * @throws JsonException
  *
  * Good:
- * @throws JsonException
- * @throws Exception
  */
 final class DisallowMultipleThrowsPerLineSniff implements Sniff
 {
     /**
      * {@inheritDoc}
+     *
+     * @return array<int, mixed>
      */
     public function register(): array
     {

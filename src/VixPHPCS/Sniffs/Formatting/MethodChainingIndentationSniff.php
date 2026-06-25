@@ -19,6 +19,8 @@ final class MethodChainingIndentationSniff implements Sniff
 
     /**
      * {@inheritDoc}
+     *
+     * @return array<int, int>
      */
     public function register(): array
     {
@@ -143,7 +145,7 @@ final class MethodChainingIndentationSniff implements Sniff
                 continue;
             }
 
-            if (in_array($code, [T_OBJECT_OPERATOR, T_NULLSAFE_OBJECT_OPERATOR], true)) {
+            if (in_array($code, [T_OBJECT_OPERATOR, T_NULLSAFE_OBJECT_OPERATOR], strict: true)) {
                 $ptr = $lineStart - 1;
 
                 continue;

@@ -6,9 +6,12 @@ namespace VixPHPCS\Sniffs\Arrays;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use VixPHPCS\Tests\Sniffs\Arrays\DuplicateArrayKeySniffTest;
 
 /**
  * Detects duplicate explicit array keys in array declarations.
+ *
+ * @see DuplicateArrayKeySniffTest
  */
 final class DuplicateArrayKeySniff implements Sniff
 {
@@ -72,13 +75,13 @@ final class DuplicateArrayKeySniff implements Sniff
         for ($i = $start; $i < $end; ++$i) {
             $code = $tokens[$i]['code'];
 
-            if (in_array($code, self::OPEN_NESTING_TOKENS, true)) {
+            if (in_array($code, self::OPEN_NESTING_TOKENS, strict: true)) {
                 ++$depth;
 
                 continue;
             }
 
-            if (in_array($code, self::CLOSE_NESTING_TOKENS, true)) {
+            if (in_array($code, self::CLOSE_NESTING_TOKENS, strict: true)) {
                 if ($depth > 0) {
                     --$depth;
                 }
@@ -111,7 +114,7 @@ final class DuplicateArrayKeySniff implements Sniff
                 $phpcsFile->addError(
                     sprintf(
                         'Duplicate array key %s detected; the previous entry is on line %d',
-                        var_export($keyData['effective'], true),
+                        var_export($keyData['effective'], return: true),
                         $firstOccurrence['line'],
                     ),
                     $keyData['pointer'],
@@ -180,7 +183,7 @@ final class DuplicateArrayKeySniff implements Sniff
                 continue;
             }
 
-            if (in_array($tokens[$i]['code'], self::IGNORED_KEY_TOKENS, true)) {
+            if (in_array($tokens[$i]['code'], self::IGNORED_KEY_TOKENS, strict: true)) {
                 continue;
             }
 
@@ -222,8 +225,8 @@ final class DuplicateArrayKeySniff implements Sniff
 
         if (
             count($keyTokens) === 2
-            && in_array($keyTokens[0]['code'], [T_PLUS, T_MINUS], true)
-            && in_array($keyTokens[1]['code'], [T_LNUMBER, T_DNUMBER], true)
+            && in_array($keyTokens[0]['code'], [T_PLUS, T_MINUS], strict: true)
+            && in_array($keyTokens[1]['code'], [T_LNUMBER, T_DNUMBER], strict: true)
         ) {
             return [$keyTokens[1], $keyTokens[0]['content'] . $keyTokens[1]['content']];
         }
@@ -271,7 +274,7 @@ final class DuplicateArrayKeySniff implements Sniff
             return null;
         }
 
-        if (preg_match('/^-?(0|[1-9][0-9]*)$/', $value) === 1) {
+        if (preg_match('/^-?(0|[1-9]\d*)$/', $value) === 1) {
             return $this->createEffectiveKeyData((int) $value, $pointer);
         }
 
@@ -301,17 +304,17 @@ final class DuplicateArrayKeySniff implements Sniff
     {
         $string = $content;
 
-        if (in_array($string[0] ?? '', ['b', 'B'], true)) {
+        if (in_array($string[0] ?? '', ['b', 'B'], strict: true)) {
             $string = mb_substr($string, 1);
         }
 
         $quote = $string[0] ?? '';
         $value = mb_substr($string, 1, -1);
 
-        if ($quote === '\'') {
+        if ($quote === "'") {
             return str_replace(
                 ['\\\\', '\\\''],
-                ['\\', '\''],
+                ['\\', "'"],
                 $value,
             );
         }

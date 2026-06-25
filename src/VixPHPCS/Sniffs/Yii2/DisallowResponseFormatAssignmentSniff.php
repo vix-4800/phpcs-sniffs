@@ -45,7 +45,7 @@ final class DisallowResponseFormatAssignmentSniff implements Sniff
         if ($prevToken !== false) {
             $prevTokenCode = $tokens[$prevToken]['code'];
 
-            if (in_array($prevTokenCode, [T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_FUNCTION], true)) {
+            if (in_array($prevTokenCode, [T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_FUNCTION], strict: true)) {
                 return;
             }
         }
@@ -115,10 +115,10 @@ final class DisallowResponseFormatAssignmentSniff implements Sniff
         $isJsonOrXml = false;
         $formatType = null;
 
-        if (in_array($tokens[$valueToken]['code'], [T_CONSTANT_ENCAPSED_STRING, T_DOUBLE_QUOTED_STRING], true)) {
+        if (in_array($tokens[$valueToken]['code'], [T_CONSTANT_ENCAPSED_STRING, T_DOUBLE_QUOTED_STRING], strict: true)) {
             $value = mb_trim($tokens[$valueToken]['content'], '"\'');
 
-            if (in_array(mb_strtolower($value), ['json', 'xml'], true)) {
+            if (in_array(mb_strtolower($value), ['json', 'xml'], strict: true)) {
                 $isJsonOrXml = true;
                 $formatType = mb_strtolower($value);
             }

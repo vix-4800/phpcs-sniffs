@@ -90,10 +90,12 @@ final class DisallowVoidMixedWithOtherTypesSniff implements Sniff
     {
         $types = array_map($this->normalizeTypeName(...), $this->splitTopLevelUnionTypes($typeString));
 
-        return in_array('void', $types, true) && count($types) > 1;
+        return in_array('void', $types, strict: true) && count($types) > 1;
     }
 
     /**
+     * @param string $typeString
+     *
      * @return list<string>
      */
     private function extractCallableReturnTypes(string $typeString): array
@@ -102,7 +104,11 @@ final class DisallowVoidMixedWithOtherTypesSniff implements Sniff
         $length = mb_strlen($typeString);
 
         for ($index = 0; $index < $length; ++$index) {
-            if ($typeString[$index] !== '(' || !$this->isCallableOpeningParenthesis($typeString, $index)) {
+            if ($typeString[$index] !== '(') {
+                continue;
+            }
+
+            if (!$this->isCallableOpeningParenthesis($typeString, $index)) {
                 continue;
             }
 

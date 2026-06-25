@@ -34,7 +34,7 @@ final class DisallowUnusedTemplateSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (!in_array(mb_strtolower((string) $tokens[$stackPtr]['content']), self::TEMPLATE_TAGS, true)) {
+        if (!in_array(mb_strtolower((string) $tokens[$stackPtr]['content']), self::TEMPLATE_TAGS, strict: true)) {
             return;
         }
 
@@ -109,7 +109,7 @@ final class DisallowUnusedTemplateSniff implements Sniff
             $tokens[$scopeOwner]['scope_opener'] + 1,
             $tokens[$scopeOwner]['scope_closer'],
             $templateName,
-            null,
+            declarationTag: null,
         );
     }
 

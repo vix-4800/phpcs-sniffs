@@ -116,13 +116,13 @@ trait MethodChainHelperTrait
                 continue;
             }
 
-            if (in_array($code, [T_OPEN_SQUARE_BRACKET, T_OPEN_SHORT_ARRAY], true)) {
+            if (in_array($code, [T_OPEN_SQUARE_BRACKET, T_OPEN_SHORT_ARRAY], strict: true)) {
                 ++$bracketDepth;
 
                 continue;
             }
 
-            if (in_array($code, [T_CLOSE_SQUARE_BRACKET, T_CLOSE_SHORT_ARRAY], true) && $bracketDepth > 0) {
+            if (in_array($code, [T_CLOSE_SQUARE_BRACKET, T_CLOSE_SHORT_ARRAY], strict: true) && $bracketDepth > 0) {
                 --$bracketDepth;
 
                 continue;

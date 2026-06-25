@@ -22,6 +22,8 @@ final class ConsistentStatementIndentationSniff implements Sniff
 
     /**
      * {@inheritDoc}
+     *
+     * @return array<int, int>
      */
     public function register(): array
     {
@@ -136,7 +138,7 @@ final class ConsistentStatementIndentationSniff implements Sniff
             }
 
             // Check if this is a statement token
-            if (!in_array($token['code'], $statementTokens, true)) {
+            if (!in_array($token['code'], $statementTokens, strict: true)) {
                 continue;
             }
 

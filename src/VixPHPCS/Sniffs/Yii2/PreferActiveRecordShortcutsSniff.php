@@ -49,7 +49,7 @@ final class PreferActiveRecordShortcutsSniff implements Sniff
 
         $prevTokenCode = $tokens[$prevToken]['code'];
 
-        if (!in_array($prevTokenCode, [T_DOUBLE_COLON, T_OBJECT_OPERATOR], true)) {
+        if (!in_array($prevTokenCode, [T_DOUBLE_COLON, T_OBJECT_OPERATOR], strict: true)) {
             return;
         }
 
@@ -111,7 +111,7 @@ final class PreferActiveRecordShortcutsSniff implements Sniff
 
         $methodName = $tokens[$methodToken]['content'];
 
-        if (!in_array($methodName, ['one', 'all'], true)) {
+        if (!in_array($methodName, ['one', 'all'], strict: true)) {
             return;
         }
 

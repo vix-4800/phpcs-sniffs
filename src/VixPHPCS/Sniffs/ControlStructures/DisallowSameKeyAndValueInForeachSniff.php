@@ -15,6 +15,8 @@ final class DisallowSameKeyAndValueInForeachSniff implements Sniff
 {
     /**
      * {@inheritDoc}
+     *
+     * @return array<int, int>
      */
     public function register(): array
     {

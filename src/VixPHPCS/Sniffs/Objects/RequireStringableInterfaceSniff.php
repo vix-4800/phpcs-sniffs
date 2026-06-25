@@ -72,13 +72,7 @@ final class RequireStringableInterfaceSniff implements Sniff
             return false;
         }
 
-        foreach ($implementedInterfaceNames as $interfaceName) {
-            if (ltrim(mb_strtolower($interfaceName), '\\') === 'stringable') {
-                return true;
-            }
-        }
-
-        return false;
+        return array_any($implementedInterfaceNames, static fn(string $interfaceName): bool => mb_ltrim(mb_strtolower($interfaceName), '\\') === 'stringable');
     }
 
     /**
@@ -86,12 +80,12 @@ final class RequireStringableInterfaceSniff implements Sniff
      */
     private function findDirectClassOwner(array $conditions): ?int
     {
-        foreach (array_reverse($conditions, true) as $conditionPtr => $conditionCode) {
+        foreach (array_reverse($conditions, preserve_keys: true) as $conditionPtr => $conditionCode) {
             if ($conditionCode === T_CLOSURE) {
                 return null;
             }
 
-            if (in_array($conditionCode, [T_CLASS, T_ANON_CLASS, T_INTERFACE, T_TRAIT, T_ENUM], true)) {
+            if (in_array($conditionCode, [T_CLASS, T_ANON_CLASS, T_INTERFACE, T_TRAIT, T_ENUM], strict: true)) {
                 return $conditionPtr;
             }
         }

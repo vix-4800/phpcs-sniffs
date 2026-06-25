@@ -14,6 +14,8 @@ final class DisallowThrowInTernarySniff implements Sniff
 {
     /**
      * Returns an array of tokens this test wants to listen for.
+     *
+     * @return array<int, int>
      */
     public function register(): array
     {
@@ -43,7 +45,7 @@ final class DisallowThrowInTernarySniff implements Sniff
 
         $tokenCode = $tokens[$operatorToken]['code'];
 
-        if (!in_array($tokenCode, [T_INLINE_THEN, T_INLINE_ELSE, T_COALESCE], true)) {
+        if (!in_array($tokenCode, [T_INLINE_THEN, T_INLINE_ELSE, T_COALESCE], strict: true)) {
             return;
         }
 

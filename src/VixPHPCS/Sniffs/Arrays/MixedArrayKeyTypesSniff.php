@@ -6,7 +6,11 @@ namespace VixPHPCS\Sniffs\Arrays;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use VixPHPCS\Tests\Sniffs\Arrays\MixedArrayKeyTypesSniffTest;
 
+/**
+ * @see MixedArrayKeyTypesSniffTest
+ */
 final class MixedArrayKeyTypesSniff implements Sniff
 {
     /**
@@ -58,13 +62,13 @@ final class MixedArrayKeyTypesSniff implements Sniff
         for ($i = $startPtr; $i < $endPtr; ++$i) {
             $tokenCode = $tokens[$i]['code'];
 
-            if (in_array($tokenCode, self::NESTING_OPEN_TOKENS, true)) {
+            if (in_array($tokenCode, self::NESTING_OPEN_TOKENS, strict: true)) {
                 ++$depth;
 
                 continue;
             }
 
-            if (in_array($tokenCode, self::NESTING_CLOSE_TOKENS, true) && $depth > 0) {
+            if (in_array($tokenCode, self::NESTING_CLOSE_TOKENS, strict: true) && $depth > 0) {
                 --$depth;
 
                 continue;
@@ -107,6 +111,9 @@ final class MixedArrayKeyTypesSniff implements Sniff
     }
 
     /**
+     * @param File $phpcsFile
+     * @param int  $stackPtr
+     *
      * @return array{int, int}|null
      */
     private function getArrayBounds(File $phpcsFile, int $stackPtr): ?array
@@ -208,13 +215,13 @@ final class MixedArrayKeyTypesSniff implements Sniff
         for ($i = $startPtr; $i <= $endPtr; ++$i) {
             $tokenCode = $tokens[$i]['code'];
 
-            if (in_array($tokenCode, self::NESTING_OPEN_TOKENS, true)) {
+            if (in_array($tokenCode, self::NESTING_OPEN_TOKENS, strict: true)) {
                 ++$depth;
 
                 continue;
             }
 
-            if (in_array($tokenCode, self::NESTING_CLOSE_TOKENS, true) && $depth > 0) {
+            if (in_array($tokenCode, self::NESTING_CLOSE_TOKENS, strict: true) && $depth > 0) {
                 --$depth;
 
                 continue;
@@ -243,7 +250,7 @@ final class MixedArrayKeyTypesSniff implements Sniff
             return 'integer';
         }
 
-        if (in_array($tokenCode, [T_MINUS, T_PLUS], true)) {
+        if (in_array($tokenCode, [T_MINUS, T_PLUS], strict: true)) {
             $numberToken = $phpcsFile->findNext(T_WHITESPACE, $firstToken + 1, $endPtr + 1, true);
 
             if ($numberToken !== false && $tokens[$numberToken]['code'] === T_LNUMBER) {
@@ -251,7 +258,7 @@ final class MixedArrayKeyTypesSniff implements Sniff
             }
         }
 
-        if (!in_array($tokenCode, [T_CONSTANT_ENCAPSED_STRING, T_DOUBLE_QUOTED_STRING], true)) {
+        if (!in_array($tokenCode, [T_CONSTANT_ENCAPSED_STRING, T_DOUBLE_QUOTED_STRING], strict: true)) {
             return null;
         }
 
@@ -266,20 +273,20 @@ final class MixedArrayKeyTypesSniff implements Sniff
 
     private function normalizeStringLiteral(string $literal): ?string
     {
-        $value = ltrim($literal, 'bB');
+        $value = mb_ltrim($literal, 'bB');
         $quote = $value[0] ?? null;
 
-        if ($quote === null || !in_array($quote, ['\'', '"'], true)) {
+        if ($quote === null || !in_array($quote, ["'", '"'], strict: true)) {
             return null;
         }
 
-        $lastChar = substr($value, -1);
+        $lastChar = mb_substr($value, -1);
 
         if ($lastChar !== $quote) {
             return null;
         }
 
-        $unquoted = substr($value, 1, -1);
+        $unquoted = mb_substr($value, 1, -1);
 
         if (str_contains($unquoted, '\\') || ($quote === '"' && str_contains($unquoted, '$'))) {
             return null;

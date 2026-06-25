@@ -68,7 +68,7 @@ final class DisallowReturnInSetterSniff implements Sniff
     {
         $functionPtr = null;
 
-        foreach (array_reverse($conditions, true) as $conditionPtr => $conditionCode) {
+        foreach (array_reverse($conditions, preserve_keys: true) as $conditionPtr => $conditionCode) {
             if ($conditionCode === T_CLOSURE) {
                 return null;
             }
@@ -87,7 +87,7 @@ final class DisallowReturnInSetterSniff implements Sniff
                 continue;
             }
 
-            if (in_array($conditionCode, self::CLASS_LIKE_TOKENS, true)) {
+            if (in_array($conditionCode, self::CLASS_LIKE_TOKENS, strict: true)) {
                 return $functionPtr;
             }
 

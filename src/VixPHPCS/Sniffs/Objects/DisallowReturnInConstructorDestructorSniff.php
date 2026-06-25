@@ -28,7 +28,7 @@ final class DisallowReturnInConstructorDestructorSniff implements Sniff
 
         $functionName = $phpcsFile->getDeclarationName($functionPtr);
 
-        if ($functionName === null || !in_array(mb_strtolower($functionName), ['__construct', '__destruct'], true)) {
+        if ($functionName === null || !in_array(mb_strtolower($functionName), ['__construct', '__destruct'], strict: true)) {
             return;
         }
 
@@ -44,7 +44,7 @@ final class DisallowReturnInConstructorDestructorSniff implements Sniff
      */
     private function findDirectFunctionOwner(array $conditions): ?int
     {
-        foreach (array_reverse($conditions, true) as $conditionPtr => $conditionCode) {
+        foreach (array_reverse($conditions, preserve_keys: true) as $conditionPtr => $conditionCode) {
             if ($conditionCode === T_CLOSURE) {
                 return null;
             }

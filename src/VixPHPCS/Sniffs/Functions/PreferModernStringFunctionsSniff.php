@@ -47,13 +47,13 @@ final class PreferModernStringFunctionsSniff implements Sniff
 
         $functionName = mb_strtolower((string) $token['content']);
 
-        if (!in_array($functionName, ['strpos', 'stripos', 'mb_strpos'], true)) {
+        if (!in_array($functionName, ['strpos', 'stripos', 'mb_strpos'], strict: true)) {
             return;
         }
 
         $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
 
-        if ($prevToken !== false && in_array($tokens[$prevToken]['code'], [T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR], true)) {
+        if ($prevToken !== false && in_array($tokens[$prevToken]['code'], [T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR], strict: true)) {
             return;
         }
 
@@ -80,7 +80,7 @@ final class PreferModernStringFunctionsSniff implements Sniff
             return;
         }
 
-        $modernFunction = $this->getModernFunctionSuggestion($phpcsFile, $comparisonToken, $functionName);
+        $modernFunction = $this->getModernFunctionSuggestion($phpcsFile, $comparisonToken);
 
         if ($modernFunction === null) {
             return;
@@ -98,16 +98,15 @@ final class PreferModernStringFunctionsSniff implements Sniff
     /**
      * Determines which modern function to suggest based on the comparison.
      *
-     * @param File   $phpcsFile
-     * @param int    $comparisonPtr
-     * @param string $originalFunction
+     * @param File $phpcsFile
+     * @param int  $comparisonPtr
      */
-    private function getModernFunctionSuggestion(File $phpcsFile, int $comparisonPtr, string $originalFunction): ?string
+    private function getModernFunctionSuggestion(File $phpcsFile, int $comparisonPtr): ?string
     {
         $tokens = $phpcsFile->getTokens();
         $comparisonCode = $tokens[$comparisonPtr]['code'];
 
-        if (in_array($comparisonCode, [T_IS_NOT_IDENTICAL, T_IS_IDENTICAL], true)) {
+        if (in_array($comparisonCode, [T_IS_NOT_IDENTICAL, T_IS_IDENTICAL], strict: true)) {
             $valueToken = $phpcsFile->findNext(T_WHITESPACE, $comparisonPtr + 1, null, true);
 
             if ($valueToken !== false && $tokens[$valueToken]['code'] === T_FALSE) {

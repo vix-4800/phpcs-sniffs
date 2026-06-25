@@ -238,7 +238,7 @@ final class PreferIdentityOverFindOneSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         for ($i = $start; $i < $end; ++$i) {
-            if (!in_array($tokens[$i]['code'], [T_CONSTANT_ENCAPSED_STRING, T_DOUBLE_QUOTED_STRING], true)) {
+            if (!in_array($tokens[$i]['code'], [T_CONSTANT_ENCAPSED_STRING, T_DOUBLE_QUOTED_STRING], strict: true)) {
                 continue;
             }
 

@@ -73,7 +73,7 @@ final class DisallowCastFunctionsSniff implements Sniff
         if ($prevToken !== false) {
             $prevTokenCode = $tokens[$prevToken]['code'];
 
-            if (in_array($prevTokenCode, [T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR], true)) {
+            if (in_array($prevTokenCode, [T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR], strict: true)) {
                 return;
             }
 

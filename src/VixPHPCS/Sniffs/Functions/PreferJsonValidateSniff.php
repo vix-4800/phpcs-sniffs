@@ -33,13 +33,13 @@ final class PreferJsonValidateSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
         $functionName = mb_strtolower((string) $tokens[$stackPtr]['content']);
 
-        if (!in_array($functionName, ['json_decode', 'json_last_error'], true)) {
+        if (!in_array($functionName, ['json_decode', 'json_last_error'], strict: true)) {
             return;
         }
 
         $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, true);
 
-        if ($prevToken !== false && in_array($tokens[$prevToken]['code'], [T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR], true)) {
+        if ($prevToken !== false && in_array($tokens[$prevToken]['code'], [T_OBJECT_OPERATOR, T_DOUBLE_COLON, T_NULLSAFE_OBJECT_OPERATOR], strict: true)) {
             return;
         }
 

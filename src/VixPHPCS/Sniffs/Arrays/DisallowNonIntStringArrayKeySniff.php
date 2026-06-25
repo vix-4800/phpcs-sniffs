@@ -33,6 +33,8 @@ final class DisallowNonIntStringArrayKeySniff implements Sniff
 
     /**
      * {@inheritDoc}
+     *
+     * @return array<int, int>
      */
     public function register(): array
     {
@@ -69,6 +71,9 @@ final class DisallowNonIntStringArrayKeySniff implements Sniff
 
     /**
      * Finds the first significant token of the current array key.
+     *
+     * @param File $phpcsFile
+     * @param int  $doubleArrowPtr
      */
     private function findArrayKeyStart(File $phpcsFile, int $doubleArrowPtr): ?int
     {
@@ -78,13 +83,13 @@ final class DisallowNonIntStringArrayKeySniff implements Sniff
         for ($ptr = $doubleArrowPtr - 1; $ptr >= 0; --$ptr) {
             $code = $tokens[$ptr]['code'];
 
-            if (in_array($code, self::CLOSE_TOKENS, true)) {
+            if (in_array($code, self::CLOSE_TOKENS, strict: true)) {
                 ++$depth;
 
                 continue;
             }
 
-            if (in_array($code, self::OPEN_TOKENS, true)) {
+            if (in_array($code, self::OPEN_TOKENS, strict: true)) {
                 if ($depth === 0) {
                     if ($code === T_OPEN_SHORT_ARRAY || $this->isLongArrayOpener($phpcsFile, $ptr)) {
                         return $this->findNextNonEmpty($phpcsFile, $ptr + 1, $doubleArrowPtr);
@@ -108,6 +113,10 @@ final class DisallowNonIntStringArrayKeySniff implements Sniff
 
     /**
      * Checks whether an expression is an allowed array key.
+     *
+     * @param File $phpcsFile
+     * @param int  $startPtr
+     * @param int  $endPtr
      */
     private function isAllowedKeyExpression(File $phpcsFile, int $startPtr, int $endPtr): bool
     {
@@ -132,7 +141,7 @@ final class DisallowNonIntStringArrayKeySniff implements Sniff
         $significantTokens = [];
 
         for ($ptr = $startPtr; $ptr <= $endPtr; ++$ptr) {
-            if (in_array($tokens[$ptr]['code'], Tokens::EMPTY_TOKENS, true)) {
+            if (in_array($tokens[$ptr]['code'], Tokens::EMPTY_TOKENS, strict: true)) {
                 continue;
             }
 
@@ -147,17 +156,20 @@ final class DisallowNonIntStringArrayKeySniff implements Sniff
             return in_array(
                 $significantTokens[0],
                 [T_LNUMBER, T_CONSTANT_ENCAPSED_STRING, T_DOUBLE_QUOTED_STRING],
-                true,
+                strict: true,
             );
         }
 
         return count($significantTokens) === 2
-            && in_array($significantTokens[0], [T_MINUS, T_PLUS], true)
+            && in_array($significantTokens[0], [T_MINUS, T_PLUS], strict: true)
             && $significantTokens[1] === T_LNUMBER;
     }
 
     /**
      * Checks whether an opening parenthesis belongs to array().
+     *
+     * @param File $phpcsFile
+     * @param int  $openPtr
      */
     private function isLongArrayOpener(File $phpcsFile, int $openPtr): bool
     {
@@ -169,6 +181,10 @@ final class DisallowNonIntStringArrayKeySniff implements Sniff
 
     /**
      * Finds the next significant token.
+     *
+     * @param File $phpcsFile
+     * @param int  $startPtr
+     * @param ?int $endPtr
      */
     private function findNextNonEmpty(File $phpcsFile, int $startPtr, ?int $endPtr = null): ?int
     {
@@ -179,6 +195,10 @@ final class DisallowNonIntStringArrayKeySniff implements Sniff
 
     /**
      * Finds the previous significant token.
+     *
+     * @param File $phpcsFile
+     * @param int  $startPtr
+     * @param ?int $endPtr
      */
     private function findPreviousNonEmpty(File $phpcsFile, int $startPtr, ?int $endPtr = null): ?int
     {
