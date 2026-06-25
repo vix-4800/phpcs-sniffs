@@ -38,6 +38,7 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Objects.StaticInFinalClass](#vixphpcsobjectsstaticinfinalclass)
     - [VixPHPCS.Objects.RequireStringableInterface](#vixphpcsobjectsrequirestringableinterface)
     - [VixPHPCS.Objects.DisallowVariableStaticProperty](#vixphpcsobjectsdisallowvariablestaticproperty)
+    - [VixPHPCS.Objects.DisallowNullsafeThis](#vixphpcsobjectsdisallownullsafethis)
     - [VixPHPCS.Objects.RequireFinalTraitMethods](#vixphpcsobjectsrequirefinaltraitmethods)
   - [Operators](#operators)
     - [VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation](#vixphpcsoperatorspreferbooleancastoverdoublenegation)
@@ -815,6 +816,26 @@ $value = ($service)::$cache['key'];
 ```php
 $toast = User::$toastArray[$model->toast];
 $value = self::$cache['key'];
+```
+
+### VixPHPCS.Objects.DisallowNullsafeThis
+
+**Level:** Warning
+
+Warns when `$this` is accessed through the nullsafe operator. `$this` is always available inside object context, so `?->` adds no useful null handling there.
+
+**Bad:**
+
+```php
+$this?->foo();
+$name = $this?->name;
+```
+
+**Good:**
+
+```php
+$this->foo();
+$name = $this->name;
 ```
 
 ### VixPHPCS.Objects.RequireFinalTraitMethods
