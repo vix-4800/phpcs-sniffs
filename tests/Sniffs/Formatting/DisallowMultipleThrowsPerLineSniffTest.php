@@ -17,7 +17,7 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(DisallowMultipleThrowsPerLineSniff::class)]
 final class DisallowMultipleThrowsPerLineSniffTest extends BaseTest
 {
-    private const string SNIFF = 'VixPHPCS.Formatting.DisallowMultipleThrowsPerLine';
+    protected const string SNIFF = 'VixPHPCS.Formatting.DisallowMultipleThrowsPerLine';
 
     #[Test]
     public function detectsMultipleExceptionsOnSingleLine(): void

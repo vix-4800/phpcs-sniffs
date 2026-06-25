@@ -17,6 +17,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(DisallowCountInLoopSniff::class)]
 final class DisallowCountInLoopSniffTest extends BaseTest
 {
+    protected const string SNIFF = 'VixPHPCS.ControlStructures.DisallowCountInLoop';
+
     /**
      * Expected minimum number of warnings for multiple for loops test.
      */
@@ -32,7 +34,7 @@ final class DisallowCountInLoopSniffTest extends BaseTest
 $array = [1, 2, 3, 4, 5];
 for ($i = 0; $i < count($array); $i++) {
     echo $array[$i];
-}', 'VixPHPCS.ControlStructures.DisallowCountInLoop');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'count()');
     }
@@ -46,7 +48,7 @@ for ($i = 0; $i < count($array); $i++) {
         $result = $this->runPhpcs('<?php
 for ($i = 0; $i < count($this->items); $i++) {
     echo "item";
-}', 'VixPHPCS.ControlStructures.DisallowCountInLoop');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'count()');
     }
@@ -60,7 +62,7 @@ for ($i = 0; $i < count($this->items); $i++) {
         $result = $this->runPhpcs('<?php
 for ($i = 0; $i < count($data["items"]); $i++) {
     echo "item";
-}', 'VixPHPCS.ControlStructures.DisallowCountInLoop');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'count()');
     }
@@ -76,7 +78,7 @@ $array = [1, 2, 3, 4, 5];
 $count = count($array);
 for ($i = 0; $i < $count; $i++) {
     echo $array[$i];
-}', 'VixPHPCS.ControlStructures.DisallowCountInLoop');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -91,7 +93,7 @@ for ($i = 0; $i < $count; $i++) {
 $array = [1, 2, 3, 4, 5];
 foreach ($array as $item) {
     echo $item;
-}', 'VixPHPCS.ControlStructures.DisallowCountInLoop');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -107,7 +109,7 @@ $array = [1, 2, 3];
 $count = count($array);
 if ($count > 0) {
     echo "has items";
-}', 'VixPHPCS.ControlStructures.DisallowCountInLoop');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -121,7 +123,7 @@ if ($count > 0) {
         $result = $this->runPhpcs('<?php
 for ($count = count($array), $i = 0; $i < $count; $i++) {
     echo $i;
-}', 'VixPHPCS.ControlStructures.DisallowCountInLoop');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -136,7 +138,7 @@ for ($count = count($array), $i = 0; $i < $count; $i++) {
 $count = 0;
 for ($i = 0; $i < 10; $i++, $count = count($array)) {
     echo $i;
-}', 'VixPHPCS.ControlStructures.DisallowCountInLoop');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -150,7 +152,7 @@ for ($i = 0; $i < 10; $i++, $count = count($array)) {
         $result = $this->runPhpcs('<?php
 for ($i = 0; $i < $this->count(); $i++) {
     echo $i;
-}', 'VixPHPCS.ControlStructures.DisallowCountInLoop');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -164,7 +166,7 @@ for ($i = 0; $i < $this->count(); $i++) {
         $result = $this->runPhpcs('<?php
 for ($i = 0; $i < MyClass::count(); $i++) {
     echo $i;
-}', 'VixPHPCS.ControlStructures.DisallowCountInLoop');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -180,7 +182,7 @@ $i = 0;
 while ($i < count($array)) {
     echo $array[$i];
     $i++;
-}', 'VixPHPCS.ControlStructures.DisallowCountInLoop');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -198,7 +200,7 @@ for ($i = 0; $i < count($array1); $i++) {
 
 for ($j = 0; $j < count($array2); $j++) {
     echo $j;
-}', 'VixPHPCS.ControlStructures.DisallowCountInLoop');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'count()');
         $warningCount = mb_substr_count($result, 'count()');
@@ -214,7 +216,7 @@ for ($j = 0; $j < count($array2); $j++) {
         $result = $this->runPhpcs('<?php
 for ($i = 10; $i >= count($array); $i--) {
     echo $i;
-}', 'VixPHPCS.ControlStructures.DisallowCountInLoop');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'count()');
     }
@@ -228,7 +230,7 @@ for ($i = 10; $i >= count($array); $i--) {
         $result = $this->runPhpcs('<?php
 for ($i = 0; $i != count($array); $i++) {
     echo $i;
-}', 'VixPHPCS.ControlStructures.DisallowCountInLoop');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'count()');
     }

@@ -17,7 +17,7 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(DisallowNullableBoolReturnTypeSniff::class)]
 final class DisallowNullableBoolReturnTypeSniffTest extends BaseTest
 {
-    private const string SNIFF = 'VixPHPCS.Functions.DisallowNullableBoolReturnType';
+    protected const string SNIFF = 'VixPHPCS.Functions.DisallowNullableBoolReturnType';
 
     #[Test]
     public function nullableBoolNativeReturnTypeTriggersError(): void

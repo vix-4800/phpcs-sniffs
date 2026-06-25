@@ -17,6 +17,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(StaticInFinalClassSniff::class)]
 final class StaticInFinalClassSniffTest extends BaseTest
 {
+    protected const string SNIFF = 'VixPHPCS.Objects.StaticInFinalClass';
+
     #[Test]
     public function staticReturnTypeInFinalClassTriggersWarning(): void
     {
@@ -29,7 +31,7 @@ final class UserFactory
         return $this;
     }
 }
-', 'VixPHPCS.Objects.StaticInFinalClass');
+', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use "self" instead of "static" as the return type inside final classes.');
     }
@@ -46,7 +48,7 @@ final readonly class UserFactory
         return new self();
     }
 }
-', 'VixPHPCS.Objects.StaticInFinalClass');
+', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use "self" instead of "static" as the return type inside final classes.');
     }
@@ -63,7 +65,7 @@ final class UserFactory
         return new self();
     }
 }
-', 'VixPHPCS.Objects.StaticInFinalClass');
+', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -80,7 +82,7 @@ class UserFactory
         return $this;
     }
 }
-', 'VixPHPCS.Objects.StaticInFinalClass');
+', self::SNIFF);
 
         $this->assertNoViolations($result);
     }

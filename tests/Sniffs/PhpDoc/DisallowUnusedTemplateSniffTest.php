@@ -17,7 +17,7 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(DisallowUnusedTemplateSniff::class)]
 final class DisallowUnusedTemplateSniffTest extends BaseTest
 {
-    private const string SNIFF = 'VixPHPCS.PhpDoc.DisallowUnusedTemplate';
+    protected const string SNIFF = 'VixPHPCS.PhpDoc.DisallowUnusedTemplate';
 
     #[Test]
     public function unusedClassTemplateTriggersWarning(): void

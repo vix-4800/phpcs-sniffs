@@ -17,7 +17,7 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(ConsistentStatementIndentationSniff::class)]
 final class ConsistentStatementIndentationSniffTest extends BaseTest
 {
-    private const string SNIFF = 'VixPHPCS.Formatting.ConsistentStatementIndentation';
+    protected const string SNIFF = 'VixPHPCS.Formatting.ConsistentStatementIndentation';
 
     #[Test]
     public function detectsInconsistentEchoIndentation(): void

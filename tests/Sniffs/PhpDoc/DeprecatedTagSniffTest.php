@@ -17,7 +17,7 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(DeprecatedTagSniff::class)]
 final class DeprecatedTagSniffTest extends BaseTest
 {
-    private const string SNIFF = 'VixPHPCS.PhpDoc.DeprecatedTag';
+    protected const string SNIFF = 'VixPHPCS.PhpDoc.DeprecatedTag';
 
     #[Test]
     public function functionWithDeprecatedTagTriggersWarning(): void

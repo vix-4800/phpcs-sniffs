@@ -12,6 +12,12 @@ use PHPUnit\Framework\TestCase;
 abstract class BaseTest extends TestCase
 {
     /**
+     * The PHPCS sniff to test.
+     * Subclasses should override this constant with the specific sniff they want to test.
+     */
+    protected const string SNIFF = '';
+
+    /**
      * Run PHPCS on given content with specified sniff.
      *
      * @param string      $content PHP code to check

@@ -17,7 +17,7 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(DisallowSuspiciousLiteralTypesSniff::class)]
 final class DisallowSuspiciousLiteralTypesSniffTest extends BaseTest
 {
-    private const string SNIFF = 'VixPHPCS.PhpDoc.DisallowSuspiciousLiteralTypes';
+    protected const string SNIFF = 'VixPHPCS.PhpDoc.DisallowSuspiciousLiteralTypes';
 
     #[Test]
     public function soleNullFalseAndLiteralValueTypesTriggerWarnings(): void

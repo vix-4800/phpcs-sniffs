@@ -17,6 +17,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(DisallowNonIntStringArrayKeySniff::class)]
 final class DisallowNonIntStringArrayKeySniffTest extends BaseTest
 {
+    protected const string SNIFF = 'VixPHPCS.Arrays.DisallowNonIntStringArrayKey';
+
     #[Test]
     public function integerAndStringKeysAreAllowed(): void
     {
@@ -27,7 +29,7 @@ return [
     "three" => 3,
     \'four\' => 4,
 ];
-', 'VixPHPCS.Arrays.DisallowNonIntStringArrayKey');
+', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -40,7 +42,7 @@ return array(
     1 => "one",
     "two" => 2,
 );
-', 'VixPHPCS.Arrays.DisallowNonIntStringArrayKey');
+', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -52,7 +54,7 @@ return array(
 return [
     1.5 => "value",
 ];
-', 'VixPHPCS.Arrays.DisallowNonIntStringArrayKey');
+', self::SNIFF);
 
         $this->assertContainsError($result, 'Array keys must be int or string literals');
     }
@@ -65,7 +67,7 @@ return [
     true => "value",
     false => "other",
 ];
-', 'VixPHPCS.Arrays.DisallowNonIntStringArrayKey');
+', self::SNIFF);
 
         $this->assertContainsError($result, 'Array keys must be int or string literals');
     }
@@ -77,7 +79,7 @@ return [
 return [
     null => "value",
 ];
-', 'VixPHPCS.Arrays.DisallowNonIntStringArrayKey');
+', self::SNIFF);
 
         $this->assertContainsError($result, 'Array keys must be int or string literals');
     }
@@ -91,7 +93,7 @@ $key = "dynamic";
 return [
     $key => "value",
 ];
-', 'VixPHPCS.Arrays.DisallowNonIntStringArrayKey');
+', self::SNIFF);
 
         $this->assertContainsError($result, 'Array keys must be int or string literals');
     }
@@ -105,7 +107,7 @@ return [
         true => "bad",
     ],
 ];
-', 'VixPHPCS.Arrays.DisallowNonIntStringArrayKey');
+', self::SNIFF);
 
         $this->assertContainsError($result, 'Array keys must be int or string literals');
         $this->assertSame(1, mb_substr_count($result, 'Array keys must be int or string literals'));

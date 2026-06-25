@@ -17,7 +17,7 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(MixedArrayKeyTypesSniff::class)]
 final class MixedArrayKeyTypesSniffTest extends BaseTest
 {
-    private const string SNIFF = 'VixPHPCS.Arrays.MixedArrayKeyTypes';
+    protected const string SNIFF = 'VixPHPCS.Arrays.MixedArrayKeyTypes';
 
     #[Test]
     public function stringAndIntegerKeysTriggerWarning(): void

@@ -17,6 +17,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(PreferJsonValidateSniff::class)]
 final class PreferJsonValidateSniffTest extends BaseTest
 {
+    protected const string SNIFF = 'VixPHPCS.Functions.PreferJsonValidate';
+
     /**
      * Test that json_last_error triggers warning.
      */
@@ -27,7 +29,7 @@ final class PreferJsonValidateSniffTest extends BaseTest
 $data = json_decode($json);
 if (json_last_error() !== JSON_ERROR_NONE) {
     throw new Exception("Invalid JSON");
-}', 'VixPHPCS.Functions.PreferJsonValidate');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'json_validate()');
     }
@@ -42,7 +44,7 @@ if (json_last_error() !== JSON_ERROR_NONE) {
 json_decode($json);
 if (json_last_error() !== JSON_ERROR_NONE) {
     throw new Exception("Invalid JSON");
-}', 'VixPHPCS.Functions.PreferJsonValidate');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'json_validate()');
     }
@@ -55,7 +57,7 @@ if (json_last_error() !== JSON_ERROR_NONE) {
     {
         $result = $this->runPhpcs('<?php
 $data = json_decode($json);
-echo $data->name;', 'VixPHPCS.Functions.PreferJsonValidate');
+echo $data->name;', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -70,7 +72,7 @@ echo $data->name;', 'VixPHPCS.Functions.PreferJsonValidate');
 $obj->json_decode($json);
 if ($obj->json_last_error() !== 0) {
     throw new Exception();
-}', 'VixPHPCS.Functions.PreferJsonValidate');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -83,7 +85,7 @@ if ($obj->json_last_error() !== 0) {
     {
         $result = $this->runPhpcs('<?php
 SomeClass::json_decode($json);
-SomeClass::json_last_error();', 'VixPHPCS.Functions.PreferJsonValidate');
+SomeClass::json_last_error();', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -103,7 +105,7 @@ if (json_last_error() !== JSON_ERROR_NONE) {
 json_decode($json2);
 if (json_last_error() !== JSON_ERROR_NONE) {
     throw new Exception();
-}', 'VixPHPCS.Functions.PreferJsonValidate');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'json_validate()');
         // Should have multiple warnings
@@ -118,7 +120,7 @@ if (json_last_error() !== JSON_ERROR_NONE) {
     public function jsonDecodeWithThrowOnErrorTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-json_decode($json, true, 512, JSON_THROW_ON_ERROR);', 'VixPHPCS.Functions.PreferJsonValidate');
+json_decode($json, true, 512, JSON_THROW_ON_ERROR);', self::SNIFF);
 
         $this->assertContainsWarning($result, 'json_validate()');
     }
@@ -134,7 +136,7 @@ try {
     json_decode(\'{test}\', true, 512, JSON_THROW_ON_ERROR);
 } catch (JsonException $e) {
     throw new Exception("Invalid JSON");
-}', 'VixPHPCS.Functions.PreferJsonValidate');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'json_validate()');
     }
@@ -150,7 +152,7 @@ try {
     $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
 } catch (JsonException $e) {
     // Just validating
-}', 'VixPHPCS.Functions.PreferJsonValidate');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'json_validate()');
     }

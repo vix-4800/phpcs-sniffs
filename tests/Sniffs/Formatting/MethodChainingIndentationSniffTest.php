@@ -17,6 +17,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(MethodChainingIndentationSniff::class)]
 final class MethodChainingIndentationSniffTest extends BaseTest
 {
+    protected const string SNIFF = 'VixPHPCS.Formatting.MethodChainingIndentation';
+
     #[Test]
     public function firstChainedCallMustBeIndented(): void
     {
@@ -26,7 +28,7 @@ User::find()
 ->where(["id" => $model->user_id])
     ->select(["id"])
     ->all();
-', 'VixPHPCS.Formatting.MethodChainingIndentation');
+', self::SNIFF);
 
         $this->assertContainsError($result, 'First chained call must be indented');
     }
@@ -40,7 +42,7 @@ User::find()
     ->where(["id" => $model->user_id])
       ->select(["id"])
     ->all();
-', 'VixPHPCS.Formatting.MethodChainingIndentation');
+', self::SNIFF);
 
         $this->assertContainsError($result, 'Chained call indentation must match');
     }
@@ -59,7 +61,7 @@ function example(): array
         ->limit(10)
         ->all();
 }
-', 'VixPHPCS.Formatting.MethodChainingIndentation');
+', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -70,7 +72,7 @@ function example(): array
         $result = $this->runPhpcs('<?php
 
 User::find()->where(["id" => $model->user_id])->all();
-', 'VixPHPCS.Formatting.MethodChainingIndentation');
+', self::SNIFF);
 
         $this->assertNoViolations($result);
     }

@@ -17,6 +17,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(PreferIsGuestOverUserIdCheckSniff::class)]
 final class PreferIsGuestOverUserIdCheckSniffTest extends BaseTest
 {
+    protected const string SNIFF = 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck';
+
     /**
      * Test that empty(Yii::$app->user->id) triggers a warning.
      */
@@ -27,7 +29,7 @@ final class PreferIsGuestOverUserIdCheckSniffTest extends BaseTest
 
 if (empty(Yii::$app->user->id)) {
     // do something
-}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use Yii::$app->user->isGuest instead of empty(Yii::$app->user->id)');
     }
@@ -42,7 +44,7 @@ if (empty(Yii::$app->user->id)) {
 
 if (!empty(Yii::$app->user->id)) {
     // do something
-}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use !Yii::$app->user->isGuest instead of !empty(Yii::$app->user->id)');
     }
@@ -57,7 +59,7 @@ if (!empty(Yii::$app->user->id)) {
 
 if (Yii::$app->user->id === null) {
     // do something
-}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use Yii::$app->user->isGuest instead of Yii::$app->user->id === null');
     }
@@ -72,7 +74,7 @@ if (Yii::$app->user->id === null) {
 
 if (Yii::$app->user->id == null) {
     // do something
-}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use Yii::$app->user->isGuest instead of Yii::$app->user->id == null');
     }
@@ -87,7 +89,7 @@ if (Yii::$app->user->id == null) {
 
 if (Yii::$app->user->id !== null) {
     // do something
-}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use !Yii::$app->user->isGuest instead of Yii::$app->user->id !== null');
     }
@@ -102,7 +104,7 @@ if (Yii::$app->user->id !== null) {
 
 if (Yii::$app->user->id != null) {
     // do something
-}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use !Yii::$app->user->isGuest instead of Yii::$app->user->id != null');
     }
@@ -117,7 +119,7 @@ if (Yii::$app->user->id != null) {
 
 if (Yii:: $app -> user -> id === null) {
     // do something
-}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result);
     }
@@ -132,7 +134,7 @@ if (Yii:: $app -> user -> id === null) {
 
 if (empty($userId)) {
     // do something
-}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -151,7 +153,7 @@ if ($user->id === null) {
 
 if (Yii::$app->user->name === null) {
     // do something
-}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -170,7 +172,7 @@ if (Yii::$app->user->isGuest) {
 
 if (!Yii::$app->user->isGuest) {
     // do something
-}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -193,7 +195,7 @@ if (Yii::$app->user->id === null) {
 
 if (!empty(Yii::$app->user->id)) {
     // authenticated user
-}', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result);
         // Should have 3 warnings
@@ -209,7 +211,7 @@ if (!empty(Yii::$app->user->id)) {
     {
         $result = $this->runPhpcs('<?php
 
-$total = Yii::$app->user->id + 10;', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
+$total = Yii::$app->user->id + 10;', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -222,7 +224,7 @@ $total = Yii::$app->user->id + 10;', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck
     {
         $result = $this->runPhpcs('<?php
 
-$userId = Yii::$app->user->id;', 'VixPHPCS.Yii2.PreferIsGuestOverUserIdCheck');
+$userId = Yii::$app->user->id;', self::SNIFF);
 
         $this->assertNoViolations($result);
     }

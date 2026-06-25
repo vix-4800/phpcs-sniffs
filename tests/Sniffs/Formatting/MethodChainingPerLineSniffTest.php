@@ -17,6 +17,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(MethodChainingPerLineSniff::class)]
 final class MethodChainingPerLineSniffTest extends BaseTest
 {
+    protected const string SNIFF = 'VixPHPCS.Formatting.MethodChainingPerLine';
+
     #[Test]
     public function multipleCallsOnSameLineTriggerError(): void
     {
@@ -25,7 +27,7 @@ final class MethodChainingPerLineSniffTest extends BaseTest
 User::find()
     ->where(["id" => $model->user_id])
     ->limit(10)->all();
-', 'VixPHPCS.Formatting.MethodChainingPerLine');
+', self::SNIFF);
 
         $this->assertContainsError($result, 'Only one chained method call is allowed per line');
     }
@@ -40,7 +42,7 @@ User::find()
     ->select(["id"])
     ->limit(10)
     ->all();
-', 'VixPHPCS.Formatting.MethodChainingPerLine');
+', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -53,7 +55,7 @@ User::find()
 $service->firstCall()
     ->secondCall()
     ->thirdCall();
-', 'VixPHPCS.Formatting.MethodChainingPerLine');
+', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -64,7 +66,7 @@ $service->firstCall()
         $result = $this->runPhpcs('<?php
 
 User::find()->where(["id" => $model->user_id])->all();
-', 'VixPHPCS.Formatting.MethodChainingPerLine');
+', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -79,7 +81,7 @@ $names = User::find()
         return $user->profile->name;
     })
     ->all();
-', 'VixPHPCS.Formatting.MethodChainingPerLine');
+', self::SNIFF);
 
         $this->assertNoViolations($result);
     }

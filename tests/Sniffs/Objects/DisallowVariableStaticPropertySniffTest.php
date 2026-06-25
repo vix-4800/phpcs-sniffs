@@ -17,13 +17,15 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(DisallowVariableStaticPropertySniff::class)]
 final class DisallowVariableStaticPropertySniffTest extends BaseTest
 {
+    protected const string SNIFF = 'VixPHPCS.Objects.DisallowVariableStaticProperty';
+
     #[Test]
     public function variableStaticPropertyTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
 
 $toast = $model::$toast_array[$model->toast];
-', 'VixPHPCS.Objects.DisallowVariableStaticProperty');
+', self::SNIFF);
 
         $this->assertContainsError($result, 'Static properties must be accessed via a class name');
     }
@@ -34,7 +36,7 @@ $toast = $model::$toast_array[$model->toast];
         $result = $this->runPhpcs('<?php
 
 $toast = ($model)::$toast_array[$model->toast];
-', 'VixPHPCS.Objects.DisallowVariableStaticProperty');
+', self::SNIFF);
 
         $this->assertContainsError($result, 'Static properties must be accessed via a class name');
     }
@@ -45,7 +47,7 @@ $toast = ($model)::$toast_array[$model->toast];
         $result = $this->runPhpcs('<?php
 
 $toast = User::$toast_array[$id];
-', 'VixPHPCS.Objects.DisallowVariableStaticProperty');
+', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -62,7 +64,7 @@ class Example
         return self::$foo;
     }
 }
-', 'VixPHPCS.Objects.DisallowVariableStaticProperty');
+', self::SNIFF);
 
         $this->assertNoViolations($result);
     }

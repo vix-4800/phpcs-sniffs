@@ -17,6 +17,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(RequireFinalTraitMethodsSniff::class)]
 final class RequireFinalTraitMethodsSniffTest extends BaseTest
 {
+    protected const string SNIFF = 'VixPHPCS.Objects.RequireFinalTraitMethods';
+
     #[Test]
     public function publicTraitMethodTriggersWarning(): void
     {
@@ -28,7 +30,7 @@ trait ExampleTrait
     {
     }
 }
-', 'VixPHPCS.Objects.RequireFinalTraitMethods');
+', self::SNIFF);
 
         $this->assertContainsWarning($result, 'must be declared final');
     }
@@ -44,7 +46,7 @@ trait ExampleTrait
     {
     }
 }
-', 'VixPHPCS.Objects.RequireFinalTraitMethods');
+', self::SNIFF);
 
         $this->assertContainsWarning($result, 'must be declared final');
     }
@@ -60,7 +62,7 @@ trait ExampleTrait
     {
     }
 }
-', 'VixPHPCS.Objects.RequireFinalTraitMethods');
+', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -76,7 +78,7 @@ trait ExampleTrait
     {
     }
 }
-', 'VixPHPCS.Objects.RequireFinalTraitMethods');
+', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -90,7 +92,7 @@ trait ExampleTrait
 {
     abstract protected function configure(): void;
 }
-', 'VixPHPCS.Objects.RequireFinalTraitMethods');
+', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -106,7 +108,7 @@ class Example
     {
     }
 }
-', 'VixPHPCS.Objects.RequireFinalTraitMethods');
+', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -128,7 +130,7 @@ trait ExampleTrait
         };
     }
 }
-', 'VixPHPCS.Objects.RequireFinalTraitMethods');
+', self::SNIFF);
 
         $this->assertNoViolations($result);
     }

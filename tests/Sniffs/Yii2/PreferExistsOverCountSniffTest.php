@@ -17,6 +17,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(PreferExistsOverCountSniff::class)]
 final class PreferExistsOverCountSniffTest extends BaseTest
 {
+    protected const string SNIFF = 'VixPHPCS.Yii2.PreferExistsOverCount';
+
     /**
      * Test that count() > 0 triggers a warning.
      */
@@ -27,7 +29,7 @@ final class PreferExistsOverCountSniffTest extends BaseTest
 
 if ($query->count() > 0) {
     // do something
-}', 'VixPHPCS.Yii2.PreferExistsOverCount');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use ...->exists() instead of count() > 0');
     }
@@ -42,7 +44,7 @@ if ($query->count() > 0) {
 
 if ($query->count() >= 1) {
     // do something
-}', 'VixPHPCS.Yii2.PreferExistsOverCount');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use ...->exists() instead of count() >= 1');
     }
@@ -57,7 +59,7 @@ if ($query->count() >= 1) {
 
 if ($query->count() != 0) {
     // do something
-}', 'VixPHPCS.Yii2.PreferExistsOverCount');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use ...->exists() instead of count() != 0');
     }
@@ -72,7 +74,7 @@ if ($query->count() != 0) {
 
 if ($query->count() !== 0) {
     // do something
-}', 'VixPHPCS.Yii2.PreferExistsOverCount');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use ...->exists() instead of count() !== 0');
     }
@@ -87,7 +89,7 @@ if ($query->count() !== 0) {
 
 if ($query->count() == 0) {
     // do something
-}', 'VixPHPCS.Yii2.PreferExistsOverCount');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use !...->exists() instead of count() == 0');
     }
@@ -102,7 +104,7 @@ if ($query->count() == 0) {
 
 if ($query->count() === 0) {
     // do something
-}', 'VixPHPCS.Yii2.PreferExistsOverCount');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use !...->exists() instead of count() === 0');
     }
@@ -117,7 +119,7 @@ if ($query->count() === 0) {
 
 if ($query->count() < 1) {
     // do something
-}', 'VixPHPCS.Yii2.PreferExistsOverCount');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use !...->exists() instead of count() < 1');
     }
@@ -132,7 +134,7 @@ if ($query->count() < 1) {
 
 if ($query->count() <= 0) {
     // do something
-}', 'VixPHPCS.Yii2.PreferExistsOverCount');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use !...->exists() instead of count() <= 0');
     }
@@ -147,7 +149,7 @@ if ($query->count() <= 0) {
 
 if (User::find()->where(["status" => 1])->count() > 0) {
     // do something
-}', 'VixPHPCS.Yii2.PreferExistsOverCount');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use ...->exists() instead of count() > 0');
     }
@@ -160,7 +162,7 @@ if (User::find()->where(["status" => 1])->count() > 0) {
     {
         $result = $this->runPhpcs('<?php
 
-$hasUsers = $query->count() > 0 ? "yes" : "no";', 'VixPHPCS.Yii2.PreferExistsOverCount');
+$hasUsers = $query->count() > 0 ? "yes" : "no";', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use ...->exists() instead of count() > 0');
     }
@@ -173,7 +175,7 @@ $hasUsers = $query->count() > 0 ? "yes" : "no";', 'VixPHPCS.Yii2.PreferExistsOve
     {
         $result = $this->runPhpcs('<?php
 
-$count = $query->count("*");', 'VixPHPCS.Yii2.PreferExistsOverCount');
+$count = $query->count("*");', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -192,7 +194,7 @@ if ($query->count() > 5) {
 
 if ($query->count() >= 10) {
     // do something
-}', 'VixPHPCS.Yii2.PreferExistsOverCount');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -206,7 +208,7 @@ if ($query->count() >= 10) {
         $result = $this->runPhpcs('<?php
 
 $count = $query->count();
-echo $count;', 'VixPHPCS.Yii2.PreferExistsOverCount');
+echo $count;', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -221,7 +223,7 @@ echo $count;', 'VixPHPCS.Yii2.PreferExistsOverCount');
 
 if (count($array) > 0) {
     // do something
-}', 'VixPHPCS.Yii2.PreferExistsOverCount');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -240,7 +242,7 @@ if ($query->exists()) {
 
 if (!$query->exists()) {
     // do something else
-}', 'VixPHPCS.Yii2.PreferExistsOverCount');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -255,7 +257,7 @@ if (!$query->exists()) {
 
 if (SomeClass::count() > 0) {
     // do something
-}', 'VixPHPCS.Yii2.PreferExistsOverCount');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -276,7 +278,7 @@ if ($query2->count() === 0) {
     // do something else
 }
 
-$result = $query3->count() >= 1 ? "found" : "not found";', 'VixPHPCS.Yii2.PreferExistsOverCount');
+$result = $query3->count() >= 1 ? "found" : "not found";', self::SNIFF);
 
         $this->assertContainsWarning($result, 'count() > 0');
         $this->assertContainsWarning($result, 'count() === 0');
@@ -299,7 +301,7 @@ if ($query->count() == 0) {
 // Should suggest exists()
 if ($query->count() > 0) {
     echo "has records";
-}', 'VixPHPCS.Yii2.PreferExistsOverCount');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, '!...->exists()');
         $this->assertContainsWarning($result, '...->exists()');
@@ -315,7 +317,7 @@ if ($query->count() > 0) {
 
 if (TimeTracker::find()->where(["datetime_end" => null, "user_id" => $user->id])->one()) {
     // do something
-}', 'VixPHPCS.Yii2.PreferExistsOverCount');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use ->exists() instead of ->one()');
     }
@@ -330,7 +332,7 @@ if (TimeTracker::find()->where(["datetime_end" => null, "user_id" => $user->id])
 
 while ($query->one()) {
     // do something
-}', 'VixPHPCS.Yii2.PreferExistsOverCount');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use ->exists() instead of ->one()');
     }
@@ -343,7 +345,7 @@ while ($query->one()) {
     {
         $result = $this->runPhpcs('<?php
 
-$result = $query->one() ? "found" : "not found";', 'VixPHPCS.Yii2.PreferExistsOverCount');
+$result = $query->one() ? "found" : "not found";', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use ->exists() instead of ->one()');
     }
@@ -358,7 +360,7 @@ $result = $query->one() ? "found" : "not found";', 'VixPHPCS.Yii2.PreferExistsOv
 
 if ($condition && $query->one()) {
     // do something
-}', 'VixPHPCS.Yii2.PreferExistsOverCount');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'Use ->exists() instead of ->one()');
     }
@@ -372,7 +374,7 @@ if ($condition && $query->one()) {
         $result = $this->runPhpcs('<?php
 
 $user = User::find()->where(["id" => 1])->one();
-return $query->one();', 'VixPHPCS.Yii2.PreferExistsOverCount');
+return $query->one();', self::SNIFF);
 
         $this->assertNoViolations($result);
     }

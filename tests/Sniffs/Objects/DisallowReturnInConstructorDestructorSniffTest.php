@@ -17,7 +17,7 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(DisallowReturnInConstructorDestructorSniff::class)]
 final class DisallowReturnInConstructorDestructorSniffTest extends BaseTest
 {
-    private const string SNIFF = 'VixPHPCS.Objects.DisallowReturnInConstructorDestructor';
+    protected const string SNIFF = 'VixPHPCS.Objects.DisallowReturnInConstructorDestructor';
 
     #[Test]
     public function constructorReturnTriggersError(): void

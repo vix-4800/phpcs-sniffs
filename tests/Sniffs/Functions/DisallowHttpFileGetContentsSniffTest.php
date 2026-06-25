@@ -17,6 +17,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(DisallowHttpFileGetContentsSniff::class)]
 final class DisallowHttpFileGetContentsSniffTest extends BaseTest
 {
+    protected const string SNIFF = 'VixPHPCS.Functions.DisallowHttpFileGetContents';
+
     /**
      * Test that HTTP URL triggers a warning.
      */
@@ -24,7 +26,7 @@ final class DisallowHttpFileGetContentsSniffTest extends BaseTest
     public function httpUrlTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$response = file_get_contents("http://example.com/api");', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
+$response = file_get_contents("http://example.com/api");', self::SNIFF);
 
         $this->assertContainsWarning($result, 'HTTP requests');
         $this->assertContainsWarning($result, 'HTTP client');
@@ -37,7 +39,7 @@ $response = file_get_contents("http://example.com/api");', 'VixPHPCS.Functions.D
     public function httpsUrlTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$response = file_get_contents(\'https://example.com/api\');', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
+$response = file_get_contents(\'https://example.com/api\');', self::SNIFF);
 
         $this->assertContainsWarning($result, 'file_get_contents()');
     }
@@ -49,7 +51,7 @@ $response = file_get_contents(\'https://example.com/api\');', 'VixPHPCS.Function
     public function urlSchemeIsCaseInsensitive(): void
     {
         $result = $this->runPhpcs('<?php
-$response = FILE_GET_CONTENTS("HTTPS://example.com/api");', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
+$response = FILE_GET_CONTENTS("HTTPS://example.com/api");', self::SNIFF);
 
         $this->assertContainsWarning($result, 'HTTP requests');
     }
@@ -61,7 +63,7 @@ $response = FILE_GET_CONTENTS("HTTPS://example.com/api");', 'VixPHPCS.Functions.
     public function interpolatedHttpUrlTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$response = file_get_contents("https://$host/api");', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
+$response = file_get_contents("https://$host/api");', self::SNIFF);
 
         $this->assertContainsWarning($result, 'HTTP requests');
     }
@@ -74,7 +76,7 @@ $response = file_get_contents("https://$host/api");', 'VixPHPCS.Functions.Disall
     {
         $result = $this->runPhpcs('<?php
 $contents = file_get_contents(__DIR__ . "/file.txt");
-$contents = file_get_contents("php://input");', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
+$contents = file_get_contents("php://input");', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -86,7 +88,7 @@ $contents = file_get_contents("php://input");', 'VixPHPCS.Functions.DisallowHttp
     public function dynamicUrlDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$response = file_get_contents($url);', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
+$response = file_get_contents($url);', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -99,7 +101,7 @@ $response = file_get_contents($url);', 'VixPHPCS.Functions.DisallowHttpFileGetCo
     {
         $result = $this->runPhpcs('<?php
 $response = $client->file_get_contents("https://example.com/api");
-$response = Client::file_get_contents("https://example.com/api");', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
+$response = Client::file_get_contents("https://example.com/api");', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -113,7 +115,7 @@ $response = Client::file_get_contents("https://example.com/api");', 'VixPHPCS.Fu
         $result = $this->runPhpcs('<?php
 function file_get_contents(string $url): string {
     return $url;
-}', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -129,7 +131,7 @@ $response = file_get_contents($path, false, stream_context_create([
     "http" => [
         "header" => "Referer: https://example.com",
     ],
-]));', 'VixPHPCS.Functions.DisallowHttpFileGetContents');
+]));', self::SNIFF);
 
         $this->assertNoViolations($result);
     }

@@ -17,6 +17,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(PreferModernStringFunctionsSniff::class)]
 final class PreferModernStringFunctionsSniffTest extends BaseTest
 {
+    protected const string SNIFF = 'VixPHPCS.Functions.PreferModernStringFunctions';
+
     /**
      * Test that strpos() !== false triggers a warning for str_contains().
      */
@@ -28,7 +30,7 @@ $haystack = "hello world";
 $needle = "world";
 if (strpos($haystack, $needle) !== false) {
     echo "Found";
-}', 'VixPHPCS.Functions.PreferModernStringFunctions');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'strpos()');
         $this->assertContainsWarning($result, 'str_contains()');
@@ -45,7 +47,7 @@ $haystack = "hello world";
 $needle = "hello";
 if (strpos($haystack, $needle) === 0) {
     echo "Starts with";
-}', 'VixPHPCS.Functions.PreferModernStringFunctions');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'strpos()');
         $this->assertContainsWarning($result, 'str_starts_with()');
@@ -60,7 +62,7 @@ if (strpos($haystack, $needle) === 0) {
         $result = $this->runPhpcs('<?php
 $haystack = "hello world";
 $needle = "world";
-$position = strpos($haystack, $needle);', 'VixPHPCS.Functions.PreferModernStringFunctions');
+$position = strpos($haystack, $needle);', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -81,7 +83,7 @@ class Foo {
 $foo = new Foo();
 if ($foo->strpos("hello", "h") !== false) {
     echo "test";
-}', 'VixPHPCS.Functions.PreferModernStringFunctions');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -101,7 +103,7 @@ class Foo {
 
 if (Foo::strpos("hello", "h") !== false) {
     echo "test";
-}', 'VixPHPCS.Functions.PreferModernStringFunctions');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -117,7 +119,7 @@ $haystack = "hello world";
 $needle = "world";
 if (mb_strpos($haystack, $needle) !== false) {
     echo "Found";
-}', 'VixPHPCS.Functions.PreferModernStringFunctions');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'mb_strpos()');
         $this->assertContainsWarning($result, 'str_contains()');

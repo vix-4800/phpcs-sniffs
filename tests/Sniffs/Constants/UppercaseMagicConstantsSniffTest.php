@@ -17,6 +17,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(UppercaseMagicConstantsSniff::class)]
 final class UppercaseMagicConstantsSniffTest extends BaseTest
 {
+    protected const string SNIFF = 'VixPHPCS.Constants.UppercaseMagicConstants';
+
     /**
      * Test that lowercase and mixed-case magic constants trigger warnings.
      */
@@ -32,7 +34,7 @@ trait ExampleTrait
     {
         return __file__ . __Dir__ . __line__ . __function__ . __method__ . __trait__ . __namespace__;
     }
-}', 'VixPHPCS.Constants.UppercaseMagicConstants');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, '__FILE__');
         $this->assertContainsWarning($result, '__DIR__');
@@ -56,7 +58,7 @@ class Example
     {
         return __class__;
     }
-}', 'VixPHPCS.Constants.UppercaseMagicConstants');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, '__CLASS__');
     }
@@ -84,7 +86,7 @@ class Example
     {
         return __CLASS__;
     }
-}', 'VixPHPCS.Constants.UppercaseMagicConstants');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }

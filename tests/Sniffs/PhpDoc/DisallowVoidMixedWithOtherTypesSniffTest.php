@@ -17,7 +17,7 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(DisallowVoidMixedWithOtherTypesSniff::class)]
 final class DisallowVoidMixedWithOtherTypesSniffTest extends BaseTest
 {
-    private const string SNIFF = 'VixPHPCS.PhpDoc.DisallowVoidMixedWithOtherTypes';
+    protected const string SNIFF = 'VixPHPCS.PhpDoc.DisallowVoidMixedWithOtherTypes';
 
     #[Test]
     public function voidMixedWithNullTriggersError(): void

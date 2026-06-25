@@ -17,7 +17,7 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(DisallowInvalidTypeUsageSniff::class)]
 final class DisallowInvalidTypeUsageSniffTest extends BaseTest
 {
-    private const string SNIFF = 'VixPHPCS.PhpDoc.DisallowInvalidTypeUsage';
+    protected const string SNIFF = 'VixPHPCS.PhpDoc.DisallowInvalidTypeUsage';
 
     #[Test]
     public function voidAndNeverInValueTagsTriggerErrors(): void

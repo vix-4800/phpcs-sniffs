@@ -17,7 +17,7 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(DisallowReturnInSetterSniff::class)]
 final class DisallowReturnInSetterSniffTest extends BaseTest
 {
-    private const string SNIFF = 'VixPHPCS.Objects.DisallowReturnInSetter';
+    protected const string SNIFF = 'VixPHPCS.Objects.DisallowReturnInSetter';
 
     #[Test]
     public function setterReturnTriggersError(): void

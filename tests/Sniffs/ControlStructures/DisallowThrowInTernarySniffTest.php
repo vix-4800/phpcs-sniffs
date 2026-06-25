@@ -17,6 +17,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(DisallowThrowInTernarySniff::class)]
 final class DisallowThrowInTernarySniffTest extends BaseTest
 {
+    protected const string SNIFF = 'VixPHPCS.ControlStructures.DisallowThrowInTernary';
+
     /**
      * Test that throw in ternary operator triggers an error.
      */
@@ -24,7 +26,7 @@ final class DisallowThrowInTernarySniffTest extends BaseTest
     public function throwInTernaryTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
-$result = $condition ? throw new Exception("error") : "default";', 'VixPHPCS.ControlStructures.DisallowThrowInTernary');
+$result = $condition ? throw new Exception("error") : "default";', self::SNIFF);
 
         $this->assertContainsError($result, 'ternary');
     }
@@ -36,7 +38,7 @@ $result = $condition ? throw new Exception("error") : "default";', 'VixPHPCS.Con
     public function throwInSecondPartOfTernaryTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
-$result = $condition ? "value" : throw new Exception("error");', 'VixPHPCS.ControlStructures.DisallowThrowInTernary');
+$result = $condition ? "value" : throw new Exception("error");', self::SNIFF);
 
         $this->assertContainsError($result, 'ternary');
     }
@@ -48,7 +50,7 @@ $result = $condition ? "value" : throw new Exception("error");', 'VixPHPCS.Contr
     public function throwInNullCoalescingTriggersError(): void
     {
         $result = $this->runPhpcs('<?php
-$result = $model ?? throw new Exception("error");', 'VixPHPCS.ControlStructures.DisallowThrowInTernary');
+$result = $model ?? throw new Exception("error");', self::SNIFF);
 
         $this->assertContainsError($result, 'null coalescing');
     }
@@ -62,7 +64,7 @@ $result = $model ?? throw new Exception("error");', 'VixPHPCS.ControlStructures.
         $result = $this->runPhpcs('<?php
 if ($condition) {
     throw new Exception("error");
-}', 'VixPHPCS.ControlStructures.DisallowThrowInTernary');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -74,7 +76,7 @@ if ($condition) {
     public function standaloneThrowDoesNotTriggerError(): void
     {
         $result = $this->runPhpcs('<?php
-throw new Exception("error");', 'VixPHPCS.ControlStructures.DisallowThrowInTernary');
+throw new Exception("error");', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -88,7 +90,7 @@ throw new Exception("error");', 'VixPHPCS.ControlStructures.DisallowThrowInTerna
         $result = $this->runPhpcs('<?php
 function test() {
     throw new Exception("error");
-}', 'VixPHPCS.ControlStructures.DisallowThrowInTernary');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -100,7 +102,7 @@ function test() {
     public function nullCoalescingWithoutThrowDoesNotTriggerError(): void
     {
         $result = $this->runPhpcs('<?php
-$result = $model ?? $default;', 'VixPHPCS.ControlStructures.DisallowThrowInTernary');
+$result = $model ?? $default;', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -112,7 +114,7 @@ $result = $model ?? $default;', 'VixPHPCS.ControlStructures.DisallowThrowInTerna
     public function nestedTernaryWithThrow(): void
     {
         $result = $this->runPhpcs('<?php
-$result = $cond1 ? ($cond2 ? throw new Exception() : "b") : "c";', 'VixPHPCS.ControlStructures.DisallowThrowInTernary');
+$result = $cond1 ? ($cond2 ? throw new Exception() : "b") : "c";', self::SNIFF);
 
         $this->assertContainsError($result, 'ternary');
     }

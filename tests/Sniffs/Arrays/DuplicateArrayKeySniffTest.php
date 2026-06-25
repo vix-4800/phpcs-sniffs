@@ -17,7 +17,7 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(DuplicateArrayKeySniff::class)]
 final class DuplicateArrayKeySniffTest extends BaseTest
 {
-    private const string SNIFF = 'VixPHPCS.Arrays.DuplicateArrayKey';
+    protected const string SNIFF = 'VixPHPCS.Arrays.DuplicateArrayKey';
 
     #[Test]
     public function duplicateStringKeysTriggerError(): void

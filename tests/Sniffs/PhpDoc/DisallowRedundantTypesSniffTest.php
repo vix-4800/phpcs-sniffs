@@ -17,7 +17,7 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(DisallowRedundantTypesSniff::class)]
 final class DisallowRedundantTypesSniffTest extends BaseTest
 {
-    private const string SNIFF = 'VixPHPCS.PhpDoc.DisallowRedundantTypes';
+    protected const string SNIFF = 'VixPHPCS.PhpDoc.DisallowRedundantTypes';
 
     #[Test]
     public function duplicateUnionTypesTriggerWarning(): void

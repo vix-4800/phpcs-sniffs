@@ -17,13 +17,15 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(DisallowSameKeyAndValueInForeachSniff::class)]
 final class DisallowSameKeyAndValueInForeachSniffTest extends BaseTest
 {
+    protected const string SNIFF = 'VixPHPCS.ControlStructures.DisallowSameKeyAndValueInForeach';
+
     #[Test]
     public function sameKeyAndValueVariableTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
 foreach ($items as $item => $item) {
     echo $item;
-}', 'VixPHPCS.ControlStructures.DisallowSameKeyAndValueInForeach');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'must be different variables');
     }
@@ -34,7 +36,7 @@ foreach ($items as $item => $item) {
         $result = $this->runPhpcs('<?php
 foreach ($items as $item => &$item) {
     $item = trim($item);
-}', 'VixPHPCS.ControlStructures.DisallowSameKeyAndValueInForeach');
+}', self::SNIFF);
 
         $this->assertContainsWarning($result, 'must be different variables');
     }
@@ -45,7 +47,7 @@ foreach ($items as $item => &$item) {
         $result = $this->runPhpcs('<?php
 foreach ($items as $key => $item) {
     echo $key . $item;
-}', 'VixPHPCS.ControlStructures.DisallowSameKeyAndValueInForeach');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -56,7 +58,7 @@ foreach ($items as $key => $item) {
         $result = $this->runPhpcs('<?php
 foreach ($items as $item) {
     echo $item;
-}', 'VixPHPCS.ControlStructures.DisallowSameKeyAndValueInForeach');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -67,7 +69,7 @@ foreach ($items as $item) {
         $result = $this->runPhpcs('<?php
 foreach ($items as $item => $item["value"]) {
     echo $item["value"];
-}', 'VixPHPCS.ControlStructures.DisallowSameKeyAndValueInForeach');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -78,7 +80,7 @@ foreach ($items as $item => $item["value"]) {
         $result = $this->runPhpcs('<?php
 foreach ($items as $item => [$first, $second]) {
     echo $first . $second;
-}', 'VixPHPCS.ControlStructures.DisallowSameKeyAndValueInForeach');
+}', self::SNIFF);
 
         $this->assertNoViolations($result);
     }

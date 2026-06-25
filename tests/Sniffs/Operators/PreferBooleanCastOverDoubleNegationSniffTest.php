@@ -17,11 +17,13 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(PreferBooleanCastOverDoubleNegationSniff::class)]
 final class PreferBooleanCastOverDoubleNegationSniffTest extends BaseTest
 {
+    protected const string SNIFF = 'VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation';
+
     #[Test]
     public function doubleNegationTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$isActive = !!$user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation');
+$isActive = !!$user->active;', self::SNIFF);
 
         $this->assertContainsWarning($result, '(bool)');
         $this->assertContainsWarning($result, 'double negation');
@@ -31,7 +33,7 @@ $isActive = !!$user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleNe
     public function spacedDoubleNegationTriggersWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$isActive = ! !$user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation');
+$isActive = ! !$user->active;', self::SNIFF);
 
         $this->assertContainsWarning($result, '(bool)');
     }
@@ -40,7 +42,7 @@ $isActive = ! !$user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleN
     public function tripleNegationDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$isInactive = !!!$user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation');
+$isInactive = !!!$user->active;', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -49,7 +51,7 @@ $isInactive = !!!$user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubl
     public function singleNegationDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$isInactive = !$user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation');
+$isInactive = !$user->active;', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -58,7 +60,7 @@ $isInactive = !$user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleN
     public function booleanCastDoesNotTriggerWarning(): void
     {
         $result = $this->runPhpcs('<?php
-$isActive = (bool) $user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation');
+$isActive = (bool) $user->active;', self::SNIFF);
 
         $this->assertNoViolations($result);
     }
@@ -68,7 +70,7 @@ $isActive = (bool) $user->active;', 'VixPHPCS.Operators.PreferBooleanCastOverDou
     {
         $result = $this->runPhpcs('<?php
 $isActive = !!$user->active;
-$hasItems = !!count($items);', 'VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation');
+$hasItems = !!count($items);', self::SNIFF);
 
         $this->assertContainsWarning($result, 'double negation');
         $this->assertGreaterThanOrEqual(2, mb_substr_count($result, 'WARNING'));

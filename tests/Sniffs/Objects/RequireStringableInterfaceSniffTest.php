@@ -17,7 +17,7 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(RequireStringableInterfaceSniff::class)]
 final class RequireStringableInterfaceSniffTest extends BaseTest
 {
-    private const string SNIFF = 'VixPHPCS.Objects.RequireStringableInterface';
+    protected const string SNIFF = 'VixPHPCS.Objects.RequireStringableInterface';
 
     #[Test]
     public function classWithToStringAndWithoutStringableTriggersWarning(): void

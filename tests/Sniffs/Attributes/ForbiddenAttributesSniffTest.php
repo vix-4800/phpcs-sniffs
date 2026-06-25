@@ -15,6 +15,8 @@ use VixPHPCS\Tests\BaseTest;
 #[CoversClass(ForbiddenAttributesSniff::class)]
 final class ForbiddenAttributesSniffTest extends BaseTest
 {
+    protected const string SNIFF = 'VixPHPCS.Attributes.ForbiddenAttributes';
+
     #[Test]
     public function forbiddenAttributeTriggersWarning(): void
     {
@@ -33,7 +35,7 @@ final class ForbiddenAttributesSniffTest extends BaseTest
             }
             PHP;
 
-        $result = $this->runPhpcs($code, 'VixPHPCS.Attributes.ForbiddenAttributes');
+        $result = $this->runPhpcs($code, self::SNIFF);
         $this->assertContainsWarning($result, 'Usage of attribute "ArrayShape" is forbidden.');
     }
 
@@ -53,7 +55,7 @@ final class ForbiddenAttributesSniffTest extends BaseTest
             }
             PHP;
 
-        $result = $this->runPhpcs($code, 'VixPHPCS.Attributes.ForbiddenAttributes');
+        $result = $this->runPhpcs($code, self::SNIFF);
         $this->assertContainsWarning($result, 'Usage of attribute "\JetBrains\PhpStorm\ArrayShape" is forbidden.');
     }
 
@@ -73,7 +75,7 @@ final class ForbiddenAttributesSniffTest extends BaseTest
             }
             PHP;
 
-        $result = $this->runPhpcs($code, 'VixPHPCS.Attributes.ForbiddenAttributes');
+        $result = $this->runPhpcs($code, self::SNIFF);
         $this->assertNoViolations($result);
     }
 
