@@ -25,7 +25,7 @@ final class DisallowMultipleThrowsPerLineSniff implements Sniff
     /**
      * {@inheritDoc}
      *
-     * @return array<int, mixed>
+     * @return array<int, int|string>
      */
     public function register(): array
     {
