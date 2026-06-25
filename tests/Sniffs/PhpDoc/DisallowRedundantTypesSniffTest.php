@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\PhpDoc;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\Attributes\CoversNothing;
+use VixPHPCS\Sniffs\PhpDoc\DisallowRedundantTypesSniff;
 use VixPHPCS\Tests\BaseTest;
 
 /**
@@ -13,7 +14,7 @@ use VixPHPCS\Tests\BaseTest;
  *
  * @internal
  */
-#[CoversNothing]
+#[CoversClass(DisallowRedundantTypesSniff::class)]
 final class DisallowRedundantTypesSniffTest extends BaseTest
 {
     private const string SNIFF = 'VixPHPCS.PhpDoc.DisallowRedundantTypes';

@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Arrays;
 
-use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
+use VixPHPCS\Sniffs\Arrays\DisallowNonIntStringArrayKeySniff;
 use VixPHPCS\Tests\BaseTest;
 
 /**
@@ -13,7 +14,7 @@ use VixPHPCS\Tests\BaseTest;
  *
  * @internal
  */
-#[CoversNothing]
+#[CoversClass(DisallowNonIntStringArrayKeySniff::class)]
 final class DisallowNonIntStringArrayKeySniffTest extends BaseTest
 {
     #[Test]

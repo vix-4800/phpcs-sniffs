@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Functions;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\Attributes\CoversNothing;
+use VixPHPCS\Sniffs\Functions\DisallowHttpFileGetContentsSniff;
 use VixPHPCS\Tests\BaseTest;
 
 /**
@@ -13,7 +14,7 @@ use VixPHPCS\Tests\BaseTest;
  *
  * @internal
  */
-#[CoversNothing]
+#[CoversClass(DisallowHttpFileGetContentsSniff::class)]
 final class DisallowHttpFileGetContentsSniffTest extends BaseTest
 {
     /**

@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Common\Sniffs\Yii2;
 
-use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
+use VixPHPCS\Sniffs\Yii2\PreferActiveRecordShortcutsSniff;
 use VixPHPCS\Tests\BaseTest;
 
 /**
@@ -13,7 +14,7 @@ use VixPHPCS\Tests\BaseTest;
  *
  * @internal
  */
-#[CoversNothing]
+#[CoversClass(PreferActiveRecordShortcutsSniff::class)]
 final class PreferActiveRecordShortcutsSniffTest extends BaseTest
 {
     /**

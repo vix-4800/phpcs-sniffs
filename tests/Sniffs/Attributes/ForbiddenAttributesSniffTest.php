@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace VixPHPCS\Tests\Sniffs\Attributes;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\Attributes\CoversNothing;
+use VixPHPCS\Sniffs\Attributes\ForbiddenAttributesSniff;
 use VixPHPCS\Tests\BaseTest;
 
 /**
  * @internal
  */
-#[CoversNothing]
+#[CoversClass(ForbiddenAttributesSniff::class)]
 final class ForbiddenAttributesSniffTest extends BaseTest
 {
     #[Test]
