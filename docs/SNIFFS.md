@@ -10,7 +10,6 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
   - [Table of Contents](#table-of-contents)
   - [Arrays](#arrays)
     - [VixPHPCS.Arrays.MixedArrayKeyTypes](#vixphpcsarraysmixedarraykeytypes)
-    - [VixPHPCS.Arrays.DisallowNonIntStringArrayKey](#vixphpcsarraysdisallownonintstringarraykey)
     - [VixPHPCS.Arrays.DuplicateArrayKey](#vixphpcsarraysduplicatearraykey)
   - [Attributes](#attributes)
     - [VixPHPCS.Attributes.ForbiddenAttributes](#vixphpcsattributesforbiddenattributes)
@@ -44,10 +43,10 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
     - [VixPHPCS.Operators.PreferBooleanCastOverDoubleNegation](#vixphpcsoperatorspreferbooleancastoverdoublenegation)
   - [PhpDoc](#phpdoc)
     - [VixPHPCS.PhpDoc.DeprecatedTag](#vixphpcsphpdocdeprecatedtag)
+    - [VixPHPCS.PhpDoc.DisallowUnusedTemplate](#vixphpcsphpdocdisallowunusedtemplate)
     - [VixPHPCS.PhpDoc.DisallowInvalidTypeUsage](#vixphpcsphpdocdisallowinvalidtypeusage)
     - [VixPHPCS.PhpDoc.DisallowSuspiciousLiteralTypes](#vixphpcsphpdocdisallowsuspiciousliteraltypes)
     - [VixPHPCS.PhpDoc.DisallowRedundantTypes](#vixphpcsphpdocdisallowredundanttypes)
-    - [VixPHPCS.PhpDoc.DisallowUnusedTemplate](#vixphpcsphpdocdisallowunusedtemplate)
     - [VixPHPCS.PhpDoc.DisallowVoidMixedWithOtherTypes](#vixphpcsphpdocdisallowvoidmixedwithothertypes)
   - [Yii2](#yii2)
     - [VixPHPCS.Yii2.DisallowResponseFormatAssignment](#vixphpcsyii2disallowresponseformatassignment)
@@ -90,32 +89,6 @@ $data = [
     0 => 'first',
     1 => 'second',
     'third',
-];
-```
-
-### VixPHPCS.Arrays.DisallowNonIntStringArrayKey
-
-**Level:** Error
-
-Requires explicit array keys to be declared as integer or string literals. This prevents implicit key casting from values such as floats, booleans, `null`, or other expressions that make array shapes harder to reason about.
-
-**Bad:**
-
-```php
-return [
-    true => 'enabled',
-    1.5 => 'half',
-    $dynamicKey => 'value',
-];
-```
-
-**Good:**
-
-```php
-return [
-    1 => 'enabled',
-    -2 => 'disabled',
-    'status' => 'active',
 ];
 ```
 

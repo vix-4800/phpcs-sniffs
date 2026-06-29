@@ -7,10 +7,6 @@
         <type>warning</type>
     </rule>
 
-    <rule ref="VixPHPCS.Arrays.DisallowNonIntStringArrayKey">
-        <type>error</type>
-    </rule>
-
     <rule ref="VixPHPCS.Arrays.DuplicateArrayKey">
         <type>error</type>
     </rule>
