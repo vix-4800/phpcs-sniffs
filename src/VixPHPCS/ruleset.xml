@@ -3,10 +3,6 @@
     name="VixPHPCS">
     <description>VixPHPCS Coding Standard - Main ruleset</description>
 
-    <rule ref="VixPHPCS.Arrays.MixedArrayKeyTypes">
-        <type>warning</type>
-    </rule>
-
     <rule ref="VixPHPCS.Arrays.DuplicateArrayKey">
         <type>error</type>
     </rule>
