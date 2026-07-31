@@ -107,4 +107,21 @@ final class Example
 
         $this->assertNoViolations($result);
     }
+
+    #[Test]
+    public function literalValueUnionsDoNotTriggerWarnings(): void
+    {
+        $result = $this->runPhpcs('<?php
+
+/**
+ * @var \'morning\'|\'evening\' $action
+ * @param array<\'morning\'|\'evening\'> $actions
+ * @param array{action: \'morning\'|\'evening\'} $config
+ */
+function example(array $actions, array $config)
+{
+}');
+
+        $this->assertNoViolations($result);
+    }
 }

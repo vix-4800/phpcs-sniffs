@@ -967,6 +967,7 @@ are checked as well.
  * @param string|null $value
  * @return int
  * @var array<bool> $flags
+ * @var 'morning'|'evening' $action
  * @template T of object
  */
 ```

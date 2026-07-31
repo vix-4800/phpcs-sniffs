@@ -416,7 +416,7 @@ trait PhpDocTypeHelperTrait
             return true;
         }
 
-        return preg_match('/^([\'"]).*\1$/', mb_trim($type)) === 1;
+        return preg_match('/^(?:\'(?:[^\'\\\\]|\\\\.)*\'|"(?:[^"\\\\]|\\\\.)*")$/', mb_trim($type)) === 1;
     }
 
     private function isNativeTypeName(string $type): bool
