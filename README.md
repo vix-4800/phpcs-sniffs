@@ -43,7 +43,7 @@ Create a `phpcs.xml` file in your project root:
 
 ## Sniffs
 
-The package ships with the `VixPHPCS` ruleset. Alternatively, individual standalone sniffs can be enabled manually. The catalog includes return-type consistency rules such as forbidding nullable `bool` returns in function and method signatures/docblocks. See [docs/SNIFFS.md](docs/SNIFFS.md) for the full catalog, examples, and configurable parameters.
+The package ships with the `VixPHPCS` ruleset. Alternatively, individual standalone sniffs can be enabled manually. The catalog includes checks for duplicate and non-ascending explicit integer array keys, and return-type consistency rules such as forbidding nullable `bool` returns in function and method signatures/docblocks. See [docs/SNIFFS.md](docs/SNIFFS.md) for the full catalog, examples, and configurable parameters.
 
 ## Development
 

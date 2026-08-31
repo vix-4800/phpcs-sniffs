@@ -7,6 +7,10 @@
         <type>error</type>
     </rule>
 
+    <rule ref="VixPHPCS.Arrays.RequireAscendingIntegerArrayKeys">
+        <type>warning</type>
+    </rule>
+
     <rule ref="VixPHPCS.ControlStructures.DisallowThrowInTernary">
         <type>error</type>
     </rule>

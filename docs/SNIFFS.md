@@ -10,6 +10,7 @@ The default `VixPHPCS` ruleset covers the main package rules. Some sniffs can al
   - [Table of Contents](#table-of-contents)
   - [Arrays](#arrays)
     - [VixPHPCS.Arrays.DuplicateArrayKey](#vixphpcsarraysduplicatearraykey)
+    - [VixPHPCS.Arrays.RequireAscendingIntegerArrayKeys](#vixphpcsarraysrequireascendingintegerarraykeys)
   - [Attributes](#attributes)
     - [VixPHPCS.Attributes.ForbiddenAttributes](#vixphpcsattributesforbiddenattributes)
   - [Constants](#constants)
@@ -87,6 +88,32 @@ $config = [
 $map = [
     '1' => 'one',
     '01' => 'distinct string key',
+];
+```
+
+### VixPHPCS.Arrays.RequireAscendingIntegerArrayKeys
+
+**Level:** Warning
+
+Requires explicit integer array keys to increase in declaration order. Dynamic, string, and implicit keys are ignored.
+
+**Bad:**
+
+```php
+$items = [
+    10 => 'first',
+    5 => 'second',
+    7 => 'third',
+];
+```
+
+**Good:**
+
+```php
+$items = [
+    5 => 'first',
+    7 => 'second',
+    10 => 'third',
 ];
 ```
 
