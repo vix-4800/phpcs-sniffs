@@ -986,6 +986,8 @@ alternatives unreachable or unnecessary.
  * @var string|string $name
  * @var mixed|string $value
  * @var array<string|string> $items
+ * @var array|string[] $names
+ * @var array|list<string> $values
  * @var bool|true|false $flag
  */
 ```
@@ -996,6 +998,8 @@ alternatives unreachable or unnecessary.
 /**
  * @var string $name
  * @var mixed $value
+ * @var array $names
+ * @var list<string> $values
  * @var bool $flag
  */
 ```

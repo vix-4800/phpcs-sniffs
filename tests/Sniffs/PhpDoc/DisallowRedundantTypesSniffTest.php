@@ -60,6 +60,34 @@ function example(): void
     }
 
     #[Test]
+    public function arrayTypesWithSpecifiedContentsTriggerWarningWhenCombinedWithArray(): void
+    {
+        $result = $this->runPhpcs('<?php
+
+/**
+ * Description.
+ *
+ * @var array|string[] $stringArray
+ * @var array|list<string> $list
+ * @var array|array<string> $genericArray
+ * @var array|array{key: string} $shape
+ * @var iterable|non-empty-list<string> $iterable
+ */
+function example(): void
+{
+}');
+
+        $this->assertContainsWarning($result, 'PHPDoc union type "array|string[]" contains redundant narrower types.');
+        $this->assertContainsWarning($result, 'PHPDoc union type "array|list<string>" contains redundant narrower types.');
+        $this->assertContainsWarning($result, 'PHPDoc union type "array|array<string>" contains redundant narrower types.');
+        $this->assertContainsWarning($result, 'PHPDoc union type "array|array{key: string}" contains redundant narrower types.');
+        $this->assertContainsWarning(
+            $result,
+            'PHPDoc union type "iterable|non-empty-list<string>" contains redundant narrower types.',
+        );
+    }
+
+    #[Test]
     public function nestedRedundantTypesTriggerWarnings(): void
     {
         $result = $this->runPhpcs('<?php

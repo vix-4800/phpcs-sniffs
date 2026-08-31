@@ -196,11 +196,45 @@ final class DisallowRedundantTypesSniff implements Sniff
             return true;
         }
 
-        if (isset($types['iterable']) && (isset($types['array']) || isset($types['traversable']))) {
+        if (isset($types['array']) && $this->containsSpecificArrayType($types)) {
+            return true;
+        }
+
+        if (
+            isset($types['iterable'])
+            && (isset($types['array']) || isset($types['traversable']) || $this->containsSpecificArrayType($types))
+        ) {
             return true;
         }
 
         return isset($types['throwable']) && (isset($types['exception']) || isset($types['error']));
+    }
+
+    /**
+     * @param array<string, true> $types
+     */
+    private function containsSpecificArrayType(array $types): bool
+    {
+        foreach (array_keys($types) as $type) {
+            if ($this->isSpecificArrayType($type)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function isSpecificArrayType(string $type): bool
+    {
+        if (str_ends_with($type, '[]')) {
+            return true;
+        }
+
+        if (in_array($type, ['list', 'non-empty-array', 'non-empty-list'], strict: true)) {
+            return true;
+        }
+
+        return preg_match('/^(?:array|list|non-empty-array|non-empty-list)[<{]/', $type) === 1;
     }
 
     /**

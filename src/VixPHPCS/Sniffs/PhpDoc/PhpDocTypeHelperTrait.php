@@ -80,6 +80,14 @@ trait PhpDocTypeHelperTrait
                 $nextCharacter = $this->findNextNonWhitespaceCharacter($trimmedContent, $index + 1);
 
                 if (
+                    in_array($previousCharacter, ['>', ']', '}'], strict: true)
+                    && $nextCharacter !== null
+                    && !$this->isTypeSeparator($nextCharacter)
+                ) {
+                    break;
+                }
+
+                if (
                     $previousCharacter !== null
                     && $nextCharacter !== null
                     && ($this->isTypeSeparator($previousCharacter) || $this->isTypeSeparator($nextCharacter))
