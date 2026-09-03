@@ -204,7 +204,7 @@ final class DuplicateArrayKeySniff implements Sniff
         return match ($token['code']) {
             T_LNUMBER => $this->createIntegerKeyData($content, $pointer),
             T_DNUMBER => $this->createFloatKeyData($content, $pointer),
-            T_CONSTANT_ENCAPSED_STRING, T_DOUBLE_QUOTED_STRING => $this->createStringKeyData((string) $token['content'], $pointer),
+            T_CONSTANT_ENCAPSED_STRING, T_DOUBLE_QUOTED_STRING => $this->createStringKeyData($token['content'], $pointer),
             T_TRUE => $this->createEffectiveKeyData(1, $pointer),
             T_FALSE => $this->createEffectiveKeyData(0, $pointer),
             T_NULL => $this->createEffectiveKeyData('', $pointer),
